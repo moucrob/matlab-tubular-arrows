@@ -20,8 +20,11 @@ function rotatedData = rotatePoints(alignmentVector, originalData)
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    alignmentDim = numel(alignmentVector);
+    alignmentDim = numel(alignmentVector); %number of elements in a matrix
+    disp(['alignmentDim = ',num2str(alignmentDim)]);
+    assignin('base', 'originalData', originalData);
     DOF = size(originalData,2); %---- DOF = Degrees of Freedom (i.e. 2 for two dimensional and 3 for three dimensional data)
+    disp(['DOF = ',num2str(DOF)]);
     
     if alignmentDim~=DOF    
         error('Alignment vector does not agree with originalData dimensions');      
@@ -38,20 +41,25 @@ function rotatedData = rotatePoints(alignmentVector, originalData)
         
         Rmatrix = [ctheta, -1.*stheta;...
                    stheta,     ctheta];
-        rotatedData = originalData*Rmatrix;        
+        rotatedData = originalData*Rmatrix; 
+        %assumption: rotate all the datas from the original base to the
+        %base where the original x becomes alignmentVector
         
     else    % 3D rotation...        
         [rad_theta, rad_phi, rho] = cart2sph(alignmentVector(1), alignmentVector(2), alignmentVector(3));
         rad_theta = rad_theta * -1; 
         deg_theta = rad_theta * (180/pi);
         deg_phi = rad_phi * (180/pi); 
-        ctheta = cosd(deg_theta);  stheta = sind(deg_theta);
+        ctheta = cosd(deg_theta);  stheta = sind(deg_theta); %MM : is it more accurate??
         Rz = [ctheta,   -1.*stheta,     0;...
               stheta,       ctheta,     0;...
               0,                 0,     1];                  %% First rotate as per theta around the Z axis
         rotatedData = originalData*Rz;
 
         [rotX, rotY, rotZ] = sph2cart(-1* (rad_theta+(pi/2)), 0, 1);          %% Second rotation corresponding to phi
+        %assuming alignmentVector is the x for the new base, then the
+        %hereabove argument corresponds to the y (z inversed)
+        %the hereabove output = newX(in base 0) vectorial product -z(in base0)
         rotationAxis = [rotX, rotY, rotZ];
         u = rotationAxis(:)/norm(rotationAxis);        %% Code extract from rotate.m from MATLAB
         cosPhi = cosd(deg_phi);
@@ -66,17 +74,3 @@ function rotatedData = rotatePoints(alignmentVector, originalData)
 
         rotatedData = rotatedData*Rmatrix;        
     end
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -20,13 +20,18 @@ yrange = linspace(ymin,ymax,n);
 zrange = linspace(zmin,zmax,n);
 [CX,CY,CZ] = meshgrid(xrange,yrange,zrange);
 
+colorCode = 'g';
+stemRatio = 0.5;
+cylRad = 0.1;
+radRatioCone = 1.5;
+
 figure
-d = arrow3D([0,0,0], [1,1,1], [0,1,0],0.8,0.5);
+d = arrow3D([0,0,0], [1,1,1],colorCode,stemRatio,cylRad,radRatioCone);
 
 c = coneplot(X,Y,Z,U,V,W,CX,CY,CZ,0);
 c.FaceColor = 'red';
 c.EdgeColor = 'none';
-camlight right
+camlight headlight
 lighting gouraud
 c.DiffuseStrength = 0.8;
 grid on ; grid minor
