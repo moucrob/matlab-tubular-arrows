@@ -1,4 +1,4 @@
-function arrowHandle = arrow3D(pos, deltaValues, colorCode, stemRatio)
+function arrowHandle = arrow3D(pos, deltaValues, colorCode, stemRatio, cylRad)
 
 % arrowHandle = arrow3D(pos, deltaValues, colorCode, stemRatio) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 
@@ -19,7 +19,7 @@ function arrowHandle = arrow3D(pos, deltaValues, colorCode, stemRatio)
 %    Updated: September 18, 2006
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    if nargin<2 || nargin>4     
+    if nargin<2 || nargin>5     
         error('Incorrect number of inputs to arrow3D');     
     end
     if numel(pos)~=3 || numel(deltaValues)~=3
@@ -39,9 +39,10 @@ function arrowHandle = arrow3D(pos, deltaValues, colorCode, stemRatio)
     [sphi, stheta, srho] = cart2sph(deltaValues(1), deltaValues(2), deltaValues(3));  
     
     %******************************************* CYLINDER == STEM *********************************************
-    cylinderRadius = 0.05*srho;
+    %cylinderRadius = 0.05*srho;
+    cylinderRadius = cylRad;
     cylinderLength = srho*stemRatio;
-    [CX,CY,CZ] = cylinder(cylinderRadius);      
+    [CX,CY,CZ] = cylinder(cylinderRadius);
     CZ = CZ.*cylinderLength;    %---- lengthen
     
     %----- ROTATE CYLINDER
@@ -91,8 +92,7 @@ function arrowHandle = arrow3D(pos, deltaValues, colorCode, stemRatio)
     headY = headY + Vp(2) + Y;
     headZ = headZ + Vp(3) + Z;
     %************************************************************************************************************    
-    hStem = surf(stemX, stemY, stemZ, 'FaceColor', colorCode, 'EdgeColor', 'none'); 
-    hold on;  
+    hStem = surf(stemX, stemY, stemZ, 'FaceColor', colorCode, 'EdgeColor', 'none');
     hHead = surf(headX, headY, headZ, 'FaceColor', colorCode, 'EdgeColor', 'none');
     
     if nargout==1   

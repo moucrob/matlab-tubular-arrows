@@ -21,7 +21,7 @@ zrange = linspace(zmin,zmax,n);
 [CX,CY,CZ] = meshgrid(xrange,yrange,zrange);
 
 figure
-d = arrow3D([0,0,0], [1,1,1], [0,1,0],0.9);
+d = arrow3D([0,0,0], [1,1,1], [0,1,0],0.8,0.5);
 
 c = coneplot(X,Y,Z,U,V,W,CX,CY,CZ,0);
 c.FaceColor = 'red';
