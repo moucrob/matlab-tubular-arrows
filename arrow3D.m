@@ -93,6 +93,7 @@ function arrowHandle = arrow3D(pos, deltaValues, colorCode, stemRatio, cylRad)
     headZ = headZ + Vp(3) + Z;
     %************************************************************************************************************    
     hStem = surf(stemX, stemY, stemZ, 'FaceColor', colorCode, 'EdgeColor', 'none');
+    hold on
     hHead = surf(headX, headY, headZ, 'FaceColor', colorCode, 'EdgeColor', 'none');
     
     if nargout==1   
