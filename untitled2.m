@@ -25,19 +25,6 @@ seqM.seq = [0.2 0.3 0.6 0.8 0.74 0.35 0.24 0.15 0.48 0.69 0.47];
 seqM.min = 0. ; seqM.max = 1.;
 
 %% what should last:
-colorAxis = 'k'; colorEvolution = 'r'; colorIsoMetric = 'g'; colorEmphasize = 'm';
-
-axisStemRatio = 0.9;
-axisRadius = 0.01;
-axisHeadRatio = 1.5;
-
-evolutionStemRatio = axisStemRatio;
-evolutionRadius = axisRadius;
-evolutionHeadRatio = axisHeadRatio;
-
-smooth = 40; %number of point on the circumference of the streamtubes
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 nbRestarts = max(size(seqParam(1).seq));
 nbParams = max(size(seqParam));
 if nbParams > 2
@@ -48,12 +35,28 @@ if nbParams > 2
 end
 indexesToPick = randperm(nbParams);
 
+%%%%%%%%%%%%%%%%%%%% TWEAKABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+colorAxis = 'k' ; colorEvolution = autumn(nbParams);
+colorIsoMetric = 'g' ; colorEmphasize = 'g';
+
+axisStemRatio = 0.9;
+axisRadius = 0.01;
+axisHeadRatio = 1.5;
+
+evolutionStemRatio = axisStemRatio;
+evolutionRadius = axisRadius;
+evolutionHeadRatio = axisHeadRatio;
+
+smooth = 40; %number of point on the circumference of the streamtubes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %Define the scaling factors for each axis,
 %two first ones are 1unit long, whereas all the following are more or less
 %greater than 1m long because they are chords within a square whith one
 %extremity anchored onto a vertex
 axis = [1;0;0];
 figure
+colormap(cool)
 for i=1:nbParams
     %plot the associated axis
     for j=1:nbRestarts 
@@ -77,6 +80,7 @@ for j=1:nbRestarts
 end %mapped between 0 and 1
 seqM.magz = diff(seqM.mapseq);
 zax = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
+set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
 hold on
 
 %plot the sequence of recalls
@@ -97,7 +101,7 @@ for i=1:nbParams
     seqParam(indexesToPick(i)).magy = diff(seqParam(indexesToPick(i)).y);
     for j=1:nbRestarts-1 %2 arrows for 3 points
         count = count+1;
-        dataArrows{count} = arrow3D([seqParam(indexesToPick(i)).x(j) seqParam(indexesToPick(i)).y(j) seqM.mapseq(j)], [seqParam(indexesToPick(i)).magx(j) seqParam(indexesToPick(i)).magy(j) seqM.magz(j)], colorEvolution, evolutionStemRatio, evolutionRadius, evolutionHeadRatio);
+        dataArrows{count} = arrow3D([seqParam(indexesToPick(i)).x(j) seqParam(indexesToPick(i)).y(j) seqM.mapseq(j)], [seqParam(indexesToPick(i)).magx(j) seqParam(indexesToPick(i)).magy(j) seqM.magz(j)], colorEvolution(i,:), evolutionStemRatio, evolutionRadius, evolutionHeadRatio);
         hold on
     end
 end
@@ -121,7 +125,7 @@ for i=1:nbRestarts
    hold on
 end
 
-grid on ; grid minor
+grid on ; %grid minor
 xlabel('x') ; ylabel('y') ; zlabel('z')
 dontCropArrow = [-axisHeadRatio*axisRadius 1];
 xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim(dontCropArrow) 
@@ -145,4 +149,3 @@ xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim(dontCropArrow)
 set(gca,'Projection','perspective')
 camlight headlight
 lighting gouraud
-set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
