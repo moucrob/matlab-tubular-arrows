@@ -24,7 +24,16 @@ seqM.min = 0. ; seqM.max = 1.;
 
 %% what should last:
 colorAxis = 'k'; colorEvolution = 'b'; colorIsoMetric = 'g'; colorEmphasize = 'r';
-axisStemRatio = 0.9 ; axisRadius = 0.01 ; axisHeadRatio = 1.5;
+
+axisStemRatio = 0.9;
+axisRadius = 0.01;
+axisHeadRatio = 1.5;
+
+evolutionStemRatio = axisStemRatio;
+evolutionRadius = axisRadius;
+evolutionHeadRatio = axisHeadRatio;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 nbRestarts = max(size(seqParam(1).seq));
 nbParams = max(size(seqParam));
@@ -43,6 +52,7 @@ indexesToPick = randperm(nbParams);
 axis = [1;0;0];
 figure
 for i=1:nbParams
+    %plot the associated axis
     for j=1:nbRestarts 
         seqParam(indexesToPick(i)).mapseq(j) = (seqParam(indexesToPick(i)).seq(j)-seqParam(indexesToPick(i)).min)/seqParam(indexesToPick(i)).max;
     end %mapped between 0 and 1
@@ -57,14 +67,36 @@ for i=1:nbParams
         ax{i} = arrow3D([0 0 0], scalefactor*[cos(deg2rad(tmpTheta)) sin(deg2rad(tmpTheta)) 0], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
         hold on
     end
-    drawnow
 end
 %axis z:
 for j=1:nbRestarts 
         seqM.mapseq(j) = (seqM.seq(j)-seqM.min)/seqM.max;
 end %mapped between 0 and 1
+seqM.magz = diff(seqM.mapseq);
 z = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
 hold on
+
+%plot the sequence of recalls
+count = 0;
+for i=1:nbParams
+    if i == 1 %x
+        seqParam(indexesToPick(i)).x = seqParam(indexesToPick(i)).mapseq;
+        seqParam(indexesToPick(i)).y = zeros(1,nbRestarts);
+    elseif i == 2 %y
+        seqParam(indexesToPick(i)).x = zeros(1,nbRestarts);
+        seqParam(indexesToPick(i)).y = seqParam(indexesToPick(i)).mapseq;
+    else %chord axis
+        tmpTheta = (i-2)*thetas;
+        seqParam(indexesToPick(i)).x = cos(deg2rad(tmpTheta))*seqParam(indexesToPick(i)).mapseq;
+        seqParam(indexesToPick(i)).y = sin(deg2rad(tmpTheta))*seqParam(indexesToPick(i)).mapseq;
+    end
+    seqParam(indexesToPick(i)).magx = diff(seqParam(indexesToPick(i)).x);
+    seqParam(indexesToPick(i)).magy = diff(seqParam(indexesToPick(i)).y);
+    for j=1:nbRestarts-1 %2 arrows for 3 points
+        count = count+1;
+        dataArrows{count} = arrow3D([seqParam(indexesToPick(i)).x(j) seqParam(indexesToPick(i)).y(j) seqM.mapseq(j)], [seqParam(indexesToPick(i)).magx(j) seqParam(indexesToPick(i)).magy(j) seqM.magz(j)], colorEvolution, evolutionStemRatio, evolutionRadius, evolutionHeadRatio);
+    end
+end
 
 grid on ; grid minor
 xlabel('x') ; ylabel('y') ; zlabel('z')
