@@ -41,7 +41,7 @@ colorIsoMetric = 'g' ; colorEmphasize = 'g';
 
 axisStemRatio = 0.9;
 axisRadius = 0.01;
-axisHeadRatio = 1.5;
+axisHeadRatio = 1.5; headRadius = axisHeadRatio*axisRadius;
 
 evolutionStemRatio = axisStemRatio;
 evolutionRadius = axisRadius;
@@ -54,14 +54,12 @@ smooth = 40; %number of point on the circumference of the streamtubes
 %two first ones are 1unit long, whereas all the following are more or less
 %greater than 1m long because they are chords within a square whith one
 %extremity anchored onto a vertex
+mapAxisIntoZeroOne = @(x,xmin,xmax) (x-xmin)./(xmax-xmin);
 axis = [1;0;0];
 figure
 colormap(cool)
-for i=1:nbParams
-    %plot the associated axis
-    for j=1:nbRestarts 
-        seqParam(indexesToPick(i)).mapseq(j) = (seqParam(indexesToPick(i)).seq(j)-seqParam(indexesToPick(i)).min)/seqParam(indexesToPick(i)).max;
-    end %mapped between 0 and 1
+for i=1:nbParams %plot the associated axis
+    seqParam(indexesToPick(i)).mapseq = mapAxisIntoZeroOne(seqParam(indexesToPick(i)).seq, seqParam(indexesToPick(i)).min, seqParam(indexesToPick(i)).max); %mapped between 0 and 1
     if i <= 2
         ax{i} = arrow3D([0 0 0], axis, colorAxis, axisStemRatio, axisRadius, axisHeadRatio); %i=1 : x
         axis = cross([0;0;1],axis); %i=2 : y
@@ -82,6 +80,36 @@ seqM.magz = diff(seqM.mapseq);
 zax = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
 set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
 hold on
+
+%plot the graduations
+[xs,ys,zs] = sphere(smooth);
+%scale the sphere pattern 
+[xs,ys,zs] = feval(@(x) x{:}, {xs*headRadius,ys*headRadius,zs*headRadius}); %feval x{:} = multi initialization
+ax{end+1} = surf(xs,ys,zs);
+hold on
+for i=1:nbParams
+    indexesToPick(i)
+    min = seqParam(indexesToPick(i)).min
+    step = seqParam(indexesToPick(i)).step
+    max = seqParam(indexesToPick(i)).max
+    spheresAlong = [min:step:max-step] %don't want a sphere to overlap the axis arrow bits
+    if i == 1
+        spheresAlong = mapAxisIntoZeroOne(spheresAlong,min,max)
+        seqParam(indexesToPick(i)).xgradu = spheresAlong;
+        seqParam(indexesToPick(i)).ygradu = zeros(1,nbSpheresAlong);
+    elseif i == 2
+        spheresAlong = mapAxisIntoZeroOne(spheresAlong,min,max)
+        seqParam(indexesToPick(i)).ygradu = spheresAlong;
+        seqParam(indexesToPick(i)).xgradu = zeros(1,nbSpheresAlong);
+    else
+        
+    end
+    nbSpheresAlong = numel(spheresAlong)
+    for j=1:nbSpheresAlong
+        ax{end+1} = surf(xs+seqParam(indexesToPick(i)).xgradu(j),ys+seqParam(indexesToPick(i)).ygradu(j),zs+0);
+        hold on
+    end
+end
 
 %plot the sequence of recalls
 count = 0;
@@ -127,25 +155,9 @@ end
 
 grid on ; %grid minor
 xlabel('x') ; ylabel('y') ; zlabel('z')
-dontCropArrow = [-axisHeadRatio*axisRadius 1];
+dontCropArrow = [-(1.2*headRadius) 1]; %120percent to get some margin
 xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim(dontCropArrow) 
 
-% xx{1} = 0:xmax:xmax;
-% yy{1} = 0:ymax:ymax;
-% zz{1} = 0:1:1; %quality (or 100...)
-% 
-% for i=1:2
-%     zz{i} = i-1:1:2;
-%     yy{i} = zz{i}.*i.*sin(zz{i});
-%     xx{i} = zz{i}.*i.*cos(zz{i});
-%     XYZ{i} = [xx{i}',yy{i}',zz{i}'];
-% end
-% daspect([1,1,1])
-% figure
-% diam = 3;
-% smooth = 40; %number of points per circumference
-% tubes = streamtube(XYZ,[diam, smooth]);
-% set(tubes,'EdgeColor','none','AmbientStrength',0.5,'FaceColor','r')
 set(gca,'Projection','perspective')
 camlight headlight
 lighting gouraud
