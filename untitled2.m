@@ -19,7 +19,7 @@ seqParam(3).seq = [10 11 10 11 10 12 11 12 13 14 15];
 seqParam(3).min = 10 ; seqParam(3).max = 17 ; seqParam(3).step = 1;
 
 seqParam(4).seq = [3.5 4. 4.5 4. 4.5 5. 5.5 6. 5.5 6. 5.5];
-seqParam(4).min = 3.5 ; seqParam(4).max = 7 ; seqParam(4).step = 0.1;
+seqParam(4).min = 3.5 ; seqParam(4).max = 7 ; seqParam(4).step = 0.5;
 
 seqM.seq = [0.2 0.3 0.6 0.8 0.74 0.35 0.24 0.15 0.48 0.69 0.47];
 seqM.min = 0. ; seqM.max = 1.;
@@ -54,12 +54,12 @@ smooth = 40; %number of point on the circumference of the streamtubes
 %two first ones are 1unit long, whereas all the following are more or less
 %greater than 1m long because they are chords within a square whith one
 %extremity anchored onto a vertex
-mapAxisIntoZeroOne = @(x,xmin,xmax) (x-xmin)./(xmax-xmin);
+mapAxisIntoZeroMag = @(x,xmin,xmax,magnitude) ((x-xmin)./(xmax-xmin)).*magnitude;
 axis = [1;0;0];
 figure
 colormap(cool)
 for i=1:nbParams %plot the associated axis
-    seqParam(indexesToPick(i)).mapseq = mapAxisIntoZeroOne(seqParam(indexesToPick(i)).seq, seqParam(indexesToPick(i)).min, seqParam(indexesToPick(i)).max); %mapped between 0 and 1
+    seqParam(indexesToPick(i)).mapseq = mapAxisIntoZeroMag(seqParam(indexesToPick(i)).seq, seqParam(indexesToPick(i)).min, seqParam(indexesToPick(i)).max,1); %mapped between 0 and 1
     if i <= 2
         ax{i} = arrow3D([0 0 0], axis, colorAxis, axisStemRatio, axisRadius, axisHeadRatio); %i=1 : x
         axis = cross([0;0;1],axis); %i=2 : y
@@ -73,9 +73,7 @@ for i=1:nbParams %plot the associated axis
     end
 end
 %axis z:
-for j=1:nbRestarts 
-        seqM.mapseq(j) = (seqM.seq(j)-seqM.min)/seqM.max;
-end %mapped between 0 and 1
+seqM.mapseq = mapAxisIntoZeroMag(seqM.seq, seqM.min, seqM.max,1); %mapped between 0 and 1
 seqM.magz = diff(seqM.mapseq);
 zax = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
 set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
@@ -88,23 +86,26 @@ hold on
 ax{end+1} = surf(xs,ys,zs);
 hold on
 for i=1:nbParams
-    indexesToPick(i)
-    min = seqParam(indexesToPick(i)).min
-    step = seqParam(indexesToPick(i)).step
-    max = seqParam(indexesToPick(i)).max
-    spheresAlong = [min:step:max-step] %don't want a sphere to overlap the axis arrow bits
+    min = seqParam(indexesToPick(i)).min;
+    step = seqParam(indexesToPick(i)).step;
+    max = seqParam(indexesToPick(i)).max;
+    spheresAlong = [min:step:max-step]; %don't want a sphere to overlap the axis arrow bits
+    nbSpheresAlong = numel(spheresAlong);
     if i == 1
-        spheresAlong = mapAxisIntoZeroOne(spheresAlong,min,max)
+        spheresAlong = mapAxisIntoZeroMag(spheresAlong,min,max,1);
         seqParam(indexesToPick(i)).xgradu = spheresAlong;
         seqParam(indexesToPick(i)).ygradu = zeros(1,nbSpheresAlong);
     elseif i == 2
-        spheresAlong = mapAxisIntoZeroOne(spheresAlong,min,max)
+        spheresAlong = mapAxisIntoZeroMag(spheresAlong,min,max,1);
         seqParam(indexesToPick(i)).ygradu = spheresAlong;
         seqParam(indexesToPick(i)).xgradu = zeros(1,nbSpheresAlong);
     else
-        
+        tmpTheta = (i-2)*thetas;
+        scalefactor = lengthChordFromVertexInSquare(tmpTheta,1); %to map between 0 and smthg<sqrt(2)
+        spheresAlong = mapAxisIntoZeroMag(spheresAlong,min,max,scalefactor);
+        seqParam(indexesToPick(i)).xgradu = spheresAlong*cos(deg2rad(tmpTheta));
+        seqParam(indexesToPick(i)).ygradu = spheresAlong*sin(deg2rad(tmpTheta));
     end
-    nbSpheresAlong = numel(spheresAlong)
     for j=1:nbSpheresAlong
         ax{end+1} = surf(xs+seqParam(indexesToPick(i)).xgradu(j),ys+seqParam(indexesToPick(i)).ygradu(j),zs+0);
         hold on
