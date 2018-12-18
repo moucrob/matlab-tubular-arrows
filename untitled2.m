@@ -1,4 +1,5 @@
 clear all
+clc
 %% fictional dataset
 
 %given a scene + query + a run + a countdown
@@ -6,6 +7,7 @@ scene = 'blabla';
 query = 'backflip';
 run = 'run number10';
 countdown = '15sec';
+acceptance = '1-t/T';
 
 seqParam(1).seq = [0 1 0 1 2 1 2 3 4 3 2];
 seqParam(1).min = 0 ; seqParam(1).max = 5 ; seqParam(1).step = 1;
@@ -23,7 +25,7 @@ seqM.seq = [0.2 0.3 0.6 0.8 0.74 0.35 0.24 0.15 0.48 0.69 0.47];
 seqM.min = 0. ; seqM.max = 1.;
 
 %% what should last:
-colorAxis = 'k'; colorEvolution = 'b'; colorIsoMetric = 'g'; colorEmphasize = 'r';
+colorAxis = 'k'; colorEvolution = 'r'; colorIsoMetric = 'g'; colorEmphasize = 'm';
 
 axisStemRatio = 0.9;
 axisRadius = 0.01;
@@ -33,6 +35,7 @@ evolutionStemRatio = axisStemRatio;
 evolutionRadius = axisRadius;
 evolutionHeadRatio = axisHeadRatio;
 
+smooth = 40; %number of point on the circumference of the streamtubes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 nbRestarts = max(size(seqParam(1).seq));
@@ -73,7 +76,7 @@ for j=1:nbRestarts
         seqM.mapseq(j) = (seqM.seq(j)-seqM.min)/seqM.max;
 end %mapped between 0 and 1
 seqM.magz = diff(seqM.mapseq);
-z = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
+zax = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
 hold on
 
 %plot the sequence of recalls
@@ -95,11 +98,33 @@ for i=1:nbParams
     for j=1:nbRestarts-1 %2 arrows for 3 points
         count = count+1;
         dataArrows{count} = arrow3D([seqParam(indexesToPick(i)).x(j) seqParam(indexesToPick(i)).y(j) seqM.mapseq(j)], [seqParam(indexesToPick(i)).magx(j) seqParam(indexesToPick(i)).magy(j) seqM.magz(j)], colorEvolution, evolutionStemRatio, evolutionRadius, evolutionHeadRatio);
+        hold on
     end
+end
+
+%plot the sequence of sets of parameters as tubes of iso quality
+count = 0;
+for i=1:nbRestarts
+   x = [] ; y = [] ; z = [];
+   for j=1:nbParams
+       x(end+1,1) = seqParam(j).x(i);
+       y(end+1,1) = seqParam(j).y(i);
+       z(end+1,1) = seqM.mapseq(i);
+   end
+   
+   xx{i} = x ; yy{i} = y ; zz{i} = z;
+   XYZ{1} = [xx{i},yy{i},zz{i}]; %streamtubes wants only cells idk why...
+   count = count+1;
+   isoQualityTubes{count} = streamtube(XYZ,[30*evolutionRadius, smooth]);
+   %set(isoQualityTubes{count},'EdgeColor','none','AmbientStrength',1,'FaceColor',colorIsoMetric)
+   set(isoQualityTubes{count},'EdgeColor','interp','AmbientStrength',1,'FaceColor','interp')
+   hold on
 end
 
 grid on ; grid minor
 xlabel('x') ; ylabel('y') ; zlabel('z')
+dontCropArrow = [-axisHeadRatio*axisRadius 1];
+xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim(dontCropArrow) 
 
 % xx{1} = 0:xmax:xmax;
 % yy{1} = 0:ymax:ymax;
@@ -120,3 +145,4 @@ xlabel('x') ; ylabel('y') ; zlabel('z')
 set(gca,'Projection','perspective')
 camlight headlight
 lighting gouraud
+set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');

@@ -72,6 +72,7 @@ end
 for j=1:nbRestarts 
         seqM.mapseq(j) = (seqM.seq(j)-seqM.min)/seqM.max;
 end %mapped between 0 and 1
+seqM.magz = diff(seqM.mapseq);
 z = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
 hold on
 
@@ -86,19 +87,27 @@ for i=1:nbParams
         seqParam(indexesToPick(i)).y = seqParam(indexesToPick(i)).mapseq;
     else %chord axis
         tmpTheta = (i-2)*thetas;
-        seqParam(indexesToPick(i)).x = cos(deg2rad(tmpTheta)*seqParam(indexesToPick(i)).mapseq;
-        seqParam(indexesToPick(i)).y = sin(deg2rad(tmpTheta)*seqParam(indexesToPick(i)).mapseq;
+        seqParam(indexesToPick(i)).x = cos(deg2rad(tmpTheta))*seqParam(indexesToPick(i)).mapseq;
+        seqParam(indexesToPick(i)).y = sin(deg2rad(tmpTheta))*seqParam(indexesToPick(i)).mapseq;
     end
     seqParam(indexesToPick(i)).magx = diff(seqParam(indexesToPick(i)).x);
     seqParam(indexesToPick(i)).magy = diff(seqParam(indexesToPick(i)).y);
     for j=1:nbRestarts-1 %2 arrows for 3 points
         count = count+1;
-        dataArrows{count} = arrow3D([seqParam(indexesToPick(i)).x(j) seqParam(indexesToPick(i)).y(j) 0], scalefactor*[cos(deg2rad(tmpTheta)) sin(deg2rad(tmpTheta)) 0], colorEvolution, evolutionStemRatio, evolutionRadius, evolutionHeadRatio);
+        dataArrows{count} = arrow3D([seqParam(indexesToPick(i)).x(j) seqParam(indexesToPick(i)).y(j) seqM.mapseq(j)], [seqParam(indexesToPick(i)).magx(j) seqParam(indexesToPick(i)).magy(j) seqM.magz(j)], colorEvolution, evolutionStemRatio, evolutionRadius, evolutionHeadRatio);
     end
+end
+
+%plot the sequence of sets of parameters as tubes of iso quality
+count = 0;
+for i=1:nbRestarts
+   x{i} = [] ; y 
 end
 
 grid on ; grid minor
 xlabel('x') ; ylabel('y') ; zlabel('z')
+dontCropArrow = [-axisHeadRatio*axisRadius 1];
+xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim(dontCropArrow) 
 
 % xx{1} = 0:xmax:xmax;
 % yy{1} = 0:ymax:ymax;

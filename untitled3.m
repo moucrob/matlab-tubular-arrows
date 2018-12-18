@@ -36,7 +36,7 @@ end
 daspect([1,1,1])
 figure
 tubes = streamtube(XYZ,[diamaxis, smooth]);
-cones = coneplot(XYZ);
-set(tubes,'EdgeColor','none','AmbientStrength',0.5,'FaceColor','k')
+% cones = coneplot(XYZ);
+% set(tubes,'EdgeColor','none','AmbientStrength',0.5,'FaceColor','k')
 set(gca,'Projection','perspective')
 camlight right
