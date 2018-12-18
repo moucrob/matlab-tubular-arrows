@@ -43,16 +43,12 @@ function arrowHandle = arrow3D(pos, deltaValues, colorCode, stemRatio, cylRad, r
     cylinderRadius = cylRad;
     cylinderLength = srho*stemRatio;
     [CX,CY,CZ] = cylinder(cylinderRadius);
-    assignin('base', 'CXX', CX);
-    assignin('base', 'CYY', CY);
-    assignin('base', 'CZZ', CZ);
     CZ = CZ.*cylinderLength;    %---- lengthen
     
     %----- ROTATE CYLINDER
     [row, col] = size(CX);      %---- initial rotation to coincide with X-axis
     
-    assignin('base', 'verif', [CX(:), CY(:), CZ(:)]); %CX(:) actually reshape the 2xN matrices in a 2N vert vector, by vertically concatenating each column
-    newEll = rotatePoints([0 0 -1], [CX(:), CY(:), CZ(:)]);
+    newEll = rotatePoints([0 0 -1], [CX(:), CY(:), CZ(:)]); %CX(:) actually reshape the 2xN matrices in a 2N vert vector, by vertically concatenating each column
     CX = reshape(newEll(:,1), row, col);
     CY = reshape(newEll(:,2), row, col);
     CZ = reshape(newEll(:,3), row, col);
@@ -67,17 +63,12 @@ function arrowHandle = arrow3D(pos, deltaValues, colorCode, stemRatio, cylRad, r
     stemX = stemX + X;
     stemY = stemY + Y;
     stemZ = stemZ + Z;
-    assignin('base', 'stemX', stemX);
-    assignin('base', 'stemY', stemY);
-    assignin('base', 'stemZ', stemZ);
     
     %******************************************* CONE == ARROWHEAD *********************************************
     coneLength = srho*(1-stemRatio);
     coneRadius = cylinderRadius*radRatioCone;
     incr = 100;  %---- Steps of cone increments
-    coneincr = coneRadius/incr; 
-    disp(['cylinderRadius*2 = ',num2str(cylinderRadius*2)]);
-    disp(['coneincr = ',num2str(coneincr)]);
+    coneincr = coneRadius/incr;
     [coneX, coneY, coneZ] = cylinder(cylinderRadius*2:-coneincr:0);  %---------- CONE 
     coneZ = coneZ.*coneLength;
     

@@ -21,10 +21,7 @@ function rotatedData = rotatePoints(alignmentVector, originalData)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     alignmentDim = numel(alignmentVector); %number of elements in a matrix
-    disp(['alignmentDim = ',num2str(alignmentDim)]);
-    assignin('base', 'originalData', originalData);
     DOF = size(originalData,2); %---- DOF = Degrees of Freedom (i.e. 2 for two dimensional and 3 for three dimensional data)
-    disp(['DOF = ',num2str(DOF)]);
     
     if alignmentDim~=DOF    
         error('Alignment vector does not agree with originalData dimensions');      
