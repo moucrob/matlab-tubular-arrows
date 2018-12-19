@@ -49,7 +49,6 @@ function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxH
         %additionally shift a bit so that the perc% of graduSpace stay centered
         %under the graduation
     else %I assume axis = x, that I might later rotate if it's not actually x
-        disp(['labelnumber = ', num2str(labelNumber)])
         X = [0 perc*graduSpace; 0 perc*graduSpace] + labelNumber*graduSpace - perc*graduSpace/2; %+labelNumber*((graduSpace/2)+((1-perc)/2)*graduSpace)
         Y = [0 0; 0 0];
     end

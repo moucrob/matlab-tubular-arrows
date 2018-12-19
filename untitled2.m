@@ -187,3 +187,4 @@ end
 set(gca,'Projection','perspective')
 camlight headlight
 lighting gouraud
+material default
