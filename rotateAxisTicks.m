@@ -9,7 +9,8 @@ function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxH
     %thetaInput : (angle around z, from x to the axis) has to be in degree
 
     %% Seems like there is no way to get rid of the black contouring...
-    hFigure = figure('Color', 'w', ...        % Create a figure window
+    hFigure = figure(1000);
+    set(hFigure,'Color', 'w', ...        % Create a figure window
                      'MenuBar', 'none', ...
                      'ToolBar', 'none');
     hText = uicontrol('Parent', hFigure, ...  % Create a text object

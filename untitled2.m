@@ -85,7 +85,7 @@ end
 seqM.mapseq = mapAxisIntoZeroMag(seqM.seq, seqM.min, seqM.max,1); %mapped between 0 and 1
 seqM.magz = diff(seqM.mapseq);
 zax = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
-set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
+
 hold on
 
 %plot the graduations:
@@ -93,27 +93,18 @@ hold on
 %scale the sphere pattern:
 [xs,ys,zs] = feval(@(x) x{:}, {xs*headRadius,ys*headRadius,zs*headRadius}); %feval x{:} = multi initialization
 ax{end+1} = surf(xs,ys,zs);
-ticks = {};
-hold on
 for i=1:nbParams
-    disp(['axis ',num2str(i)])
-    disp(['(param ',num2str(indexesToPick(i)),')'])
     min = seqParam(indexesToPick(i)).min;
     step = seqParam(indexesToPick(i)).step;
     max = seqParam(indexesToPick(i)).max;
     spheresAlong = [min:step:max-step]; %don't want a sphere to overlap the axis arrow bits
-    ticksAlong = [min+step:step:max]; %don't want several ticks onto the 0 point
     nbSpheresAlong = numel(spheresAlong); %(equals btw nbTicksAlong)
-    disp(['numel(sphereAlong) =  ',num2str(numel(spheresAlong))])
-    disp(['numel(ticksAlong) =  ',num2str(numel(ticksAlong))])
     if i == 1
         spheresAlong = mapAxisIntoZeroMag(spheresAlong,min,max,1);
-        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,min,max,1);
         seqParam(indexesToPick(i)).xgradu = spheresAlong;
         seqParam(indexesToPick(i)).ygradu = zeros(1,nbSpheresAlong);
     elseif i == 2
         spheresAlong = mapAxisIntoZeroMag(spheresAlong,min,max,1);
-        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,min,max,1);
         seqParam(indexesToPick(i)).ygradu = spheresAlong;
         seqParam(indexesToPick(i)).xgradu = zeros(1,nbSpheresAlong);
     else
@@ -122,22 +113,11 @@ for i=1:nbParams
         spheresAlong = mapAxisIntoZeroMag(spheresAlong,min,max,scalefactor);
         seqParam(indexesToPick(i)).xgradu = spheresAlong*cos(deg2rad(tmpTheta));
         seqParam(indexesToPick(i)).ygradu = spheresAlong*sin(deg2rad(tmpTheta));
-        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,min,max,scalefactor);
     end
     for j=1:nbSpheresAlong
         ax{end+1} = surf(xs+seqParam(indexesToPick(i)).xgradu(j), ...
                          ys+seqParam(indexesToPick(i)).ygradu(j), ...
                          zs+0);
-        hold on
-        ticks{end+1} = rotateAxisTicks(num2str(ticksAlong(j)), ...
-                                       colorAxis, tickFontSize, ...
-                                       dontCropArrow(1), ...
-                                       diff(ticksAlongMapped(1:2)), ...
-                                       boxHeight, ...
-                                       perc, ...
-                                       j, ...
-                                       i, ...
-                                       tmpTheta);
         hold on
     end
 end
@@ -188,3 +168,38 @@ set(gca,'Projection','perspective')
 camlight headlight
 lighting gouraud
 material default
+
+%plot the ticks
+ticks = {};
+for i=1:nbParams
+    min = seqParam(indexesToPick(i)).min;
+    step = seqParam(indexesToPick(i)).step;
+    max = seqParam(indexesToPick(i)).max;
+    ticksAlong = [min+step:step:max]; %don't want several ticks onto the 0 point
+    nbTicksAlong = numel(ticksAlong);
+    if i <= 2
+        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,min,max,1);
+    else
+        tmpTheta = (i-2)*thetas;
+        scalefactor = lengthChordFromVertexInSquare(tmpTheta,1); %to map between 0 and smthg<sqrt(2)
+        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,min,max,scalefactor);
+    end
+    for j=1:nbTicksAlong
+        disp(['axis number = ',num2str(i)])
+        disp(['param set number = ',num2str(indexesToPick(i))])
+        disp(['tick number = ',num2str(j)])
+        ticks{end+1} = rotateAxisTicks(num2str(ticksAlong(j)), ...
+                                       colorAxis, tickFontSize, ...
+                                       dontCropArrow(1), ...
+                                       diff(ticksAlongMapped(1:2)), ...
+                                       boxHeight, ...
+                                       perc, ...
+                                       j, ...
+                                       i, ...
+                                       tmpTheta);
+        hold on
+        disp('ok')
+    end
+    disp(' ')
+end
+set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
