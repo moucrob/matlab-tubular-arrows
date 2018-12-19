@@ -1,0 +1,26 @@
+clc
+figure ; plot3(1,1,1,'*')
+xlabel('x') ; ylabel('y') ; zlabel('z')
+text.str = 'blabla' ; text.color = 'k' ; text.pos = [1 1 1] ; text.size = 10 
+%rotate(t,[0 0 1],pi/2) %doesn't work.
+
+hFigure = figure('Color', 'w', ...        %# Create a figure window
+                 'MenuBar', 'none', ...
+                 'ToolBar', 'none');
+hText = uicontrol('Parent', hFigure, ...  %# Create a text object
+                  'Style', 'text', ...
+                  'String', text.str, ...
+                  'BackgroundColor', 'w', ...
+                  'ForegroundColor', text.color, ...
+                  'FontSize', text.size, ...
+                  'FontWeight', 'bold');
+set([hText hFigure], 'Pos', get(hText, 'Extent'));  %# Adjust the sizes of the
+                                                    %#   text and figure
+imageData = getframe(hFigure);  %# Save the figure as an image frame
+delete(hFigure);
+textImage = imageData.cdata;  %# Get the RGB image of the text
+
+Now that we have an image of the text we want, here is how you can texture map it on a 3-D surface and adjust the view projection:
+
+surf([0 1; 0 1], [1 0; 1 0], [1 1; 0 0], ...
+     'FaceColor', 'texturemap', 'CData', textImage);
