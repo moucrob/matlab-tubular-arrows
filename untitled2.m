@@ -25,6 +25,7 @@ seqM.seq = [0.2 0.3 0.6 0.8 0.74 0.35 0.24 0.15 0.48 0.69 0.47];
 seqM.min = 0. ; seqM.max = 1.;
 
 %% what should last:
+
 nbRestarts = max(size(seqParam(1).seq));
 nbParams = max(size(seqParam));
 if nbParams > 2
@@ -38,6 +39,9 @@ indexesToPick = randperm(nbParams);
 %%%%%%%%%%%%%%%%%%%% TWEAKABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 colorAxis = 'k' ; colorEvolution = autumn(nbParams);
 colorIsoMetric = 'g' ; colorEmphasize = 'g';
+tickFontSize = 100;
+boxHeight = 0.2; %boxes wrapping the ticks
+perc = 0.9; %if perc = 1 (100%), then the labels are all sticked together with no space inbetween
 
 axisStemRatio = 0.9;
 axisRadius = 0.01;
@@ -49,11 +53,15 @@ evolutionHeadRatio = axisHeadRatio;
 
 smooth = 40; %number of point on the circumference of the streamtubes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+grid on ; %grid minor
+xlabel('x') ; ylabel('y') ; zlabel('z')
+dontCropArrow = [-(1.2*headRadius) 1]; %120percent to get some margin
+xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim([-(1.2*headRadius+boxHeight), 1]) 
 
 %Define the scaling factors for each axis,
 %two first ones are 1unit long, whereas all the following are more or less
 %greater than 1m long because they are chords within a square whith one
-%extremity anchored onto a vertex
+%extremity anchored onto a vertex:
 mapAxisIntoZeroMag = @(x,xmin,xmax,magnitude) ((x-xmin)./(xmax-xmin)).*magnitude;
 axis = [1;0;0];
 figure
@@ -79,24 +87,28 @@ zax = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRa
 set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
 hold on
 
-%plot the graduations
+%plot the graduations:
 [xs,ys,zs] = sphere(smooth);
-%scale the sphere pattern 
+%scale the sphere pattern:
 [xs,ys,zs] = feval(@(x) x{:}, {xs*headRadius,ys*headRadius,zs*headRadius}); %feval x{:} = multi initialization
 ax{end+1} = surf(xs,ys,zs);
+ticks = {};
 hold on
 for i=1:nbParams
     min = seqParam(indexesToPick(i)).min;
     step = seqParam(indexesToPick(i)).step;
     max = seqParam(indexesToPick(i)).max;
     spheresAlong = [min:step:max-step]; %don't want a sphere to overlap the axis arrow bits
-    nbSpheresAlong = numel(spheresAlong);
+    ticksAlong = [min+step:step:max]; %don't want several ticks onto the 0 point
+    nbSpheresAlong = numel(spheresAlong); %(equals btw nbTicksAlong)
     if i == 1
         spheresAlong = mapAxisIntoZeroMag(spheresAlong,min,max,1);
+        ticksAlong = mapAxisIntoZeroMag(ticksAlong,min,max,1);
         seqParam(indexesToPick(i)).xgradu = spheresAlong;
         seqParam(indexesToPick(i)).ygradu = zeros(1,nbSpheresAlong);
     elseif i == 2
         spheresAlong = mapAxisIntoZeroMag(spheresAlong,min,max,1);
+        ticksAlong = mapAxisIntoZeroMag(ticksAlong,min,max,1);
         seqParam(indexesToPick(i)).ygradu = spheresAlong;
         seqParam(indexesToPick(i)).xgradu = zeros(1,nbSpheresAlong);
     else
@@ -105,14 +117,28 @@ for i=1:nbParams
         spheresAlong = mapAxisIntoZeroMag(spheresAlong,min,max,scalefactor);
         seqParam(indexesToPick(i)).xgradu = spheresAlong*cos(deg2rad(tmpTheta));
         seqParam(indexesToPick(i)).ygradu = spheresAlong*sin(deg2rad(tmpTheta));
+        ticksAlong = mapAxisIntoZeroMag(ticksAlong,min,max,scalefactor);
     end
     for j=1:nbSpheresAlong
-        ax{end+1} = surf(xs+seqParam(indexesToPick(i)).xgradu(j),ys+seqParam(indexesToPick(i)).ygradu(j),zs+0);
+        ax{end+1} = surf(xs+seqParam(indexesToPick(i)).xgradu(j), ...
+                         ys+seqParam(indexesToPick(i)).ygradu(j), ...
+                         zs+0);
+        hold on
+        tmp  = rotateAxisTicks(num2str(ticksAlong(j)), ...
+                                       colorAxis, tickFontSize, ...
+                                       dontCropArrow(1), ...
+                                       diff(ticksAlong(1:2)), ...
+                                       boxHeight, ...
+                                       perc, ...
+                                       j, ...
+                                       i, ...
+                                       tmpTheta);
+        ticks{end+1} = tmp;
         hold on
     end
 end
 
-%plot the sequence of recalls
+%plot the sequence of recalls:
 count = 0;
 for i=1:nbParams
     if i == 1 %x
@@ -135,7 +161,7 @@ for i=1:nbParams
     end
 end
 
-%plot the sequence of sets of parameters as tubes of iso quality
+%plot the sequence of sets of parameters as tubes of iso quality:
 count = 0;
 for i=1:nbRestarts
    x = [] ; y = [] ; z = [];
@@ -153,11 +179,6 @@ for i=1:nbRestarts
    set(isoQualityTubes{count},'EdgeColor','interp','AmbientStrength',1,'FaceColor','interp')
    hold on
 end
-
-grid on ; %grid minor
-xlabel('x') ; ylabel('y') ; zlabel('z')
-dontCropArrow = [-(1.2*headRadius) 1]; %120percent to get some margin
-xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim(dontCropArrow) 
 
 set(gca,'Projection','perspective')
 camlight headlight

@@ -4,7 +4,7 @@ figure ; plot3(1,1,1,'*')
 xlabel('x') ; ylabel('y') ; zlabel('z') ; grid on ; grid minor
 xlim([0 1]) ; ylim([0 1]) ; zlim([-1.5 0]) 
 %% that future function will take as arguments :
-text.str = 'blabla' ; text.color = 'k' ; text.size = 0.5;
+text.str = 'blabla' ; text.color = 'k' ;
 zmax = -0.2;
 mag = 1; %length of the axis
 graduSpace = 0.5; %space between each graduation, within the local (not yet projected on x,y) axis !!
