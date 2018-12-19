@@ -9,8 +9,8 @@ run = 'run number10';
 countdown = '15sec';
 acceptance = '1-t/T';
 
-seqParam(1).seq = [0 1 0 1 2 1 2 3 4 3 2];
-seqParam(1).min = 0 ; seqParam(1).max = 5 ; seqParam(1).step = 1;
+seqParam(1).seq = [0 1 0 1 2 1 2 1 2 1 2];
+seqParam(1).min = 0 ; seqParam(1).max = 2 ; seqParam(1).step = 1;
 
 seqParam(2).seq = [0.0 0.1 0.2 0.1 0.2 0.3 0.4 0.3 0.2 0.3 0.4];
 seqParam(2).min = 0. ; seqParam(2).max = 0.5 ; seqParam(2).step = 0.1;
@@ -39,9 +39,9 @@ indexesToPick = randperm(nbParams);
 %%%%%%%%%%%%%%%%%%%% TWEAKABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 colorAxis = 'k' ; colorEvolution = autumn(nbParams);
 colorIsoMetric = 'g' ; colorEmphasize = 'g';
-tickFontSize = 100;
-boxHeight = 0.2; %boxes wrapping the ticks
-perc = 0.9; %if perc = 1 (100%), then the labels are all sticked together with no space inbetween
+tickFontSize = 20;
+boxHeight = 0.1; %boxes wrapping the ticks
+perc = 0.5; %if perc = 1 (100%), then the labels are all sticked together with no space inbetween
 
 axisStemRatio = 0.9;
 axisRadius = 0.01;
@@ -56,6 +56,7 @@ smooth = 40; %number of point on the circumference of the streamtubes
 grid on ; %grid minor
 xlabel('x') ; ylabel('y') ; zlabel('z')
 dontCropArrow = [-(1.2*headRadius) 1]; %120percent to get some margin
+disp(['xylim should stop at ',num2str(-(1.2*headRadius))])
 xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim([-(1.2*headRadius+boxHeight), 1]) 
 
 %Define the scaling factors for each axis,
@@ -95,20 +96,24 @@ ax{end+1} = surf(xs,ys,zs);
 ticks = {};
 hold on
 for i=1:nbParams
+    disp(['axis ',num2str(i)])
+    disp(['(param ',num2str(indexesToPick(i)),')'])
     min = seqParam(indexesToPick(i)).min;
     step = seqParam(indexesToPick(i)).step;
     max = seqParam(indexesToPick(i)).max;
     spheresAlong = [min:step:max-step]; %don't want a sphere to overlap the axis arrow bits
     ticksAlong = [min+step:step:max]; %don't want several ticks onto the 0 point
     nbSpheresAlong = numel(spheresAlong); %(equals btw nbTicksAlong)
+    disp(['numel(sphereAlong) =  ',num2str(numel(spheresAlong))])
+    disp(['numel(ticksAlong) =  ',num2str(numel(ticksAlong))])
     if i == 1
         spheresAlong = mapAxisIntoZeroMag(spheresAlong,min,max,1);
-        ticksAlong = mapAxisIntoZeroMag(ticksAlong,min,max,1);
+        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,min,max,1);
         seqParam(indexesToPick(i)).xgradu = spheresAlong;
         seqParam(indexesToPick(i)).ygradu = zeros(1,nbSpheresAlong);
     elseif i == 2
         spheresAlong = mapAxisIntoZeroMag(spheresAlong,min,max,1);
-        ticksAlong = mapAxisIntoZeroMag(ticksAlong,min,max,1);
+        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,min,max,1);
         seqParam(indexesToPick(i)).ygradu = spheresAlong;
         seqParam(indexesToPick(i)).xgradu = zeros(1,nbSpheresAlong);
     else
@@ -117,23 +122,22 @@ for i=1:nbParams
         spheresAlong = mapAxisIntoZeroMag(spheresAlong,min,max,scalefactor);
         seqParam(indexesToPick(i)).xgradu = spheresAlong*cos(deg2rad(tmpTheta));
         seqParam(indexesToPick(i)).ygradu = spheresAlong*sin(deg2rad(tmpTheta));
-        ticksAlong = mapAxisIntoZeroMag(ticksAlong,min,max,scalefactor);
+        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,min,max,scalefactor);
     end
     for j=1:nbSpheresAlong
         ax{end+1} = surf(xs+seqParam(indexesToPick(i)).xgradu(j), ...
                          ys+seqParam(indexesToPick(i)).ygradu(j), ...
                          zs+0);
         hold on
-        tmp  = rotateAxisTicks(num2str(ticksAlong(j)), ...
+        ticks{end+1} = rotateAxisTicks(num2str(ticksAlong(j)), ...
                                        colorAxis, tickFontSize, ...
                                        dontCropArrow(1), ...
-                                       diff(ticksAlong(1:2)), ...
+                                       diff(ticksAlongMapped(1:2)), ...
                                        boxHeight, ...
                                        perc, ...
                                        j, ...
                                        i, ...
                                        tmpTheta);
-        ticks{end+1} = tmp;
         hold on
     end
 end
