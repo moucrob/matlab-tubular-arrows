@@ -65,7 +65,7 @@ function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxH
     else %function called for plotting an axis name
         if axnumber == 2 %axis = y
             X = [0 0; 0 0];
-            Y = [0 perc*graduSpace; 0 perc*graduSpace] + labelNumber*graduSpace;
+            Y = [0 perc*boxWidth; 0 perc*boxWidth] + labelNumber*graduSpace;
             %(graduSpace/2)/2 to center under the graduation, (1-perc)/2) to
             %additionally shift a bit so that the perc% of graduSpace stay centered
             %under the graduation

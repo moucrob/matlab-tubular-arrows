@@ -6,7 +6,7 @@ clc
 planner = 'PLANNER';
 scene = 'SCENE';
 query = 'backflip';
-run = 'run number10';
+%run = 'run number10';
 countdown = '15sec';
 acceptance = '1-t/T';
 metric = 'relevancy';
@@ -59,20 +59,19 @@ evolutionHeadRatio = axisHeadRatio;
 
 smooth = 40; %number of point on the circumference of the streamtubes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-grid on ; %grid minor
-xlabel('x') ; ylabel('y') ; zlabel('z')
-dontCropArrow = [-(1.2*headRadius) 1]; %120percent to get some margin
-disp(['xylim should stop at ',num2str(-(1.2*headRadius))])
-xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim([-(1.2*headRadius+boxHeight), 1]) 
-
 %Define the scaling factors for each axis,
 %two first ones are 1unit long, whereas all the following are more or less
 %greater than 1m long because they are chords within a square whith one
 %extremity anchored onto a vertex:
 mapAxisIntoZeroMag = @(x,xmin,xmax,magnitude) ((x-xmin)./(xmax-xmin)).*magnitude;
 axis = [1;0;0];
+
 figure
+dontCropArrow = [-(1.2*headRadius) 1]; %120percent to get some margin
+disp(['xylim should stop at ',num2str(-(1.2*headRadius))])
+xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim([-(1.2*headRadius+boxHeight), 1]) 
 colormap(cool)
+
 for i=1:nbParams %plot the associated axis
     seqParam(indexesToPick(i)).mapseq = mapAxisIntoZeroMag(seqParam(indexesToPick(i)).seq, seqParam(indexesToPick(i)).min, seqParam(indexesToPick(i)).max,1); %mapped between 0 and 1
     if i <= 2
@@ -92,6 +91,7 @@ seqM.mapseq = mapAxisIntoZeroMag(seqM.seq, seqM.min, seqM.max,1); %mapped betwee
 seqM.magz = diff(seqM.mapseq);
 zax = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
 % set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
+
 hold on
 
 %plot the graduations:
@@ -241,5 +241,20 @@ for i=1:nbParams
                                    tmpTheta, ...
                                    1, ...
                                    0.2);
+    hold on
     disp(' ')
 end
+grid off
+set(gca,'XColor','none') ; set(gca,'YColor','none') ; set(gca,'ZColor','none')
+wrap = plotPositiveUnitaryBox([colorAxis,'-'],1);
+hold on
+line1 = ['Iterative tweaks of the parameter set of the ',planner, ' motion-planning algorithm,'];
+line2 = 'associated to the quality of the resulting plan,';
+line22 = ['with respect to our ',metric,' metric'];
+line3 = ['Context: scene "',scene, ...
+         '", query "',query, ...
+         '", countdown T = ',countdown, ...
+         ', acceptance function(t):=',acceptance];
+longStr = {line1,[line2,line22],line3};
+title(longStr)
+set(gcf,'color','w');
