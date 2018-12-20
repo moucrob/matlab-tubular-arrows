@@ -26,7 +26,7 @@ function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxH
     delete(hFigure);
     textImage = imageData.cdata;  %# Get the RGB image of the text
 
-    %% MAKE THE X,Y,Z (text) REVERSE DEPENDING ON AZIMUT VALUE (launch a fig and see on the bottom in real time the azimut value)
+    %% TODO : MAKE THE X,Y,Z (text) REVERSE DEPENDING ON AZIMUT VALUE (launch a fig and see on the bottom in real time the azimut value)
     % X or Y or Z(1,1) =  _______
     %                    *       |
     %                    |       |

@@ -22,26 +22,26 @@ function rotatedData = rotatePoints(alignmentVector, originalData)
 
     alignmentDim = numel(alignmentVector); %number of elements in a matrix
     DOF = size(originalData,2); %---- DOF = Degrees of Freedom (i.e. 2 for two dimensional and 3 for three dimensional data)
-    
+
     if alignmentDim~=DOF    
         error('Alignment vector does not agree with originalData dimensions');      
     end
     if DOF<2 || DOF>3      
         error('rotatePoints only does rotation in two or three dimensions');        
     end
-    
-        
+
+
     if DOF==2  % 2D rotation...        
         [rad_theta, rho] = cart2pol(alignmentVector(1), alignmentVector(2));    
         deg_theta = -1 * rad_theta * (180/pi);
         ctheta = cosd(deg_theta);  stheta = sind(deg_theta);
-        
+
         Rmatrix = [ctheta, -1.*stheta;...
                    stheta,     ctheta];
         rotatedData = originalData*Rmatrix; 
         %assumption: rotate all the datas from the original base to the
         %base where the original x becomes alignmentVector
-        
+
     else    % 3D rotation...        
         [rad_theta, rad_phi, rho] = cart2sph(alignmentVector(1), alignmentVector(2), alignmentVector(3));
         rad_theta = rad_theta * -1; 

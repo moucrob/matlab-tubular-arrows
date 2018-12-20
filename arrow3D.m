@@ -35,24 +35,24 @@ function arrowHandle = arrow3D(pos, deltaValues, colorCode, stemRatio, cylRad, r
     X = pos(1); %---- with this notation, there is no need to transpose if the user has chosen a row vs col vector
     Y = pos(2);
     Z = pos(3);
-    
+
     [sphi, stheta, srho] = cart2sph(deltaValues(1), deltaValues(2), deltaValues(3));  
-    
+
     %******************************************* CYLINDER == STEM *********************************************
     %cylinderRadius = 0.05*srho;
     cylinderRadius = cylRad;
     cylinderLength = srho*stemRatio;
     [CX,CY,CZ] = cylinder(cylinderRadius);
     CZ = CZ.*cylinderLength;    %---- lengthen
-    
+
     %----- ROTATE CYLINDER
     [row, col] = size(CX);      %---- initial rotation to coincide with X-axis
-    
+
     newEll = rotatePoints([0 0 -1], [CX(:), CY(:), CZ(:)]); %CX(:) actually reshape the 2xN matrices in a 2N vert vector, by vertically concatenating each column
     CX = reshape(newEll(:,1), row, col);
     CY = reshape(newEll(:,2), row, col);
     CZ = reshape(newEll(:,3), row, col);
-    
+
     [row, col] = size(CX);    
     newEll = rotatePoints(deltaValues, [CX(:), CY(:), CZ(:)]);
     stemX = reshape(newEll(:,1), row, col);
@@ -63,7 +63,7 @@ function arrowHandle = arrow3D(pos, deltaValues, colorCode, stemRatio, cylRad, r
     stemX = stemX + X;
     stemY = stemY + Y;
     stemZ = stemZ + Z;
-    
+
     %******************************************* CONE == ARROWHEAD *********************************************
     coneLength = srho*(1-stemRatio);
     coneRadius = cylinderRadius*radRatioCone;
@@ -71,19 +71,19 @@ function arrowHandle = arrow3D(pos, deltaValues, colorCode, stemRatio, cylRad, r
     coneincr = coneRadius/incr;
     [coneX, coneY, coneZ] = cylinder(cylinderRadius*2:-coneincr:0);  %---------- CONE 
     coneZ = coneZ.*coneLength;
-    
+
     %----- ROTATE CONE 
     [row, col] = size(coneX);    
     newEll = rotatePoints([0 0 -1], [coneX(:), coneY(:), coneZ(:)]);
     coneX = reshape(newEll(:,1), row, col);
     coneY = reshape(newEll(:,2), row, col);
     coneZ = reshape(newEll(:,3), row, col);
-    
+
     newEll = rotatePoints(deltaValues, [coneX(:), coneY(:), coneZ(:)]);
     headX = reshape(newEll(:,1), row, col);
     headY = reshape(newEll(:,2), row, col);
     headZ = reshape(newEll(:,3), row, col);
-    
+
     %---- TRANSLATE CONE
     V = [0, 0, srho*stemRatio];    %---- centerline for cylinder: the multiplier is to set the cone 'on the rim' of the cylinder
     Vp = rotatePoints([0 0 -1], V);
@@ -99,8 +99,7 @@ function arrowHandle = arrow3D(pos, deltaValues, colorCode, stemRatio, cylRad, r
     hHead = surf(headX, headY, headZ, 'FaceColor', colorCode, 'EdgeColor', 'none');
     hold on
     hBottCone = fill3(headX(1,:),headY(1,:),headZ(1,:), colorCode, 'EdgeColor', 'none');
-    
+
     if nargout==1   
         arrowHandle = [hStem, hBottStem, hHead, hBottCone]; 
     end
-    
