@@ -1,34 +1,7 @@
 clear all
 clc
-%% fictional dataset
-
-%given a scene + query + a run + a countdown
-planner = 'PLANNER';
-scene = 'SCENE';
-query = 'backflip';
-%run = 'run number10';
-countdown = '15sec';
-acceptance = '1-t/T';
-metric = 'relevancy';
-
-seqParam(1).seq = [0 1 0 1 2 1 2 1 2 1 2];
-seqParam(1).min = 0 ; seqParam(1).max = 2 ; seqParam(1).step = 1;
-seqParam(1).name = 'param1';
-
-seqParam(2).seq = [0.0 0.1 0.2 0.1 0.2 0.3 0.4 0.3 0.2 0.3 0.4];
-seqParam(2).min = 0. ; seqParam(2).max = 0.5 ; seqParam(2).step = 0.1;
-seqParam(2).name = 'param2';
-
-seqParam(3).seq = [10 11 10 11 10 12 11 12 13 14 15];
-seqParam(3).min = 10 ; seqParam(3).max = 17 ; seqParam(3).step = 1;
-seqParam(3).name = 'param3';
-
-seqParam(4).seq = [3.5 4. 4.5 4. 4.5 5. 5.5 6. 5.5 6. 5.5];
-seqParam(4).min = 3.5 ; seqParam(4).max = 7 ; seqParam(4).step = 0.5;
-seqParam(4).name = 'param4';
-
-seqM.seq = [0.2 0.3 0.6 0.8 0.74 0.35 0.24 0.15 0.48 0.69 0.47];
-seqM.min = 0. ; seqM.max = 1.;
+%% load
+fictionalDataset;
 
 %% what should last:
 
@@ -56,21 +29,85 @@ evolutionStemRatio = axisStemRatio;
 evolutionRadius = axisRadius;
 
 smooth = 40; %number of point on the circumference of the streamtubes
+
+dontCropArrow = [-(1.2*(2*axisRadius)) 1]; %120percent to get some margin with the arrowHead radius := 2*arrowBody radius
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Define the scaling factors for each axis,
 %two first ones are 1unit long, whereas all the following are more or less
 %greater than 1m long because they are chords within a square whith one
 %extremity anchored onto a vertex:
 mapAxisIntoZeroMag = @(x,xmin,xmax,magnitude) ((x-xmin)./(xmax-xmin)).*magnitude;
+
+%% beginning of the bifurcation of the axes in two "parallel worlds"
+firstfig = figure ; ax1 = axes;
+%plot the ticks
+ticks = {};
+[~, idxMaxQuality] = max(seqM.seq); %however I won't be able to highlight the first tick
+shiftedIndex = idxMaxQuality-1;
+if shiftedIndex >= 1
+    colorable = true;
+end
+tmpTheta = NaN; %debug
+for i=1:nbParams
+    mini = seqParam(indexesToPick(i)).min;
+    step = seqParam(indexesToPick(i)).step;
+    maxi = seqParam(indexesToPick(i)).max;
+    lastValue = seqParam(indexesToPick(i)).seq(end);
+    ticksAlong = [mini+step:step:maxi]; %don't want several ticks onto the 0 point
+    [~,idxLastInAlong] = find(lastValue == ticksAlong);
+    [~,idxBestInAlong] = find(seqParam(indexesToPick(i)).seq(idxMaxQuality) == ticksAlong);
+    nbTicksAlong = numel(ticksAlong);
+    if i <= 2
+        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,1);
+    else
+        tmpTheta = (i-2)*thetas;
+        scalefactor = lengthChordFromVertexInSquare(tmpTheta,1); %to map between 0 and smthg<sqrt(2)
+        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,scalefactor);
+    end
+    for j=1:nbTicksAlong
+        colorSent = colorAxis; %bring back
+        if j == idxLastInAlong
+            colorSent = colorEmphasizeLast;
+        end
+        if colorable && j==idxBestInAlong
+            colorSent = colorEmphasizeBest;
+        end
+        ticks{end+1} = rotateAxisTicks(num2str(ticksAlong(j)), ...
+                                       colorSent, ...
+                                       tickFontSize, ...
+                                       dontCropArrow(1), ...
+                                       diff(ticksAlongMapped(1:2)), ...
+                                       boxHeight, ...
+                                       perc, ...
+                                       j, ...
+                                       i, ...
+                                       tmpTheta, ...
+                                       0, ...
+                                       NaN);
+        hold on
+    end
+    %plot the axis name
+    ticks{end+1} = rotateAxisTicks(seqParam(indexesToPick(i)).name, ...
+                                   colorAxis, ...
+                                   tickFontSize, ...
+                                   0, ...
+                                   diff(ticksAlongMapped(1:2)), ...
+                                   boxHeight, ...
+                                   1, ...
+                                   nbTicksAlong, ...
+                                   i, ...
+                                   tmpTheta, ...
+                                   1, ...
+                                   0.2);
+    hold on
+end
+
+%% second parallel world, enlightened this time!
+tempfig = figure; ax2 = axes;
+
+%plot the parameter axis
 axis = [1;0;0];
-
-figure
-dontCropArrow = [-(1.2*(2*axisRadius)) 1]; %120percent to get some margin with the arrowHead radius := 2*arrowBody radius
-disp(['xylim should stop at ',num2str(-(1.2*(2*axisRadius)))])
-xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim([-(1.2*(2*axisRadius)+boxHeight), 1]) 
-colormap(cool)
-
-for i=1:nbParams %plot the associated axis
+for i=1:nbParams
     seqParam(indexesToPick(i)).mapseq = mapAxisIntoZeroMag(seqParam(indexesToPick(i)).seq, seqParam(indexesToPick(i)).min, seqParam(indexesToPick(i)).max,1); %mapped between 0 and 1
     if i <= 2
         ax{i} = arrow3D([0 0 0], axis, colorAxis, axisStemRatio, axisRadius); %i=1 : x
@@ -87,16 +124,14 @@ end
 %axis z:
 seqM.mapseq = mapAxisIntoZeroMag(seqM.seq, seqM.min, seqM.max,1); %mapped between 0 and 1
 seqM.magz = diff(seqM.mapseq);
-zax = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius);
-% set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
-
+ax{end+1} = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius);
 hold on
 
 %plot the graduations:
 [xs,ys,zs] = sphere(smooth);
 %scale the sphere pattern:
 [xs,ys,zs] = feval(@(x) x{:}, {xs*(2*axisRadius),ys*(2*axisRadius),zs*(2*axisRadius)}); %feval x{:} = multi initialization
-ax{end+1} = surf(xs,ys,zs);
+ax{end+1} = surf(xs,ys,zs,'FaceColor', colorAxis, 'EdgeColor', 'none');
 for i=1:nbParams
     mini = seqParam(indexesToPick(i)).min;
     step = seqParam(indexesToPick(i)).step;
@@ -121,7 +156,9 @@ for i=1:nbParams
     for j=1:nbSpheresAlong
         ax{end+1} = surf(xs+seqParam(indexesToPick(i)).xgradu(j), ...
                          ys+seqParam(indexesToPick(i)).ygradu(j), ...
-                         zs+0);
+                         zs+0, ...
+                         'FaceColor', colorAxis, ...
+                         'EdgeColor', 'none');
         hold on
     end
 end
@@ -151,11 +188,17 @@ end
 
 %plot the sequence of sets of parameters as tubes of iso quality:
 count = 0;
+indexesToPickForIso = [indexesToPick(1),indexesToPick(3:end),indexesToPick(2)]; %in order for the streamtubes to use the shortest path, I must pushback axis y (index 2 out of n) to the end of the list!
 for i=1:nbRestarts
    x = [] ; y = [] ; z = [];
    for j=1:nbParams
-       x(end+1,1) = seqParam(j).x(i);
-       y(end+1,1) = seqParam(j).y(i);
+       
+       %debug:
+       if i==1
+       end
+       
+       x(end+1,1) = seqParam(indexesToPickForIso(j)).x(i);
+       y(end+1,1) = seqParam(indexesToPickForIso(j)).y(i);
        z(end+1,1) = seqM.mapseq(i);
    end
    
@@ -163,89 +206,60 @@ for i=1:nbRestarts
    XYZ{1} = [xx{i},yy{i},zz{i}]; %streamtubes wants only cells idk why...
    count = count+1;
    isoQualityTubes{count} = streamtube(XYZ,[30*evolutionRadius, smooth]);
-   %set(isoQualityTubes{count},'EdgeColor','none','AmbientStrength',1,'FaceColor',colorIsoMetric)
-   set(isoQualityTubes{count},'EdgeColor',colorMoves(i,:),'AmbientStrength',1,'FaceColor',colorMoves(i,:))
+   set(isoQualityTubes{count},'EdgeColor','none','AmbientStrength',1,'FaceColor',colorMoves(i,:)) %'EdgeColor',colorMoves(i,:) to get rid of the lighting (if visually not clear enough)
    hold on
 end
-bar = colorbar('TickLabels',[1:nbRestarts]);
-set(get(bar,'title'),'string',{'Last parameter set tweak',['(and call to ',planner,')']});
-% TODO : FIGURE OUT WHY UNCOMMENTING THE TICK CODEBLOCK LOWERS THE LOWERBAR
-% TICKS FROM [1:11] to [1:6] only!!
+% currently matches if I comment that colorbar :
+% TODO : FIND THE PROPERTY TO LINKPROP !!!
+%bar = colorbar('TickLabels',[1:nbRestarts]);
+%set(get(bar,'title'),'string',{'Last parameter set tweak',['(and call to ',planner,')']});
 
-set(gca,'Projection','perspective')
 camlight headlight
 lighting gouraud
-%material default
 
-%plot the ticks
-ticks = {};
-[~, idxMaxQuality] = max(seqM.seq); %however I won't be able to highlight the first tick
-shiftedIndex = idxMaxQuality-1;
-if shiftedIndex >= 1
-    colorable = true;
-end
-for i=1:nbParams
-    mini = seqParam(indexesToPick(i)).min;
-    step = seqParam(indexesToPick(i)).step;
-    maxi = seqParam(indexesToPick(i)).max;
-    lastValue = seqParam(indexesToPick(i)).seq(end);
-    ticksAlong = [mini+step:step:maxi]; %don't want several ticks onto the 0 point
-    [~,idxLastInAlong] = find(lastValue == ticksAlong);
-    [~,idxBestInAlong] = find(seqParam(indexesToPick(i)).seq(idxMaxQuality) == ticksAlong);
-    nbTicksAlong = numel(ticksAlong);
-    if i <= 2
-        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,1);
-    else
-        tmpTheta = (i-2)*thetas;
-        scalefactor = lengthChordFromVertexInSquare(tmpTheta,1); %to map between 0 and smthg<sqrt(2)
-        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,scalefactor);
-    end
-    for j=1:nbTicksAlong
-        disp(['axis number = ',num2str(i)])
-        disp(['param set number = ',num2str(indexesToPick(i))])
-        disp(['tick number = ',num2str(j)])
-        colorSent = colorAxis; %bring back
-        if j == idxLastInAlong
-            colorSent = colorEmphasizeLast;
-        end
-        if colorable && j==idxBestInAlong
-            colorSent = colorEmphasizeBest;
-        end
-        ticks{end+1} = rotateAxisTicks(num2str(ticksAlong(j)), ...
-                                       colorSent, ...
-                                       tickFontSize, ...
-                                       dontCropArrow(1), ...
-                                       diff(ticksAlongMapped(1:2)), ...
-                                       boxHeight, ...
-                                       perc, ...
-                                       j, ...
-                                       i, ...
-                                       tmpTheta, ...
-                                       0, ...
-                                       NaN);
-        hold on
-        disp('ok')
-    end
-    %plot the axis name
-    ticks{end+1} = rotateAxisTicks(seqParam(indexesToPick(i)).name, ...
-                                   colorAxis, ...
-                                   tickFontSize, ...
-                                   0, ...
-                                   diff(ticksAlongMapped(1:2)), ...
-                                   boxHeight, ...
-                                   1, ...
-                                   nbTicksAlong, ...
-                                   i, ...
-                                   tmpTheta, ...
-                                   1, ...
-                                   0.2);
-    hold on
-    disp(' ')
-end
-grid off
-set(gca,'XColor','none') ; set(gca,'YColor','none') ; set(gca,'ZColor','none')
 wrap = plotPositiveUnitaryBox([colorAxis,'-'],1);
 hold on
+%% Merge the two parallel figs
+x11 = [ax1.XLim ; ax2.XLim];
+x12 = [min(x11(:,1)), max(x11(:,2))];
+y11 = [ax1.YLim ; ax2.YLim];
+y12 = [min(y11(:,1)), max(y11(:,2))];
+z11 = [ax1.ZLim ; ax2.ZLim];
+z12 = [min(z11(:,1)), max(z11(:,2))];
+hax = [ax1;ax2];
+set(hax,'XLim',x12,'YLim',y12,'ZLim',z12)
+
+%Adjust the view to be sure
+ax2.View = ax1.View;
+ax2.CameraPosition = ax1.CameraPosition;
+ax2.CameraTarget = ax1.CameraTarget;
+ax2.DataAspectRatio = ax1.DataAspectRatio;
+ax2.PlotBoxAspectRatio = ax1.PlotBoxAspectRatio;
+
+%Remove secondary axes background, then move it to main figure
+ax2.Visible = 'off';
+
+pause(10)
+
+ax2.Parent = firstfig; delete(tempfig)
+
+%Link the view between axes
+%h1 = linkprop(hax, 'View');
+%or link even more properties at once
+h1 = linkprop(hax, {'View', 'XLim', 'YLim', 'ZLim','CameraPosition','CameraTarget','DataAspectRatio','PlotBoxAspectRatio'}); %linkprop keeps the equality through time, but previous assignations have to be made!!!
+%%
+colormap(cool)
+
+%to potentially remove :
+%disp(['xylim should stop at ',num2str(-(1.2*(2*axisRadius)))])
+%xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim([-(1.2*(2*axisRadius)+boxHeight), 1]) 
+
+set(gca,'Projection','perspective')
+
+%to keep :
+%grid off
+%set(gca,'XColor','none') ; set(gca,'YColor','none') ; set(gca,'ZColor','none')
+
 line1 = ['Iterative tweaks of the parameter set of the ',planner, ' motion-planning algorithm,'];
 line2 = 'associated to the quality of the resulting plan,';
 line22 = ['with respect to our ',metric,' metric'];
@@ -255,4 +269,5 @@ line3 = ['Context: scene "',scene, ...
          ', acceptance function(t):=',acceptance];
 longStr = {line1,[line2,line22],line3};
 title(longStr)
-set(gcf,'color','w');
+%to keep :
+%set(gcf,'color','w');
