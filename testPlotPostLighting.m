@@ -3,12 +3,12 @@
 %clear all
 
 mainfig = figure ; ax1 = axes;
-arrow = arrow3D([0 0 0], [1 1 1], 'r', 0.8, 0.2, 1.5);
-set(arrow, 'EdgeColor', 'interp', 'FaceColor', 'interp');
-camlight headlight %might be interesting to uncomment this line
+surfaceHandle = rotateAxisTicks('lol','r',10,-0.3,0.5,0.5,1,1,1,0,0,NaN);
 
 tempfig = figure; ax2 = axes;
-surfaceHandle = rotateAxisTicks('lol','r',10,-0.3,0.5,0.5,1,1,1,0,0,NaN);
+arrow = arrow3D([0 0 0], [1 1 1], 'r', 0.8, 0.2);
+set(arrow, 'EdgeColor', 'interp', 'FaceColor', 'interp');
+camlight headlight %might be interesting to uncomment this line
 
 %% Prepare and set matching limits
 x1 = [ax1.XLim ; ax2.XLim];

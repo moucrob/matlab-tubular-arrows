@@ -51,11 +51,9 @@ perc = 0.5; %if perc = 1 (100%), then the labels are all sticked together with n
 
 axisStemRatio = 0.9;
 axisRadius = 0.01;
-axisHeadRatio = 1.5; headRadius = axisHeadRatio*axisRadius;
 
 evolutionStemRatio = axisStemRatio;
 evolutionRadius = axisRadius;
-evolutionHeadRatio = axisHeadRatio;
 
 smooth = 40; %number of point on the circumference of the streamtubes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,29 +65,29 @@ mapAxisIntoZeroMag = @(x,xmin,xmax,magnitude) ((x-xmin)./(xmax-xmin)).*magnitude
 axis = [1;0;0];
 
 figure
-dontCropArrow = [-(1.2*headRadius) 1]; %120percent to get some margin
-disp(['xylim should stop at ',num2str(-(1.2*headRadius))])
-xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim([-(1.2*headRadius+boxHeight), 1]) 
+dontCropArrow = [-(1.2*(2*axisRadius)) 1]; %120percent to get some margin with the arrowHead radius := 2*arrowBody radius
+disp(['xylim should stop at ',num2str(-(1.2*(2*axisRadius)))])
+xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim([-(1.2*(2*axisRadius)+boxHeight), 1]) 
 colormap(cool)
 
 for i=1:nbParams %plot the associated axis
     seqParam(indexesToPick(i)).mapseq = mapAxisIntoZeroMag(seqParam(indexesToPick(i)).seq, seqParam(indexesToPick(i)).min, seqParam(indexesToPick(i)).max,1); %mapped between 0 and 1
     if i <= 2
-        ax{i} = arrow3D([0 0 0], axis, colorAxis, axisStemRatio, axisRadius, axisHeadRatio); %i=1 : x
+        ax{i} = arrow3D([0 0 0], axis, colorAxis, axisStemRatio, axisRadius); %i=1 : x
         axis = cross([0;0;1],axis); %i=2 : y
         hold on
     else
         tmpTheta = (i-2)*thetas;
         scalefactor = lengthChordFromVertexInSquare(tmpTheta,1); %to map between 0 and smthg<sqrt(2)
         seqParam(indexesToPick(i)).mapseq = seqParam(indexesToPick(i)).mapseq * scalefactor;
-        ax{i} = arrow3D([0 0 0], scalefactor*[cos(deg2rad(tmpTheta)) sin(deg2rad(tmpTheta)) 0], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
+        ax{i} = arrow3D([0 0 0], scalefactor*[cos(deg2rad(tmpTheta)) sin(deg2rad(tmpTheta)) 0], colorAxis, axisStemRatio, axisRadius);
         hold on
     end
 end
 %axis z:
 seqM.mapseq = mapAxisIntoZeroMag(seqM.seq, seqM.min, seqM.max,1); %mapped between 0 and 1
 seqM.magz = diff(seqM.mapseq);
-zax = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
+zax = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius);
 % set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
 
 hold on
@@ -97,7 +95,7 @@ hold on
 %plot the graduations:
 [xs,ys,zs] = sphere(smooth);
 %scale the sphere pattern:
-[xs,ys,zs] = feval(@(x) x{:}, {xs*headRadius,ys*headRadius,zs*headRadius}); %feval x{:} = multi initialization
+[xs,ys,zs] = feval(@(x) x{:}, {xs*(2*axisRadius),ys*(2*axisRadius),zs*(2*axisRadius)}); %feval x{:} = multi initialization
 ax{end+1} = surf(xs,ys,zs);
 for i=1:nbParams
     mini = seqParam(indexesToPick(i)).min;
@@ -146,7 +144,7 @@ for i=1:nbParams
     seqParam(indexesToPick(i)).magy = diff(seqParam(indexesToPick(i)).y);
     for j=1:nbRestarts-1 %2 arrows for 3 points
         count = count+1;
-        dataArrows{count} = arrow3D([seqParam(indexesToPick(i)).x(j) seqParam(indexesToPick(i)).y(j) seqM.mapseq(j)], [seqParam(indexesToPick(i)).magx(j) seqParam(indexesToPick(i)).magy(j) seqM.magz(j)], colorEvolution(i,:), evolutionStemRatio, evolutionRadius, evolutionHeadRatio);
+        dataArrows{count} = arrow3D([seqParam(indexesToPick(i)).x(j) seqParam(indexesToPick(i)).y(j) seqM.mapseq(j)], [seqParam(indexesToPick(i)).magx(j) seqParam(indexesToPick(i)).magy(j) seqM.magz(j)], colorEvolution(i,:), evolutionStemRatio, evolutionRadius);
         hold on
     end
 end
