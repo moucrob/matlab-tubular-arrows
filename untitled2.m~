@@ -3,6 +3,7 @@ clc
 %% fictional dataset
 
 %given a scene + query + a run + a countdown
+planner = 'KPIECEK';
 scene = 'blabla';
 query = 'backflip';
 run = 'run number10';
@@ -37,7 +38,7 @@ end
 indexesToPick = randperm(nbParams);
 
 %%%%%%%%%%%%%%%%%%%% TWEAKABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-colorAxis = 'k' ; colorEvolution = autumn(nbParams);
+colorAxis = 'k' ; colorEvolution = autumn(nbParams); colorMoves = cool(nbRestarts);
 colorEmphasizeBest = 'g' ; colorEmphasizeLast = 'r';
 tickFontSize = 20;
 boxHeight = 0.1; %boxes wrapping the ticks
@@ -84,8 +85,8 @@ end
 %axis z:
 seqM.mapseq = mapAxisIntoZeroMag(seqM.seq, seqM.min, seqM.max,1); %mapped between 0 and 1
 seqM.magz = diff(seqM.mapseq);
-% zax = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
-set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
+zax = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
+% set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
 hold on
 
 %plot the graduations:
@@ -160,9 +161,11 @@ for i=1:nbRestarts
    count = count+1;
    isoQualityTubes{count} = streamtube(XYZ,[30*evolutionRadius, smooth]);
    %set(isoQualityTubes{count},'EdgeColor','none','AmbientStrength',1,'FaceColor',colorIsoMetric)
-   set(isoQualityTubes{count},'EdgeColor','interp','AmbientStrength',1,'FaceColor','interp')
+   set(isoQualityTubes{count},'EdgeColor',colorMoves(i,:),'AmbientStrength',1,'FaceColor',colorMoves(i,:))
    hold on
 end
+bar = colorbar('TickLabels',[1:nbRestarts]);
+set(get(bar,'title'),'string',{'Last parameter set tweak',['(and call to ',planner,')']);
 
 set(gca,'Projection','perspective')
 camlight headlight
