@@ -85,7 +85,7 @@ end
 seqM.mapseq = mapAxisIntoZeroMag(seqM.seq, seqM.min, seqM.max,1); %mapped between 0 and 1
 seqM.magz = diff(seqM.mapseq);
 zax = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius, axisHeadRatio);
-set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
+% set(zax, 'EdgeColor', 'interp', 'FaceColor', 'interp');
 hold on
 
 %plot the graduations:
@@ -169,51 +169,51 @@ camlight headlight
 lighting gouraud
 material default
 
-%plot the ticks
-ticks = {};
-[~, idxMaxQuality] = max(seqM.seq); %however I won't be able to highlight the first tick
-shiftedIndex = idxMaxQuality-1;
-if shiftedIndex >= 1
-    colorable = true;
-end
-for i=1:nbParams
-    mini = seqParam(indexesToPick(i)).min;
-    step = seqParam(indexesToPick(i)).step;
-    maxi = seqParam(indexesToPick(i)).max;
-    lastValue = seqParam(indexesToPick(i)).seq(end);
-    ticksAlong = [mini+step:step:maxi]; %don't want several ticks onto the 0 point
-    [,idxLastInAlong] = find(lastValue == ticksAlong);
-    [,idxBestInAlong] = find(seqParam(indexesToPick(i)).seq(idxMaxQuality) == ticksAlong);
-    nbTicksAlong = numel(ticksAlong);
-    if i <= 2
-        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,1);
-    else
-        tmpTheta = (i-2)*thetas;
-        scalefactor = lengthChordFromVertexInSquare(tmpTheta,1); %to map between 0 and smthg<sqrt(2)
-        ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,scalefactor);
-    end
-    for j=1:nbTicksAlong
-        disp(['axis number = ',num2str(i)])
-        disp(['param set number = ',num2str(indexesToPick(i))])
-        disp(['tick number = ',num2str(j)])
-        colorSent = colorAxis; %bring back
-        if j == idxLastInAlong
-            colorSent = colorEmphasizeLast;
-        end
-        if colorable && j==idxBestInAlong
-            colorSent = colorEmphasizeBest;
-        end
-        ticks{end+1} = rotateAxisTicks(num2str(ticksAlong(j)), ...
-                                       colorSent, tickFontSize, ...
-                                       dontCropArrow(1), ...
-                                       diff(ticksAlongMapped(1:2)), ...
-                                       boxHeight, ...
-                                       perc, ...
-                                       j, ...
-                                       i, ...
-                                       tmpTheta);
-        hold on
-        disp('ok')
-    end
-    disp(' ')
-end
+% %plot the ticks
+% ticks = {};
+% [~, idxMaxQuality] = max(seqM.seq); %however I won't be able to highlight the first tick
+% shiftedIndex = idxMaxQuality-1;
+% if shiftedIndex >= 1
+%     colorable = true;
+% end
+% for i=1:nbParams
+%     mini = seqParam(indexesToPick(i)).min;
+%     step = seqParam(indexesToPick(i)).step;
+%     maxi = seqParam(indexesToPick(i)).max;
+%     lastValue = seqParam(indexesToPick(i)).seq(end);
+%     ticksAlong = [mini+step:step:maxi]; %don't want several ticks onto the 0 point
+%     [,idxLastInAlong] = find(lastValue == ticksAlong);
+%     [,idxBestInAlong] = find(seqParam(indexesToPick(i)).seq(idxMaxQuality) == ticksAlong);
+%     nbTicksAlong = numel(ticksAlong);
+%     if i <= 2
+%         ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,1);
+%     else
+%         tmpTheta = (i-2)*thetas;
+%         scalefactor = lengthChordFromVertexInSquare(tmpTheta,1); %to map between 0 and smthg<sqrt(2)
+%         ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,scalefactor);
+%     end
+%     for j=1:nbTicksAlong
+%         disp(['axis number = ',num2str(i)])
+%         disp(['param set number = ',num2str(indexesToPick(i))])
+%         disp(['tick number = ',num2str(j)])
+%         colorSent = colorAxis; %bring back
+%         if j == idxLastInAlong
+%             colorSent = colorEmphasizeLast;
+%         end
+%         if colorable && j==idxBestInAlong
+%             colorSent = colorEmphasizeBest;
+%         end
+%         ticks{end+1} = rotateAxisTicks(num2str(ticksAlong(j)), ...
+%                                        colorSent, tickFontSize, ...
+%                                        dontCropArrow(1), ...
+%                                        diff(ticksAlongMapped(1:2)), ...
+%                                        boxHeight, ...
+%                                        perc, ...
+%                                        j, ...
+%                                        i, ...
+%                                        tmpTheta);
+%         hold on
+%         disp('ok')
+%     end
+%     disp(' ')
+% end
