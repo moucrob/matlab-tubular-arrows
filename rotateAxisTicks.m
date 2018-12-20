@@ -1,4 +1,4 @@
-function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxHeight,perc,labelNumber,axnumber,thetaInput)
+function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxHeight,perc,labelNumber,axnumber,thetaInput,axisNameCall,boxWidth)
 %https://stackoverflow.com/questions/9843048/matlab-how-to-plot-a-text-in-3d
     %zmax : give it a negative value to not overlap the axis
     %graduSpace : space between each graduation, within the projected on [0,1] axis if axis = x||y, OR local (not yet projected on x,y) axis !!
@@ -7,7 +7,10 @@ function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxH
     %labelNumber : the first tick to be displayed is actually associated to the second graduation (0 can't get several labels)
     %axnumber : out of nbParams, 1 for x, 2 for y, then, from closest to x, to closest to y : 3 to nbParams.
     %thetaInput : (angle around z, from x to the axis) has to be in degree
-
+    
+    %axisNameCall: boolean that activates a special behavior
+    %boxWidth: in the axis dim (before projection), for axis name only.
+    
     %% Seems like there is no way to get rid of the black contouring...
     hFigure = figure(1000);
     set(hFigure,'Color', 'w', ...        % Create a figure window
@@ -43,19 +46,37 @@ function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxH
     %                    |       |
     %                    |       |
     %                    |_______x
-    if axnumber == 2 %axis = y
-        X = [0 0; 0 0];
-        Y = [0 perc*graduSpace; 0 perc*graduSpace] + labelNumber*graduSpace - perc*graduSpace/2;
-        %(graduSpace/2)/2 to center under the graduation, (1-perc)/2) to
-        %additionally shift a bit so that the perc% of graduSpace stay centered
-        %under the graduation
-    else %I assume axis = x, that I might later rotate if it's not actually x
-        X = [0 perc*graduSpace; 0 perc*graduSpace] + labelNumber*graduSpace - perc*graduSpace/2; %+labelNumber*((graduSpace/2)+((1-perc)/2)*graduSpace)
-        Y = [0 0; 0 0];
-    end
-    Z = [zmax zmax; zmax-boxHeight zmax-boxHeight];
-    surfaceHandle = surf(X, Y, Z, 'FaceColor', 'texturemap', 'CData', textImage);
-    if axnumber > 2
-        rotate(surfaceHandle, [0 0 1], thetaInput,[0 0 0]);
+    if ~axisNameCall
+        if axnumber == 2 %axis = y
+            X = [0 0; 0 0];
+            Y = [0 perc*graduSpace; 0 perc*graduSpace] + labelNumber*graduSpace - perc*graduSpace/2;
+            %(graduSpace/2)/2 to center under the graduation, (1-perc)/2) to
+            %additionally shift a bit so that the perc% of graduSpace stay centered
+            %under the graduation
+        else %I assume axis = x, that I might later rotate if it's not actually x
+            X = [0 perc*graduSpace; 0 perc*graduSpace] + labelNumber*graduSpace - perc*graduSpace/2; %+labelNumber*((graduSpace/2)+((1-perc)/2)*graduSpace)
+            Y = [0 0; 0 0];
+        end
+        Z = [zmax zmax; zmax-boxHeight zmax-boxHeight];
+        surfaceHandle = surf(X, Y, Z, 'FaceColor', 'texturemap', 'CData', textImage);
+        if axnumber > 2
+            rotate(surfaceHandle, [0 0 1], thetaInput,[0 0 0]);
+        end
+    else %function called for plotting an axis name
+        if axnumber == 2 %axis = y
+            X = [0 0; 0 0];
+            Y = [0 perc*graduSpace; 0 perc*graduSpace] + labelNumber*graduSpace;
+            %(graduSpace/2)/2 to center under the graduation, (1-perc)/2) to
+            %additionally shift a bit so that the perc% of graduSpace stay centered
+            %under the graduation
+        else %I assume axis = x, that I might later rotate if it's not actually x
+            X = [0 perc*boxWidth; 0 perc*boxWidth] + labelNumber*graduSpace; %+labelNumber*((graduSpace/2)+((1-perc)/2)*graduSpace)
+            Y = [0 0; 0 0];
+        end
+        Z = [zmax+boxHeight zmax+boxHeight; zmax zmax]; %here zmax is actually zmin to nor overlap the last tick
+        surfaceHandle = surf(X, Y, Z, 'FaceColor', 'texturemap', 'CData', textImage);
+        if axnumber > 2
+            rotate(surfaceHandle, [0 0 1], thetaInput,[0 0 0]);
+        end
     end
 end
