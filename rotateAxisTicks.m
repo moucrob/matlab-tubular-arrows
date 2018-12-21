@@ -1,4 +1,4 @@
-function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxHeight,perc,labelNumber,axnumber,thetaInput,axisNameCall,boxWidth)
+function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxHeight,perc,labelNumber,axnumber,thetaInput,axisNameCall,boxWidth,contour)
 %https://stackoverflow.com/questions/9843048/matlab-how-to-plot-a-text-in-3d
     %zmax : give it a negative value to not overlap the axis
     %graduSpace : space between each graduation, within the projected on [0,1] axis if axis = x||y, OR local (not yet projected on x,y) axis !!
@@ -11,11 +11,15 @@ function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxH
     %axisNameCall: boolean that activates a special behavior
     %boxWidth: in the axis dim (before projection), for axis name only.
     
-    %% Seems like there is no way to get rid of the black contouring...
-    hFigure = figure(1000);
+    %contour : ifticks surfaces have to be highlighted, eg: 'k', 'none'.
+    
+    %% 
+    hFigure = figure;
     set(hFigure,'Color', 'w', ...        % Create a figure window
                      'MenuBar', 'none', ...
                      'ToolBar', 'none');
+    
+    hAxes = axes; hAxes.Visible = 'off';
     hText = uicontrol('Parent', hFigure, ...  % Create a text object
                       'Style', 'text', ...
                       'String', str, ...
@@ -23,9 +27,17 @@ function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxH
                       'ForegroundColor', color, ...
                       'FontSize', fontsize, ...
                       'FontWeight', 'normal');
-    set([hText hFigure], 'Pos', get(hText, 'Extent'));  %# Adjust the sizes of the
+    
+    
+    debug = get(hText, 'Extent')
+    assignin('base','debug',debug);
+                  
+    set([hText hFigure], 'Position', get(hText, 'Extent'));  %# Adjust the sizes of the
                                                         %#   text and figure
     imageData = getframe(hFigure);  %# Save the figure as an image frame
+    
+    pause(15)
+    
     delete(hFigure);
     textImage = imageData.cdata;  %# Get the RGB image of the text
 
@@ -58,7 +70,7 @@ function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxH
             Y = [0 0; 0 0];
         end
         Z = [zmax zmax; zmax-boxHeight zmax-boxHeight];
-        surfaceHandle = surf(X, Y, Z, 'FaceColor', 'texturemap', 'CData', textImage);
+        surfaceHandle = surf(X, Y, Z, 'FaceColor', 'texturemap', 'CData', textImage, 'EdgeColor', contour);
         if axnumber > 2
             rotate(surfaceHandle, [0 0 1], thetaInput,[0 0 0]);
         end
@@ -74,7 +86,7 @@ function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxH
             Y = [0 0; 0 0];
         end
         Z = [zmax+boxHeight zmax+boxHeight; zmax zmax]; %here zmax is actually zmin to nor overlap the last tick
-        surfaceHandle = surf(X, Y, Z, 'FaceColor', 'texturemap', 'CData', textImage);
+        surfaceHandle = surf(X, Y, Z, 'FaceColor', 'texturemap', 'CData', textImage, 'EdgeColor', contour);
         if axnumber > 2
             rotate(surfaceHandle, [0 0 1], thetaInput,[0 0 0]);
         end

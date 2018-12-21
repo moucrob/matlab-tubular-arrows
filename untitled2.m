@@ -18,6 +18,8 @@ indexesToPick = randperm(nbParams);
 %%%%%%%%%%%%%%%%%%%% TWEAKABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 colorAxis = 'k' ; colorEvolution = autumn(nbParams); colorMoves = cool(nbRestarts);
 colorEmphasizeBest = 'g' ; colorEmphasizeLast = 'r';
+
+contour = 'none'; %or colorAxis
 tickFontSize = 20;
 boxHeight = 0.1; %boxes wrapping the ticks
 perc = 0.5; %if perc = 1 (100%), then the labels are all sticked together with no space inbetween
@@ -83,7 +85,8 @@ for i=1:nbParams
                                        i, ...
                                        tmpTheta, ...
                                        0, ...
-                                       NaN);
+                                       NaN, ...
+                                       contour);
         hold on
     end
     %plot the axis name
@@ -98,7 +101,8 @@ for i=1:nbParams
                                    i, ...
                                    tmpTheta, ...
                                    1, ...
-                                   0.2);
+                                   0.2, ...
+                                   colorAxis);
     hold on
 end
 
@@ -241,8 +245,6 @@ ax1.CLim = ax2.CLim; %it's figmain who should adapt its color range to tempfig s
 
 %Remove secondary axes background, then move it to main figure
 ax2.Visible = 'off';
-
-pause(5)
 
 ax2.Parent = firstfig; delete(tempfig)
 
