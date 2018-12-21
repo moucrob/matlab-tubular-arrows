@@ -209,10 +209,8 @@ for i=1:nbRestarts
    set(isoQualityTubes{count},'EdgeColor','none','AmbientStrength',1,'FaceColor',colorMoves(i,:)) %'EdgeColor',colorMoves(i,:) to get rid of the lighting (if visually not clear enough)
    hold on
 end
-% currently matches if I comment that colorbar :
-% TODO : FIND THE PROPERTY TO LINKPROP !!!
-%bar = colorbar('TickLabels',[1:nbRestarts]);
-%set(get(bar,'title'),'string',{'Last parameter set tweak',['(and call to ',planner,')']});
+bar = colorbar('TickLabels',[1:nbRestarts]);
+set(get(bar,'title'),'string',{'Last parameter set tweak',['(and call to ',planner,')']});
 
 camlight headlight
 lighting gouraud
@@ -235,18 +233,28 @@ ax2.CameraPosition = ax1.CameraPosition;
 ax2.CameraTarget = ax1.CameraTarget;
 ax2.DataAspectRatio = ax1.DataAspectRatio;
 ax2.PlotBoxAspectRatio = ax1.PlotBoxAspectRatio;
+ax2.CameraViewAngle = ax1.CameraViewAngle;
+ax2.Projection = ax1.Projection;
+ax2.Position = ax1.Position;
+ax2.OuterPosition = ax1.OuterPosition;
+ax1.CLim = ax2.CLim; %it's figmain who should adapt its color range to tempfig since it's tempfig that contains the colorbar
 
 %Remove secondary axes background, then move it to main figure
 ax2.Visible = 'off';
 
-pause(10)
+pause(5)
 
 ax2.Parent = firstfig; delete(tempfig)
 
 %Link the view between axes
 %h1 = linkprop(hax, 'View');
 %or link even more properties at once
-h1 = linkprop(hax, {'View', 'XLim', 'YLim', 'ZLim','CameraPosition','CameraTarget','DataAspectRatio','PlotBoxAspectRatio'}); %linkprop keeps the equality through time, but previous assignations have to be made!!!
+h1 = linkprop(hax, {'View', 'XLim', 'YLim', 'ZLim', ...
+    'CameraPosition','CameraTarget', ...
+    'DataAspectRatio','PlotBoxAspectRatio', ...
+    'CameraViewAngle', 'Projection', ...
+    'Position', 'OuterPosition', ...
+    'CLim'}); %linkprop keeps the equality through time, but previous assignations have to be made!!!
 %%
 colormap(cool)
 
@@ -256,9 +264,8 @@ colormap(cool)
 
 set(gca,'Projection','perspective')
 
-%to keep :
-%grid off
-%set(gca,'XColor','none') ; set(gca,'YColor','none') ; set(gca,'ZColor','none')
+grid off
+set(gca,'XColor','none') ; set(gca,'YColor','none') ; set(gca,'ZColor','none')
 
 line1 = ['Iterative tweaks of the parameter set of the ',planner, ' motion-planning algorithm,'];
 line2 = 'associated to the quality of the resulting plan,';
@@ -269,5 +276,4 @@ line3 = ['Context: scene "',scene, ...
          ', acceptance function(t):=',acceptance];
 longStr = {line1,[line2,line22],line3};
 title(longStr)
-%to keep :
-%set(gcf,'color','w');
+set(gcf,'color','w');

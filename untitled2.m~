@@ -209,8 +209,10 @@ for i=1:nbRestarts
    set(isoQualityTubes{count},'EdgeColor','none','AmbientStrength',1,'FaceColor',colorMoves(i,:)) %'EdgeColor',colorMoves(i,:) to get rid of the lighting (if visually not clear enough)
    hold on
 end
-% bar = colorbar('TickLabels',[1:nbRestarts]);
-% set(get(bar,'title'),'string',{'Last parameter set tweak',['(and call to ',planner,')']});
+% currently matches if I comment that colorbar :
+% TODO : FIND THE PROPERTY TO LINKPROP !!!
+bar = colorbar('TickLabels',[1:nbRestarts]);
+set(get(bar,'title'),'string',{'Last parameter set tweak',['(and call to ',planner,')']});
 
 camlight headlight
 lighting gouraud
@@ -233,28 +235,36 @@ ax2.CameraPosition = ax1.CameraPosition;
 ax2.CameraTarget = ax1.CameraTarget;
 ax2.DataAspectRatio = ax1.DataAspectRatio;
 ax2.PlotBoxAspectRatio = ax1.PlotBoxAspectRatio;
-ax2.View = ax1.View;
-%ax2 = ax1; % doesn't work
+ax2.CameraViewAngle = ax1.CameraViewAngle;
+ax2.Projection = ax1.Projection;
+ax2.Position = ax1.Position;
+ax2.OuterPosition = ax1.OuterPosition;
+ax2.CLim = ax1.CLim;
 
 %Remove secondary axes background, then move it to main figure
 ax2.Visible = 'off';
 
-pause(10)
+pause(5)
 
 ax2.Parent = firstfig; delete(tempfig)
 
 %Link the view between axes
 %h1 = linkprop(hax, 'View');
 %or link even more properties at once
-h1 = linkprop(hax, 'View', 'XLim', 'YLim', 'ZLim');
+h1 = linkprop(hax, {'View', 'XLim', 'YLim', 'ZLim', ...
+    'CameraPosition','CameraTarget', ...
+    'DataAspectRatio','PlotBoxAspectRatio', ...
+    'CameraViewAngle', 'Projection'}); %linkprop keeps the equality through time, but previous assignations have to be made!!!
 %%
 colormap(cool)
 
-disp(['xylim should stop at ',num2str(-(1.2*(2*axisRadius)))])
-xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim([-(1.2*(2*axisRadius)+boxHeight), 1]) 
+%to potentially remove :
+%disp(['xylim should stop at ',num2str(-(1.2*(2*axisRadius)))])
+%xlim(dontCropArrow) ; ylim(dontCropArrow) ; zlim([-(1.2*(2*axisRadius)+boxHeight), 1]) 
 
-%set(gca,'Projection','perspective')
+set(gca,'Projection','perspective')
 
+%to keep :
 %grid off
 %set(gca,'XColor','none') ; set(gca,'YColor','none') ; set(gca,'ZColor','none')
 
@@ -267,4 +277,5 @@ line3 = ['Context: scene "',scene, ...
          ', acceptance function(t):=',acceptance];
 longStr = {line1,[line2,line22],line3};
 title(longStr)
+%to keep :
 %set(gcf,'color','w');
