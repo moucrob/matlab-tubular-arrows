@@ -16,6 +16,7 @@ function surfaceHandle = rotateAxisTicks2(txt,howManyCharMaximum,color,zmax,grad
 %% TWEAKABLE
 factor = 5000; %boxes dimensions are in the units of the plot, which is q unitary cube so dim <1 and standard fontsizes are o(10) points
 %%
+boxHeightUnscaled = boxHeight;
 boxHeight = factor*boxHeight;
 if ~axisNameCall
     boxWidth = perc*graduSpace;
@@ -23,6 +24,11 @@ else
     boxWidth = labelWidth;
 end
 boxWidth = factor*boxWidth;
+
+disp(['axisNameCall = ', num2str(axisNameCall)])
+disp(['boxHeight = ', num2str(boxHeight)])
+disp(['boxWidth = ', num2str(boxWidth)])
+disp(' ')
 
 %% comput: Now I assume one char is as wide as tall
 howManyChar = strlength(txt);
@@ -91,7 +97,7 @@ if ~axisNameCall
         X = [0 perc*graduSpace; 0 perc*graduSpace] + labelNumber*graduSpace - perc*graduSpace/2; %+labelNumber*((graduSpace/2)+((1-perc)/2)*graduSpace)
         Y = [0 0; 0 0];
     end
-    Z = [zmax zmax; zmax-boxHeight zmax-boxHeight];
+    Z = [zmax zmax; zmax-boxHeightUnscaled zmax-boxHeightUnscaled];
     surfaceHandle = surf(X, Y, Z, 'FaceColor', 'texturemap', 'CData', textImage, 'EdgeColor', contour);
     if axnumber > 2
         rotate(surfaceHandle, [0 0 1], thetaInput,[0 0 0]);
@@ -107,7 +113,7 @@ else %function called for plotting an axis name
         X = [0 perc*labelWidth; 0 perc*labelWidth] + labelNumber*graduSpace; %+labelNumber*((graduSpace/2)+((1-perc)/2)*graduSpace)
         Y = [0 0; 0 0];
     end
-    Z = [zmax+boxHeight zmax+boxHeight; zmax zmax]; %here zmax is actually zmin to nor overlap the last tick
+    Z = [zmax+boxHeightUnscaled zmax+boxHeightUnscaled; zmax zmax]; %here zmax is actually zmin to nor overlap the last tick
     surfaceHandle = surf(X, Y, Z, 'FaceColor', 'texturemap', 'CData', textImage, 'EdgeColor', contour);
     if axnumber > 2
         rotate(surfaceHandle, [0 0 1], thetaInput,[0 0 0]);
