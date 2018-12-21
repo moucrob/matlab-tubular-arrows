@@ -17,7 +17,8 @@ function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxH
     hFigure = figure;
     set(hFigure,'Color', 'w', ...        % Create a figure window
                      'MenuBar', 'none', ...
-                     'ToolBar', 'none');
+                     'ToolBar', 'none', ...
+                     );
     
     hAxes = axes; hAxes.Visible = 'off';
     hText = uicontrol('Parent', hFigure, ...  % Create a text object
@@ -29,14 +30,22 @@ function surfaceHandle = rotateAxisTicks(str,color,fontsize,zmax,graduSpace,boxH
                       'FontWeight', 'normal');
     
     
-    debug = get(hText, 'Extent')
-    assignin('base','debug',debug);
+    debug1 = get(hText, 'Extent')
+    assignin('base','debug1',debug1);
                   
-    set([hText hFigure], 'Position', get(hText, 'Extent'));  %# Adjust the sizes of the
+    set([hText;hFigure], 'Position', get(hText, 'Extent'));  %# Adjust the sizes of the
                                                         %#   text and figure
+    debug2 = get(hFigure, 'Position')
+    assignin('base','debug2',debug2);     
+    debug3 = get(hText, 'Position')
+    assignin('base','debug3',debug3);
+    if min(debug1 == debug2) == min(debug2 == debug3)
+        disp('ok')
+    end
+                                                        
     imageData = getframe(hFigure);  %# Save the figure as an image frame
     
-    pause(15)
+    pause(3)
     
     delete(hFigure);
     textImage = imageData.cdata;  %# Get the RGB image of the text
