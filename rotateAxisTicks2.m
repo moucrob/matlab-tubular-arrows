@@ -25,11 +25,6 @@ else
 end
 boxWidth = factor*boxWidth;
 
-disp(['axisNameCall = ', num2str(axisNameCall)])
-disp(['boxHeight = ', num2str(boxHeight)])
-disp(['boxWidth = ', num2str(boxWidth)])
-disp(' ')
-
 %% comput: Now I assume one char is as wide as tall
 howManyChar = strlength(txt);
 marginHoriz = mod(boxWidth,howManyCharMaximum); %in points
