@@ -1,0 +1,2228 @@
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose31
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose31
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose35
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose35
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose36
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose36
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose37
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose37
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose38
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose38
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose42
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose42
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose8
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose8
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose10
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose10
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose15
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose15
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose16
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose16
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose17
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose17
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose18
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose18
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose21
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose21
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose24
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose24
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose25
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose25
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose26
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose26
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose27
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose27
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose28
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose28
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose32
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose32
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose33
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose33
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose34
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose34
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose39
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose39
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose40
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose40
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose41
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose41
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose43
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose43
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose44
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose44
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose45
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose45
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose46
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose46
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose47
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose47
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose48
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose48
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose49
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose49
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose0
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose0
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose1
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose1
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose2
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose2
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose3
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose3
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose4
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose4
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose5
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose5
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose6
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose6
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose7
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose7
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose9
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose9
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose11
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose11
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose12
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose12
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose13
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose13
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose14
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose14
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose19
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose19
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose20
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose20
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose22
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose22
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose23
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose23
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose29
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose29
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose30
+countdown = 0.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose30
+countdown = 0.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose31
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose31
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose35
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.626564;
+0.5, 0.336285;
+succeeding_restarts = 2
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose35
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.374958;
+0.5, 0.369956;
+succeeding_restarts = 2
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose36
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose36
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose37
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.0802513;
+0.5, 0.0926044;
+0, 0.160658;
+succeeding_restarts = 3
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose37
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.153994;
+0.5, 0.172139;
+1, 0.204816;
+succeeding_restarts = 3
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose38
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.102679;
+0.5, 0.141102;
+1, 0.0961204;
+succeeding_restarts = 3
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose38
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.0499889;
+0.5, 0.0540041;
+succeeding_restarts = 2
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose42
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.111599;
+0.5, 0.0978849;
+1, 0.116295;
+0.5, 0.127651;
+1, 0.135972;
+succeeding_restarts = 5
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose42
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.104595;
+0.5, 0.0786357;
+1, 0.06998;
+succeeding_restarts = 3
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose8
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose8
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose10
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose10
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose15
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.230186;
+0.5, 0.20949;
+1, 0.332598;
+1.5, 0.220737;
+1, 0.360335;
+0.5, 0.397572;
+succeeding_restarts = 6
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose15
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.131208;
+0.5, 0.0977547;
+1, 0.165825;
+1.5, 0.284695;
+1, 0.19071;
+succeeding_restarts = 5
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose16
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.135385;
+0.5, 0.441659;
+1, 0.257081;
+1.5, 0.480616;
+2, 0.533101;
+2.5, 0.274955;
+2, 0.792802;
+2.5, 0.232074;
+2, 0.470196;
+1.5, 0.177819;
+1, 0.472231;
+0.5, 0.635567;
+succeeding_restarts = 12
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose16
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.367052;
+0.5, 0.373966;
+1, 0.23349;
+0.5, 0.290857;
+0, 0.286918;
+succeeding_restarts = 5
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose17
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.177348;
+0.5, 0.169234;
+0, 0.144584;
+succeeding_restarts = 3
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose17
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.128928;
+succeeding_restarts = 1
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose18
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose18
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose21
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose21
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose24
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.287124;
+0.5, 0.187067;
+0, 0.242426;
+0.5, 0.745046;
+0, 0.236101;
+0.5, 0.342729;
+succeeding_restarts = 6
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose24
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.848753;
+0.5, 0.367964;
+1, 0.236637;
+1.5, 0.548438;
+1, 0.302082;
+1.5, 0.670622;
+1, 0.735037;
+succeeding_restarts = 7
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose25
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose25
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose26
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose26
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose27
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.464436;
+0.5, 0.380347;
+1, 0.549322;
+1.5, 0.647393;
+2, 0.459407;
+1.5, 0.486355;
+1, 0.176794;
+0.5, 0.634526;
+1, 0.501725;
+1.5, 0.455367;
+2, 0.479794;
+2.5, 0.51463;
+3, 0.532658;
+3.5, 0.502432;
+4, 0.669835;
+3.5, 0.717664;
+succeeding_restarts = 16
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose27
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.52452;
+0.5, 0.33137;
+1, 0.513625;
+1.5, 0.326511;
+2, 0.436034;
+2.5, 0.339618;
+3, 0.510376;
+3.5, 0.550656;
+3, 0.262609;
+3.5, 0.470293;
+4, 0.448053;
+3.5, 0.416573;
+3, 0.372706;
+2.5, 0.412702;
+2, 0.322705;
+1.5, 0.667631;
+succeeding_restarts = 16
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose28
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose28
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose32
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose32
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose33
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.0861597;
+0.5, 0.143383;
+1, 0.121944;
+0.5, 0.197133;
+1, 0.190568;
+succeeding_restarts = 5
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose33
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.0563536;
+0.5, 0.122654;
+succeeding_restarts = 2
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose34
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose34
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose39
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose39
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose40
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose40
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose41
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.255957;
+0.5, 0.0964917;
+0, 0.290124;
+succeeding_restarts = 3
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose41
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.241549;
+0.5, 0.250676;
+0, 0.158552;
+0.5, 0.288119;
+succeeding_restarts = 4
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose43
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose43
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose44
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose44
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose45
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose45
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose46
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.0607053;
+0.5, 0.131508;
+1, 0.1753;
+1.5, 0.469357;
+1, 0.232327;
+1.5, 0.331894;
+2, 0.247897;
+2.5, 0.263884;
+succeeding_restarts = 8
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose46
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.118413;
+0.5, 0.27231;
+0, 0.242461;
+0.5, 0.725767;
+0, 0.274137;
+0.5, 0.187167;
+1, 0.196604;
+0.5, 0.251698;
+succeeding_restarts = 8
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose47
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.0744378;
+succeeding_restarts = 1
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose47
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.0604212;
+0.5, 0.063951;
+succeeding_restarts = 2
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose48
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose48
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose49
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose49
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose0
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose0
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose1
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.293254;
+0.5, 0.136058;
+1, 0.201547;
+1.5, 0.264456;
+1, 0.383632;
+succeeding_restarts = 5
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose1
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.261602;
+0.5, 0.284637;
+1, 0.223383;
+succeeding_restarts = 3
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose2
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose2
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose3
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose3
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose4
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose4
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose5
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose5
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose6
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose6
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose7
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose7
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose9
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose9
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose11
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose11
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose12
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose12
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose13
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose13
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose14
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose14
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose19
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose19
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose20
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.0536902;
+0.5, 0.0594308;
+1, 0.0373583;
+1.5, 0.0479107;
+succeeding_restarts = 4
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose20
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.0649048;
+0.5, 0.0827223;
+succeeding_restarts = 2
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose22
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose22
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose23
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.586805;
+0.5, 0.250562;
+1, 0.523013;
+1.5, 0.443726;
+2, 0.293907;
+2.5, 0.636191;
+3, 0.434522;
+3.5, 0.357713;
+4, 0.223625;
+3.5, 0.333132;
+3, 0.436267;
+2.5, 0.341571;
+2, 0.436168;
+2.5, 0.554474;
+3, 0.491746;
+2.5, 0.622463;
+succeeding_restarts = 16
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose23
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.326362;
+0.5, 0.406985;
+0, 0.334016;
+0.5, 0.425007;
+1, 0.707199;
+1.5, 0.365936;
+1, 0.546666;
+0.5, 0.37042;
+1, 0.653883;
+1.5, 0.310724;
+1, 0.30536;
+1.5, 0.503738;
+1, 0.553699;
+1.5, 0.758856;
+1, 0.721593;
+0.5, 0.317651;
+0, 0.283923;
+0.5, 0.341892;
+0, 0.404858;
+0.5, 0.378006;
+succeeding_restarts = 20
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose29
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+0, 0.59432;
+0.5, 0.587724;
+1, 0.697268;
+0.5, 0.640612;
+0, 0.503653;
+0.5, 0.703082;
+1, 0.754491;
+0.5, 0.862778;
+1, 0.590472;
+1.5, 0.812844;
+2, 0.73411;
+1.5, 0.774285;
+2, 0.804406;
+2.5, 0.728026;
+3, 0.749273;
+2.5, 0.779246;
+2, 0.532989;
+1.5, 0.697719;
+succeeding_restarts = 18
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose29
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+0, 0.841209;
+0.5, 0.520845;
+0, 0.610025;
+0.5, 0.562892;
+1, 0.430251;
+0.5, 0.738361;
+1, 0.707481;
+0.5, 0.712798;
+1, 0.488028;
+0.5, 0.72953;
+1, 0.594382;
+1.5, 0.539851;
+1, 0.657993;
+0.5, 0.733316;
+0, 0.69327;
+0.5, 0.727334;
+1, 0.59378;
+1.5, 0.734571;
+1, 0.814391;
+0.5, 0.656242;
+1, 0.432638;
+1.5, 0.644592;
+2, 0.627256;
+1.5, 0.719316;
+2, 0.934705;
+1.5, 0.947801;
+succeeding_restarts = 26
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose30
+countdown = 2.001
+acceptance = 1-t/T
+run = 1
+range, quality:
+succeeding_restarts = 0
+
+planner = RRTConnectkConfigDefault
+metric = relevancy
+scene = scene_ground_with_boxes
+query = RANDOM_pose30
+countdown = 2.001
+acceptance = 1-t/T
+run = 2
+range, quality:
+succeeding_restarts = 0
+
+..
