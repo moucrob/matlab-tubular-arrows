@@ -1,10 +1,18 @@
-clear all
-clc
+function plotOptimizer(cellComp)
+%designed to work on a component of the cell outputed from loadlog().
 %% load
-fictionalDataset;
+%fictionalDataset;
+planner = cellComp.planner;
+metric = cellComp.metric;
+scene = cellComp.scene;
+query = cellComp.query;
+countdown = cellComp.countdown;
+acceptance = cellComp.acceptance;
+run = cellComp.run;
+seqParam = cellComp.seqParam;
+seqM = cellComp.seqM;
 
-%% what should last:
-
+%% main:
 nbRestarts = max(size(seqParam(1).seq));
 nbParams = max(size(seqParam));
 if nbParams > 2
@@ -21,6 +29,7 @@ for i=1:nbParams
         tmpvec(end+1) = strlength(num2str(seqParam(i).seq(j)));
     end
     seqParam(i).howManyCharMaximum = max(tmpvec);
+    seqParam(i).min = min(seqParam(i));
 end
 
 %% %%%%%%%%%%%%%%%%% TWEAKABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
