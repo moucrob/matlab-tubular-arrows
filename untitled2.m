@@ -136,6 +136,7 @@ for i=1:nbParams
     end
 end
 %axis z:
+seqM.min = 0 ; seqM.max = 1; % ASSUMPTION
 seqM.mapseq = mapAxisIntoZeroMag(seqM.seq, seqM.min, seqM.max,1); %mapped between 0 and 1
 seqM.magz = diff(seqM.mapseq);
 ax{end+1} = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius);
