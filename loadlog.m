@@ -81,7 +81,7 @@ for i=1:numel(succeedingRuns)
     cell2strVar = string(beforeafter(2));
     cell2strVec = strsplit(cell2strVar, ' ');
     cell2strVec(end) = []; %remove the char "]" at the end
-    stru.(beforeafter(1)) = str2num(cell2strVec);
+    stru.(beforeafter(1)) = str2double(strcat(cell2strVec));
     succeedingRunsStructCell{i,1} = stru;
 end
 % assignin('base','succeedingRunsStructCell',succeedingRunsStructCell) %debug

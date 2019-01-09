@@ -103,7 +103,7 @@ for i=1:nbParams
         if j == idxLastInAlong
             colorSent = colorEmphasizeLast;
         end
-        if colorable && j==idxBestInAlong
+        if colorable==true & j==idxBestInAlong
             colorSent = colorEmphasizeBest;
         end
         ticks{end+1} = rotateAxisTicks2(num2str(ticksAlong(j)), ...
@@ -246,7 +246,7 @@ if numel(indexesToPick) > 1
        hold on
     end
     bar = colorbar('TickLabels',[1:nbRestarts]);
-    set(get(bar,'title'),'string',{'Last parameter set tweak',['(and call to ',planner,')']});
+%     set(get(bar,'title'),'string',{'Last parameter set tweak';strcat(['(and call to ',planner,')'])});
 end
 
 camlight headlight
