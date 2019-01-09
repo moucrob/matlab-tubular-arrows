@@ -11,6 +11,7 @@ acceptance = cellComp.acceptance;
 run = cellComp.run;
 seqParam = cellComp.seqParam;
 seqM = cellComp.seqM;
+step = cellComp.step; %vector
 
 %% main:
 nbRestarts = max(size(seqParam(1).seq));
@@ -29,7 +30,9 @@ for i=1:nbParams
         tmpvec(end+1) = strlength(num2str(seqParam(i).seq(j)));
     end
     seqParam(i).howManyCharMaximum = max(tmpvec);
-    seqParam(i).min = min(seqParam(i));
+    seqParam(i).min = min(seqParam(i).seq);
+    seqParam(i).max = max(seqParam(i).seq);
+    seqParam(i).step = step(i);
 end
 
 %% %%%%%%%%%%%%%%%%% TWEAKABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -85,6 +88,13 @@ for i=1:nbParams
         scalefactor = lengthChordFromVertexInSquare(tmpTheta,1); %to map between 0 and smthg<sqrt(2)
         ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,scalefactor);
     end
+    %handle an exception where one param progressed overall from only 1 unit far
+    %from its origin:
+    if nbTicksAlong == 1
+        graduSpace = ticksAlongMapped;
+    else
+        graduSpace = diff(ticksAlongMapped(1:2));
+    end
     for j=1:nbTicksAlong
         colorSent = colorAxis; %bring back
         if j == idxLastInAlong
@@ -97,7 +107,7 @@ for i=1:nbParams
                                        seqParam(indexesToPick(i)).howManyCharMaximum, ...
                                        colorSent, ...
                                        dontCropArrow(1), ...
-                                       diff(ticksAlongMapped(1:2)), ...
+                                       graduSpace, ...
                                        boxHeight, ...
                                        perc, ...
                                        j, ...

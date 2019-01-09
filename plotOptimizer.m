@@ -11,6 +11,7 @@ acceptance = cellComp.acceptance;
 run = cellComp.run;
 seqParam = cellComp.seqParam;
 seqM = cellComp.seqM;
+step = cellComp.step; %vector
 
 %% main:
 nbRestarts = max(size(seqParam(1).seq));
@@ -29,9 +30,9 @@ for i=1:nbParams
         tmpvec(end+1) = strlength(num2str(seqParam(i).seq(j)));
     end
     seqParam(i).howManyCharMaximum = max(tmpvec);
-    seqParam(i).seq
     seqParam(i).min = min(seqParam(i).seq);
     seqParam(i).max = max(seqParam(i).seq);
+    seqParam(i).step = step(i);
 end
 
 %% %%%%%%%%%%%%%%%%% TWEAKABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -61,12 +62,13 @@ mapAxisIntoZeroMag = @(x,xmin,xmax,magnitude) ((x-xmin)./(xmax-xmin)).*magnitude
 
 howManyCharMaximum = 5;
 
-%% beginning of the bifurcation of the axes in two "parallel worlds"
+%% beginning of the bifurcation of the axes in two "parallel worlds" from matlab internal graphics storage point of view
 firstfig = figure ; ax1 = axes;
 %plot the ticks
 ticks = {};
 [~, idxMaxQuality] = max(seqM.seq); %however I won't be able to highlight the first tick
 shiftedIndex = idxMaxQuality-1;
+colorable = false;
 if shiftedIndex >= 1
     colorable = true;
 end
@@ -87,6 +89,15 @@ for i=1:nbParams
         scalefactor = lengthChordFromVertexInSquare(tmpTheta,1); %to map between 0 and smthg<sqrt(2)
         ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,scalefactor);
     end
+    %handle an exception where one param progressed overall from only 1 unit far
+    %from its origin:
+    if nbTicksAlong == 1
+        graduSpace = ticksAlongMapped;
+    elseif nbTicksAlong == 0 %e.g:mini=0, step=0.5, maxi=0, because there was only 1 sumonning and no restart constrainted to progress forward!
+        graduSpace = step;
+    else
+        graduSpace = diff(ticksAlongMapped(1:2));
+    end
     for j=1:nbTicksAlong
         colorSent = colorAxis; %bring back
         if j == idxLastInAlong
@@ -99,7 +110,7 @@ for i=1:nbParams
                                        seqParam(indexesToPick(i)).howManyCharMaximum, ...
                                        colorSent, ...
                                        dontCropArrow(1), ...
-                                       diff(ticksAlongMapped(1:2)), ...
+                                       graduSpace, ...
                                        boxHeight, ...
                                        perc, ...
                                        j, ...
@@ -115,7 +126,7 @@ for i=1:nbParams
                                    strlength(seqParam(indexesToPick(i)).name), ...
                                    colorAxis, ...
                                    0, ...
-                                   diff(ticksAlongMapped(1:2)), ...
+                                   graduSpace, ...
                                    boxHeight, ...
                                    1, ...
                                    nbTicksAlong, ...
@@ -213,30 +224,30 @@ for i=1:nbParams
 end
 
 %plot the sequence of sets of parameters as tubes of iso quality:
-count = 0;
-indexesToPickForIso = [indexesToPick(1),indexesToPick(3:end),indexesToPick(2)]; %in order for the streamtubes to use the shortest path, I must pushback axis y (index 2 out of n) to the end of the list!
-for i=1:nbRestarts
-   x = [] ; y = [] ; z = [];
-   for j=1:nbParams
-       
-       %debug:
-       if i==1
+if numel(indexesToPick) > 1
+    count = 0;
+    if numel(indexesToPick) > 2
+        indexesToPickForIso = [indexesToPick(1),indexesToPick(3:end),indexesToPick(2)]; %in order for the streamtubes to use the shortest path, I must pushback axis y (index 2 out of n) to the end of the list!
+    else %numel(indexesToPick) = 2
+        indexesToPickForIso = indexesToPick;
+    end
+    for i=1:nbRestarts
+       x = [] ; y = [] ; z = [];
+       for j=1:nbParams
+           x(end+1,1) = seqParam(indexesToPickForIso(j)).x(i);
+           y(end+1,1) = seqParam(indexesToPickForIso(j)).y(i);
+           z(end+1,1) = seqM.mapseq(i);
        end
-       
-       x(end+1,1) = seqParam(indexesToPickForIso(j)).x(i);
-       y(end+1,1) = seqParam(indexesToPickForIso(j)).y(i);
-       z(end+1,1) = seqM.mapseq(i);
-   end
-   
-   xx{i} = x ; yy{i} = y ; zz{i} = z;
-   XYZ{1} = [xx{i},yy{i},zz{i}]; %streamtubes wants only cells idk why...
-   count = count+1;
-   isoQualityTubes{count} = streamtube(XYZ,[30*evolutionRadius, smooth]);
-   set(isoQualityTubes{count},'EdgeColor','none','AmbientStrength',1,'FaceColor',colorMoves(i,:)) %'EdgeColor',colorMoves(i,:) to get rid of the lighting (if visually not clear enough)
-   hold on
+       xx{i} = x ; yy{i} = y ; zz{i} = z;
+       XYZ{1} = [xx{i},yy{i},zz{i}]; %streamtubes wants only cells idk why...
+       count = count+1;
+       isoQualityTubes{count} = streamtube(XYZ,[30*evolutionRadius, smooth]);
+       set(isoQualityTubes{count},'EdgeColor','none','AmbientStrength',1,'FaceColor',colorMoves(i,:)) %'EdgeColor',colorMoves(i,:) to get rid of the lighting (if visually not clear enough)
+       hold on
+    end
+    bar = colorbar('TickLabels',[1:nbRestarts]);
+    set(get(bar,'title'),'string',{'Last parameter set tweak',['(and call to ',planner,')']});
 end
-bar = colorbar('TickLabels',[1:nbRestarts]);
-set(get(bar,'title'),'string',{'Last parameter set tweak',['(and call to ',planner,')']});
 
 camlight headlight
 lighting gouraud
@@ -291,13 +302,15 @@ set(gca,'Projection','perspective')
 grid off
 set(gca,'XColor','none') ; set(gca,'YColor','none') ; set(gca,'ZColor','none')
 
-line1 = ['Iterative tweaks of the parameter set of the ',planner, ' motion-planning algorithm,'];
-line2 = 'associated to the quality of the resulting plan,';
-line22 = ['with respect to our ',metric,' metric'];
-line3 = ['Context: scene "',scene, ...
-         '", query "',query, ...
-         '", countdown T = ',countdown, ...
-         ', acceptance function(t):=',acceptance];
-longStr = {line1,[line2,line22],line3};
-title(longStr)
+line1 = strcat('Iterative tweaks of the parameter set of the ', planner, ' motion-planning algorithm,');
+line2 = 'associated to the quality of the resulting plan, ';
+line22 = strcat(line2,'with respect to our ',metric,' metric.');
+line3 = strcat('Context: scene "',scene, ...
+               '", query "',query, ...
+               '", countdown T = ',countdown, ...
+               's, acceptance(t):=',acceptance);
+longStr = {line1;line2;line3};
+assignin('base','longStr',longStr) %debug
+% title('test') %debug
+title(longStr, 'Interpreter', 'none') % https://fr.mathworks.com/matlabcentral/answers/9260-disabling-printing-underscore-as-subscript-in-figures
 set(gcf,'color','w');

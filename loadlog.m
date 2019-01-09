@@ -4,6 +4,10 @@ function succeedingRunsStructCell = loadlog(fileName)
 %the runs where results have been found before the allocated countdown.
 %Each necessary variable for a run are stored as attributes of a cell array
 %component: eg: cell{successive run <= total nb of runs}.seqParam(2) = [...]
+
+format short g %otherwise (e.g:) str2num('0.5') (appears later in the code) returns 0.5000 uselessly..
+%https://stackoverflow.com/questions/24068990/how-to-remove-decimal-trailing-zeros-in-matlab
+
 %% read each line
 fileID = fopen(fileName,'r');
 tline = fgetl(fileID);
@@ -71,7 +75,7 @@ for i=1:numel(succeedingRuns)
     end
     stru.seqParam = seqParam;
     stru.seqM.seq = tmpMat(end,:);
-    beforeafter = strsplit(succeedingRuns{i}(j), ' = [ ');
+    beforeafter = strsplit(succeedingRuns{i}(numel(succeedingRuns{i})), ' = [ ');
     %re-split to get the vector of the steps associated to the vector of
     %paramNames:
     cell2strVar = string(beforeafter(2));
@@ -80,4 +84,5 @@ for i=1:numel(succeedingRuns)
     stru.(beforeafter(1)) = str2num(cell2strVec);
     succeedingRunsStructCell{i,1} = stru;
 end
+% assignin('base','succeedingRunsStructCell',succeedingRunsStructCell) %debug
 end
