@@ -3,7 +3,8 @@
 % fileName = 'datas2019-01-09_21_58.log'; %TRRT 9params, 2runs, 50random queries, 2:2:4s of countdown
 fileName = 'datas2019-01-09_23_15.log'; %TRRT 9params, 2runs, 50random queries, 0:2:2s of countdown
 c = loadlog(fileName);
-for i=1:numel(c)
+% for i=1:numel(c)
+for i=26:26
     plotOptimizer(c{i});
 end
 % end

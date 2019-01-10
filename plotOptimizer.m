@@ -39,7 +39,7 @@ end
 colorAxis = 'k' ; colorEvolution = autumn(nbParams); colorMoves = cool(nbRestarts);
 colorEmphasizeBest = 'g' ; colorEmphasizeLast = 'r';
 
-contour = 'none'; %or colorAxis
+contour = colorAxis;%'none'; %or colorAxis
 tickFontSize = 20;
 boxHeight = 0.1; %boxes wrapping the ticks
 perc = 0.5; %if perc = 1 (100%), then the labels are all sticked together with no space inbetween
