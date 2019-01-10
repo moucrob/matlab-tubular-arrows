@@ -246,7 +246,8 @@ if numel(indexesToPick) > 1
        hold on
     end
     bar = colorbar('TickLabels',[1:nbRestarts]);
-%     set(get(bar,'title'),'string',{'Last parameter set tweak';strcat(['(and call to ',planner,')'])});
+    str = {'Last parameter set tweak';strcat('(and call to ',planner,')')};
+    set(get(bar,'title'),'string',str);
 end
 
 camlight headlight
@@ -302,7 +303,7 @@ set(gca,'Projection','perspective')
 grid off
 set(gca,'XColor','none') ; set(gca,'YColor','none') ; set(gca,'ZColor','none')
 
-line1 = strcat('Iterative tweaks of the parameter set of the ', planner, ' motion-planning algorithm,');
+line1 = strcat('Iterative tweaks of the parameter set of the ',planner, ' motion-planning algorithm,');
 line2 = 'associated to the quality of the resulting plan, ';
 line22 = strcat(line2,'with respect to our ',metric,' metric.');
 line3 = strcat('Context: scene "',scene, ...
@@ -310,7 +311,5 @@ line3 = strcat('Context: scene "',scene, ...
                '", countdown T = ',countdown, ...
                's, acceptance(t):=',acceptance);
 longStr = {line1;line2;line3};
-assignin('base','longStr',longStr) %debug
-% title('test') %debug
 title(longStr, 'Interpreter', 'none') % https://fr.mathworks.com/matlabcentral/answers/9260-disabling-printing-underscore-as-subscript-in-figures
 set(gcf,'color','w');
