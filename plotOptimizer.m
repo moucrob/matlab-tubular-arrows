@@ -72,16 +72,29 @@ colorable = false;
 if shiftedIndex >= 1
     colorable = true;
 end
+disp(['idxMaxQuality = ',num2str(idxMaxQuality)])
+disp(['colorable = ',num2str(colorable)])
 tmpTheta = NaN; %debug
 for i=1:nbParams
+    %debug
+    disp(['i = ',num2str(i)])
+    disp(strcat('param = ',seqParam(indexesToPick(i)).name))
+    
     mini = seqParam(indexesToPick(i)).min;
     step = seqParam(indexesToPick(i)).step;
     maxi = seqParam(indexesToPick(i)).max;
+    disp(['mini = ',num2str(mini)])
+    disp(['step = ',num2str(step)])
+    disp(['maxi = ',num2str(maxi)])
     lastValue = seqParam(indexesToPick(i)).seq(end);
     ticksAlong = [mini+step:step:maxi]; %don't want several ticks onto the 0 point
+    nbTicksAlong = numel(ticksAlong);
+    disp(['lastValue = ',num2str(lastValue)])
+    disp(['ticksAlong = ',num2str(ticksAlong)])
     [~,idxLastInAlong] = find(lastValue == ticksAlong);
     [~,idxBestInAlong] = find(seqParam(indexesToPick(i)).seq(idxMaxQuality) == ticksAlong);
-    nbTicksAlong = numel(ticksAlong);
+    disp(['idxLastInAlong = ',num2str(idxLastInAlong)])
+    disp(['idxBestInAlong = ',num2str(idxBestInAlong)])
     if i <= 2
         ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,1);
     else
@@ -102,9 +115,14 @@ for i=1:nbParams
         colorSent = colorAxis; %bring back
         if j == idxLastInAlong
             colorSent = colorEmphasizeLast;
-        end
-        if colorable==true & j==idxBestInAlong
+        elseif j==idxBestInAlong & colorable==true
             colorSent = colorEmphasizeBest;
+        else %debug
+            disp('there is an else')
+            disp(['j = ',num2str(j)])
+            disp(['idxLastInAlong = ',num2str(idxLastInAlong)])
+            disp(['idxBestInAlong = ',num2str(idxBestInAlong)])
+            disp(ticksAlong)
         end
         ticks{end+1} = rotateAxisTicks2(num2str(ticksAlong(j)), ...
                                        seqParam(indexesToPick(i)).howManyCharMaximum, ...
@@ -245,11 +263,19 @@ if numel(indexesToPick) > 1
        set(isoQualityTubes{count},'EdgeColor','none','AmbientStrength',1,'FaceColor',colorMoves(i,:)) %'EdgeColor',colorMoves(i,:) to get rid of the lighting (if visually not clear enough)
        hold on
     end
-    bar = colorbar('TickLabels',[1:nbRestarts]);
-    str = {'Last parameter set tweak';strcat('(and call to ',planner,')')};
-    set(get(bar,'title'),'string',str);
 end
+% AxesH = axes('CLim', [1,nbRestarts]);
+% bar = colorbar('peer', AxesH, 'h', ...
+%                'TickLabels',{num2str([1:nbRestarts])}, ...
+%                'Ticks', [1:nbRestarts]);
 
+% bar = colorbar('TickLabels',{num2str([1:1:nbRestarts]')});
+bar = colorbar('Ticks',linspace(0, 1, nbRestarts),'TickLabels',num2cell(1:nbRestarts));
+disp(['nbRestarts = ',num2str(nbRestarts)])
+disp([1:nbRestarts])
+str = {'Last parameter set tweak';'(and call to';strcat(planner,')')};
+set(get(bar,'title'),'string',str);
+    
 camlight headlight
 lighting gouraud
 
@@ -292,7 +318,7 @@ h1 = linkprop(hax, {'View', 'XLim', 'YLim', 'ZLim', ...
     'Position', 'OuterPosition', ...
     'CLim'}); %linkprop keeps the equality through time, but previous assignations have to be made!!!
 %%
-colormap(cool)
+colormap(cool(nbRestarts))
 
 %to potentially remove :
 %disp(['xylim should stop at ',num2str(-(1.2*(2*axisRadius)))])

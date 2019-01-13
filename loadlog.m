@@ -5,8 +5,7 @@ function succeedingRunsStructCell = loadlog(fileName)
 %Each necessary variable for a run are stored as attributes of a cell array
 %component: eg: cell{successive run <= total nb of runs}.seqParam(2) = [...]
 
-format short g %otherwise (e.g:) str2num('0.5') (appears later in the code) returns 0.5000 uselessly..
-%https://stackoverflow.com/questions/24068990/how-to-remove-decimal-trailing-zeros-in-matlab
+format longG %otherwise tmpMat(end+1,:) = tmpRow transforms "1.00001" into numerical value 1 !!
 
 %% read each line
 fileID = fopen(fileName,'r');
@@ -66,6 +65,14 @@ for i=1:numel(succeedingRuns)
         tmpRow = strsplit(succeedingRuns{i}(k),{', ', ';'});
         tmpRow(end) = []; %remove the '' char returned after the ';' due to the split!
         tmpMat(end+1,:) = tmpRow;
+        
+%         %debug : check if the 2 prints are identical
+%         if i==13
+%             disp(['tmpRow = ',tmpRow])
+%             disp(tmpMat(end,:))
+%         end
+%         %answer :
+        
     end
     tmpMat = tmpMat';
     seqParam = [];
@@ -83,6 +90,10 @@ for i=1:numel(succeedingRuns)
     cell2strVec(end) = []; %remove the char "]" at the end
     stru.(beforeafter(1)) = str2double(strcat(cell2strVec));
     succeedingRunsStructCell{i,1} = stru;
+%     %debug
+%     if i==13
+%         disp('--------------')
+%     end
 end
 % assignin('base','succeedingRunsStructCell',succeedingRunsStructCell) %debug
 end
