@@ -91,6 +91,7 @@ for i=1:nbParams
     nbTicksAlong = numel(ticksAlong);
     disp(['lastValue = ',num2str(lastValue)])
     disp(['ticksAlong = ',num2str(ticksAlong)])
+    disp(['nbTicksAlong = ',num2str(nbTicksAlong)])
     [~,idxLastInAlong] = find(lastValue == ticksAlong);
     [~,idxBestInAlong] = find(seqParam(indexesToPick(i)).seq(idxMaxQuality) == ticksAlong);
     disp(['idxLastInAlong = ',num2str(idxLastInAlong)])
@@ -150,7 +151,7 @@ for i=1:nbParams
                                    i, ...
                                    tmpTheta, ...
                                    1, ...
-                                   0.2, ...
+                                   0.3, ...
                                    colorAxis);
     hold on
 end
