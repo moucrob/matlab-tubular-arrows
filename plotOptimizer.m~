@@ -116,12 +116,12 @@ for i=1:nbParams
     for j=1:nbTicksAlong
         colorSent = colorAxis; %bring back
         if j == idxLastInAlong
-            disp('j == idxLastInAlong')
             colorSent = colorEmphasizeLast;
-        end
-        if j==idxBestInAlong & colorable==1
-            disp('j==idxBestInAlong & colorable==true')
+        elseif j==idxBestInAlong & colorable==true
             colorSent = colorEmphasizeBest;
+        else %debug
+            disp('there is an else')
+            disp(['j = ',num2str(j)])
         end
         ticks{end+1} = rotateAxisTicks2(num2str(ticksAlong(j)), ...
                                        seqParam(indexesToPick(i)).howManyCharMaximum, ...
