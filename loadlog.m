@@ -95,5 +95,5 @@ for i=1:numel(succeedingRuns)
 %         disp('--------------')
 %     end
 end
-assignin('base','cLoadLog',succeedingRunsStructCell) %debug
+% assignin('base','cLoadLog',succeedingRunsStructCell) %debug
 end
