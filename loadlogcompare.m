@@ -1,6 +1,6 @@
 clc
 clear all
-logNamesVec = {'ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTCwrapped.log','TRRTwrapped.log'};
+logNamesVec = {'ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log','TRRTwrapped.log'};
 
 format longG %otherwise tmpMat(end+1,:) = tmpRow transforms "1.00001" into numerical value 1 !!
 
