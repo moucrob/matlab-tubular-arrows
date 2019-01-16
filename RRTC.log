@@ -5633,7 +5633,7 @@ range, quality:
 succeeding_restarts = 0
 step = [ 0 ]
 
-.planner = RRTConnectkConfigDefault
+planner = RRTConnectkConfigDefault
 metric = relevancy
 scene = scene_ground_with_boxes
 query = RANDOM_pose31
@@ -8468,7 +8468,7 @@ range, quality:
 succeeding_restarts = 0
 step = [ 0 ]
 
-.planner = RRTConnectkConfigDefault
+planner = RRTConnectkConfigDefault
 metric = relevancy
 scene = scene_ground_with_boxes
 query = RANDOM_pose31
@@ -11303,7 +11303,7 @@ range, quality:
 succeeding_restarts = 0
 step = [ 0 ]
 
-.planner = RRTConnectkConfigDefault
+planner = RRTConnectkConfigDefault
 metric = relevancy
 scene = scene_ground_with_boxes
 query = RANDOM_pose31
@@ -14138,7 +14138,7 @@ range, quality:
 succeeding_restarts = 0
 step = [ 0 ]
 
-.planner = RRTConnectkConfigDefault
+planner = RRTConnectkConfigDefault
 metric = relevancy
 scene = scene_ground_with_boxes
 query = RANDOM_pose31
@@ -16973,7 +16973,7 @@ range, quality:
 succeeding_restarts = 0
 step = [ 0 ]
 
-.planner = RRTConnectkConfigDefault
+planner = RRTConnectkConfigDefault
 metric = relevancy
 scene = scene_ground_with_boxes
 query = RANDOM_pose31
@@ -19808,7 +19808,7 @@ range, quality:
 succeeding_restarts = 0
 step = [ 0 ]
 
-.planner = RRTConnectkConfigDefault
+planner = RRTConnectkConfigDefault
 metric = relevancy
 scene = scene_ground_with_boxes
 query = RANDOM_pose31
@@ -22643,7 +22643,7 @@ range, quality:
 succeeding_restarts = 0
 step = [ 0 ]
 
-.planner = RRTConnectkConfigDefault
+planner = RRTConnectkConfigDefault
 metric = relevancy
 scene = scene_ground_with_boxes
 query = RANDOM_pose31
