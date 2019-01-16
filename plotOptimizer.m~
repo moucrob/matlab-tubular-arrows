@@ -72,30 +72,30 @@ colorable = false;
 if shiftedIndex >= 1
     colorable = true;
 end
-disp(['idxMaxQuality = ',num2str(idxMaxQuality)])
-disp(['colorable = ',num2str(colorable)])
+% disp(['idxMaxQuality = ',num2str(idxMaxQuality)])
+% disp(['colorable = ',num2str(colorable)])
 tmpTheta = NaN; %debug
 for i=1:nbParams
     %debug
-    disp(['i = ',num2str(i)])
-    disp(strcat('param =  ',seqParam(indexesToPick(i)).name))
+%     disp(['i = ',num2str(i)])
+%     disp(strcat('param =  ',seqParam(indexesToPick(i)).name))
     
     mini = seqParam(indexesToPick(i)).min;
     step = seqParam(indexesToPick(i)).step;
     maxi = seqParam(indexesToPick(i)).max;
-    disp(['mini = ',num2str(mini)])
-    disp(['step = ',num2str(step)])
-    disp(['maxi = ',num2str(maxi)])
+%     disp(['mini = ',num2str(mini)])
+%     disp(['step = ',num2str(step)])
+%     disp(['maxi = ',num2str(maxi)])
     lastValue = seqParam(indexesToPick(i)).seq(end);
     ticksAlong = [mini+step:step:maxi]; %don't want several ticks onto the 0 point
     nbTicksAlong = numel(ticksAlong);
-    disp(['lastValue = ',num2str(lastValue)])
-    disp(['ticksAlong = ',num2str(ticksAlong)])
-    disp(['nbTicksAlong = ',num2str(nbTicksAlong)])
+%     disp(['lastValue = ',num2str(lastValue)])
+%     disp(['ticksAlong = ',num2str(ticksAlong)])
+%     disp(['nbTicksAlong = ',num2str(nbTicksAlong)])
     [~,idxLastInAlong] = find(lastValue == ticksAlong);
     [~,idxBestInAlong] = find(seqParam(indexesToPick(i)).seq(idxMaxQuality) == ticksAlong);
-    disp(['idxLastInAlong = ',num2str(idxLastInAlong)])
-    disp(['idxBestInAlong = ',num2str(idxBestInAlong)])
+%     disp(['idxLastInAlong = ',num2str(idxLastInAlong)])
+%     disp(['idxBestInAlong = ',num2str(idxBestInAlong)])
     if i <= 2
         ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,1);
     else
@@ -103,7 +103,7 @@ for i=1:nbParams
         scalefactor = lengthChordFromVertexInSquare(tmpTheta,1); %to map between 0 and smthg<sqrt(2)
         ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,scalefactor);
     end
-    disp(['ticksAlongMapped = ',num2str(ticksAlongMapped)])
+%     disp(['ticksAlongMapped = ',num2str(ticksAlongMapped)])
     %handle an exception where one param progressed overall from only 1 unit far
     %from its origin:
     if nbTicksAlong == 1
@@ -113,11 +113,11 @@ for i=1:nbParams
     else
         graduSpace = diff(ticksAlongMapped(1:2));
     end
-    disp(['graduSpace = ',num2str(graduSpace)])
+%     disp(['graduSpace = ',num2str(graduSpace)])
     for j=1:nbTicksAlong
         colorSent = colorAxis; %bring back
         if j == idxLastInAlong
-            disp('j == idxLastInAlong')
+%             disp('j == idxLastInAlong')
             colorSent = colorEmphasizeLast;
         end
         if j==idxBestInAlong & colorable==1
@@ -155,7 +155,6 @@ for i=1:nbParams
                                    colorAxis);
     hold on
 end
-assignin('base','ticks',ticks) %debug
 
 %% second parallel world, enlightened this time!
 tempfig = figure; ax2 = axes;
@@ -218,7 +217,6 @@ for i=1:nbParams
         hold on
     end
 end
-assignin('base','ax',ax) %debug
 
 %plot the sequence of recalls:
 count = 0;
@@ -242,7 +240,6 @@ for i=1:nbParams
         hold on
     end
 end
-assignin('base','dataArrows',dataArrows) %debug
 
 %plot the sequence of sets of parameters as tubes of iso quality:
 if numel(indexesToPick) > 1
@@ -267,17 +264,14 @@ if numel(indexesToPick) > 1
        hold on
     end
 end
-assignin('base','isoQualityTubes',isoQualityTubes) %debug
 bar = colorbar('Ticks',linspace(0, 1, nbRestarts),'TickLabels',num2cell(1:nbRestarts));
 str = {'Last parameter set tweak';'(and call to';strcat(planner,')')};
 set(get(bar,'title'),'string',str);
-assignin('base','bar',bar) %debug
     
 camlight headlight
 lighting gouraud
 
 wrap = plotPositiveUnitaryBox([colorAxis,'-'],1);
-assignin('base','wrap',wrap) %debug
 hold on
 %% Merge the two parallel figs
 x11 = [ax1.XLim ; ax2.XLim];
