@@ -1,19 +1,10 @@
-function firstfig = plotOptimizer(cellComp)
-%designed to work on a component of the cell outputed from loadlog().
+clear all
+clc
 %% load
-%fictionalDataset;
-planner = cellComp.planner;
-metric = cellComp.metric;
-scene = cellComp.scene;
-query = cellComp.query;
-countdown = cellComp.countdown;
-acceptance = cellComp.acceptance;
-run = cellComp.run;
-seqParam = cellComp.seqParam;
-seqM = cellComp.seqM;
-step = cellComp.step; %vector
+fictionalDataset;
 
-%% main:
+%% what should last:
+
 nbRestarts = max(size(seqParam(1).seq));
 nbParams = max(size(seqParam));
 if nbParams > 2
@@ -30,16 +21,13 @@ for i=1:nbParams
         tmpvec(end+1) = strlength(num2str(seqParam(i).seq(j)));
     end
     seqParam(i).howManyCharMaximum = max(tmpvec);
-    seqParam(i).min = min(seqParam(i).seq);
-    seqParam(i).max = max(seqParam(i).seq);
-    seqParam(i).step = step(i);
 end
 
 %% %%%%%%%%%%%%%%%%% TWEAKABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 colorAxis = 'k' ; colorEvolution = autumn(nbParams); colorMoves = cool(nbRestarts);
 colorEmphasizeBest = 'g' ; colorEmphasizeLast = 'r';
 
-contour = colorAxis;%'none'; %or colorAxis
+contour = 'none'; %or colorAxis
 tickFontSize = 20;
 boxHeight = 0.1; %boxes wrapping the ticks
 perc = 0.5; %if perc = 1 (100%), then the labels are all sticked together with no space inbetween
@@ -62,40 +50,25 @@ mapAxisIntoZeroMag = @(x,xmin,xmax,magnitude) ((x-xmin)./(xmax-xmin)).*magnitude
 
 howManyCharMaximum = 5;
 
-%% beginning of the bifurcation of the axes in two "parallel worlds" from matlab internal graphics storage point of view
+%% beginning of the bifurcation of the axes in two "parallel worlds"
 firstfig = figure ; ax1 = axes;
 %plot the ticks
 ticks = {};
 [~, idxMaxQuality] = max(seqM.seq); %however I won't be able to highlight the first tick
 shiftedIndex = idxMaxQuality-1;
-colorable = false;
 if shiftedIndex >= 1
     colorable = true;
 end
-disp(['idxMaxQuality = ',num2str(idxMaxQuality)])
-disp(['colorable = ',num2str(colorable)])
 tmpTheta = NaN; %debug
 for i=1:nbParams
-    %debug
-    disp(['i = ',num2str(i)])
-    disp(strcat('param =  ',seqParam(indexesToPick(i)).name))
-    
     mini = seqParam(indexesToPick(i)).min;
     step = seqParam(indexesToPick(i)).step;
     maxi = seqParam(indexesToPick(i)).max;
-    disp(['mini = ',num2str(mini)])
-    disp(['step = ',num2str(step)])
-    disp(['maxi = ',num2str(maxi)])
     lastValue = seqParam(indexesToPick(i)).seq(end);
     ticksAlong = [mini+step:step:maxi]; %don't want several ticks onto the 0 point
-    nbTicksAlong = numel(ticksAlong);
-    disp(['lastValue = ',num2str(lastValue)])
-    disp(['ticksAlong = ',num2str(ticksAlong)])
-    disp(['nbTicksAlong = ',num2str(nbTicksAlong)])
     [~,idxLastInAlong] = find(lastValue == ticksAlong);
     [~,idxBestInAlong] = find(seqParam(indexesToPick(i)).seq(idxMaxQuality) == ticksAlong);
-    disp(['idxLastInAlong = ',num2str(idxLastInAlong)])
-    disp(['idxBestInAlong = ',num2str(idxBestInAlong)])
+    nbTicksAlong = numel(ticksAlong);
     if i <= 2
         ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,1);
     else
@@ -103,32 +76,19 @@ for i=1:nbParams
         scalefactor = lengthChordFromVertexInSquare(tmpTheta,1); %to map between 0 and smthg<sqrt(2)
         ticksAlongMapped = mapAxisIntoZeroMag(ticksAlong,mini,maxi,scalefactor);
     end
-    disp(['ticksAlongMapped = ',num2str(ticksAlongMapped)])
-    %handle an exception where one param progressed overall from only 1 unit far
-    %from its origin:
-    if nbTicksAlong == 1
-        graduSpace = ticksAlongMapped;
-    elseif nbTicksAlong == 0 %e.g:mini=0, step=0.5, maxi=0, because there was only 1 sumonning and no restart constrainted to progress forward!
-        graduSpace = step;
-    else
-        graduSpace = diff(ticksAlongMapped(1:2));
-    end
-    disp(['graduSpace = ',num2str(graduSpace)])
     for j=1:nbTicksAlong
         colorSent = colorAxis; %bring back
         if j == idxLastInAlong
-            disp('j == idxLastInAlong')
             colorSent = colorEmphasizeLast;
         end
-        if j==idxBestInAlong & colorable==1
-            disp('j==idxBestInAlong & colorable==true')
+        if colorable && j==idxBestInAlong
             colorSent = colorEmphasizeBest;
         end
         ticks{end+1} = rotateAxisTicks2(num2str(ticksAlong(j)), ...
                                        seqParam(indexesToPick(i)).howManyCharMaximum, ...
                                        colorSent, ...
                                        dontCropArrow(1), ...
-                                       graduSpace, ...
+                                       diff(ticksAlongMapped(1:2)), ...
                                        boxHeight, ...
                                        perc, ...
                                        j, ...
@@ -144,18 +104,17 @@ for i=1:nbParams
                                    strlength(seqParam(indexesToPick(i)).name), ...
                                    colorAxis, ...
                                    0, ...
-                                   graduSpace, ...
+                                   diff(ticksAlongMapped(1:2)), ...
                                    boxHeight, ...
                                    1, ...
                                    nbTicksAlong, ...
                                    i, ...
                                    tmpTheta, ...
                                    1, ...
-                                   0.3, ...
+                                   0.2, ...
                                    colorAxis);
     hold on
 end
-assignin('base','ticks',ticks) %debug
 
 %% second parallel world, enlightened this time!
 tempfig = figure; ax2 = axes;
@@ -177,7 +136,6 @@ for i=1:nbParams
     end
 end
 %axis z:
-seqM.min = 0 ; seqM.max = 1; % ASSUMPTION
 seqM.mapseq = mapAxisIntoZeroMag(seqM.seq, seqM.min, seqM.max,1); %mapped between 0 and 1
 seqM.magz = diff(seqM.mapseq);
 ax{end+1} = arrow3D([0 0 0], [0 0 1], colorAxis, axisStemRatio, axisRadius);
@@ -218,7 +176,6 @@ for i=1:nbParams
         hold on
     end
 end
-assignin('base','ax',ax) %debug
 
 %plot the sequence of recalls:
 count = 0;
@@ -242,42 +199,37 @@ for i=1:nbParams
         hold on
     end
 end
-assignin('base','dataArrows',dataArrows) %debug
 
 %plot the sequence of sets of parameters as tubes of iso quality:
-if numel(indexesToPick) > 1
-    count = 0;
-    if numel(indexesToPick) > 2
-        indexesToPickForIso = [indexesToPick(1),indexesToPick(3:end),indexesToPick(2)]; %in order for the streamtubes to use the shortest path, I must pushback axis y (index 2 out of n) to the end of the list!
-    else %numel(indexesToPick) = 2
-        indexesToPickForIso = indexesToPick;
-    end
-    for i=1:nbRestarts
-       x = [] ; y = [] ; z = [];
-       for j=1:nbParams
-           x(end+1,1) = seqParam(indexesToPickForIso(j)).x(i);
-           y(end+1,1) = seqParam(indexesToPickForIso(j)).y(i);
-           z(end+1,1) = seqM.mapseq(i);
+count = 0;
+indexesToPickForIso = [indexesToPick(1),indexesToPick(3:end),indexesToPick(2)]; %in order for the streamtubes to use the shortest path, I must pushback axis y (index 2 out of n) to the end of the list!
+for i=1:nbRestarts
+   x = [] ; y = [] ; z = [];
+   for j=1:nbParams
+       
+       %debug:
+       if i==1
        end
-       xx{i} = x ; yy{i} = y ; zz{i} = z;
-       XYZ{1} = [xx{i},yy{i},zz{i}]; %streamtubes wants only cells idk why...
-       count = count+1;
-       isoQualityTubes{count} = streamtube(XYZ,[30*evolutionRadius, smooth]);
-       set(isoQualityTubes{count},'EdgeColor','none','AmbientStrength',1,'FaceColor',colorMoves(i,:)) %'EdgeColor',colorMoves(i,:) to get rid of the lighting (if visually not clear enough)
-       hold on
-    end
+       
+       x(end+1,1) = seqParam(indexesToPickForIso(j)).x(i);
+       y(end+1,1) = seqParam(indexesToPickForIso(j)).y(i);
+       z(end+1,1) = seqM.mapseq(i);
+   end
+   
+   xx{i} = x ; yy{i} = y ; zz{i} = z;
+   XYZ{1} = [xx{i},yy{i},zz{i}]; %streamtubes wants only cells idk why...
+   count = count+1;
+   isoQualityTubes{count} = streamtube(XYZ,[30*evolutionRadius, smooth]);
+   set(isoQualityTubes{count},'EdgeColor','none','AmbientStrength',1,'FaceColor',colorMoves(i,:)) %'EdgeColor',colorMoves(i,:) to get rid of the lighting (if visually not clear enough)
+   hold on
 end
-assignin('base','isoQualityTubes',isoQualityTubes) %debug
-bar = colorbar('Ticks',linspace(0, 1, nbRestarts),'TickLabels',num2cell(1:nbRestarts));
-str = {'Last parameter set tweak';'(and call to';strcat(planner,')')};
-set(get(bar,'title'),'string',str);
-assignin('base','bar',bar) %debug
-    
+bar = colorbar('TickLabels',[1:nbRestarts]);
+set(get(bar,'title'),'string',{'Last parameter set tweak',['(and call to ',planner,')']});
+
 camlight headlight
 lighting gouraud
 
 wrap = plotPositiveUnitaryBox([colorAxis,'-'],1);
-assignin('base','wrap',wrap) %debug
 hold on
 %% Merge the two parallel figs
 x11 = [ax1.XLim ; ax2.XLim];
@@ -316,7 +268,7 @@ h1 = linkprop(hax, {'View', 'XLim', 'YLim', 'ZLim', ...
     'Position', 'OuterPosition', ...
     'CLim'}); %linkprop keeps the equality through time, but previous assignations have to be made!!!
 %%
-colormap(cool(nbRestarts))
+colormap(cool)
 
 %to potentially remove :
 %disp(['xylim should stop at ',num2str(-(1.2*(2*axisRadius)))])
@@ -327,15 +279,13 @@ set(gca,'Projection','perspective')
 grid off
 set(gca,'XColor','none') ; set(gca,'YColor','none') ; set(gca,'ZColor','none')
 
-line1 = strcat('Iterative tweaks of the parameter set of the ',planner, ' motion-planning algorithm,');
-line2 = 'associated to the quality of the resulting plan, ';
-line22 = strcat(line2,'with respect to our ',metric,' metric.');
-line3 = strcat('Context: scene "',scene, ...
-               '", query "',query, ...
-               '", countdown T = ',countdown, ...
-               's, acceptance(t):=',acceptance);
-longStr = {line1;line2;line3};
-title(longStr, 'Interpreter', 'none') % https://fr.mathworks.com/matlabcentral/answers/9260-disabling-printing-underscore-as-subscript-in-figures
+line1 = ['Iterative tweaks of the parameter set of the ',planner, ' motion-planning algorithm,'];
+line2 = 'associated to the quality of the resulting plan,';
+line22 = ['with respect to our ',metric,' metric'];
+line3 = ['Context: scene "',scene, ...
+         '", query "',query, ...
+         '", countdown T = ',countdown, ...
+         ', acceptance function(t):=',acceptance];
+longStr = {line1,[line2,line22],line3};
+title(longStr)
 set(gcf,'color','w');
-
-pause(25)

@@ -1,4 +1,4 @@
-function plotOptimizer(cellComp)
+function firstfig = plotOptimizer(cellComp)
 %designed to work on a component of the cell outputed from loadlog().
 %% load
 %fictionalDataset;
@@ -91,8 +91,7 @@ for i=1:nbParams
     nbTicksAlong = numel(ticksAlong);
     disp(['lastValue = ',num2str(lastValue)])
     disp(['ticksAlong = ',num2str(ticksAlong)])
-    
-    disp(['lastValue = ',num2str(lastValue)])
+    disp(['nbTicksAlong = ',num2str(nbTicksAlong)])
     [~,idxLastInAlong] = find(lastValue == ticksAlong);
     [~,idxBestInAlong] = find(seqParam(indexesToPick(i)).seq(idxMaxQuality) == ticksAlong);
     disp(['idxLastInAlong = ',num2str(idxLastInAlong)])
@@ -152,10 +151,11 @@ for i=1:nbParams
                                    i, ...
                                    tmpTheta, ...
                                    1, ...
-                                   0.2, ...
+                                   0.3, ...
                                    colorAxis);
     hold on
 end
+assignin('base','ticks',ticks) %debug
 
 %% second parallel world, enlightened this time!
 tempfig = figure; ax2 = axes;
@@ -218,6 +218,7 @@ for i=1:nbParams
         hold on
     end
 end
+assignin('base','ax',ax) %debug
 
 %plot the sequence of recalls:
 count = 0;
@@ -241,6 +242,7 @@ for i=1:nbParams
         hold on
     end
 end
+assignin('base','dataArrows',dataArrows) %debug
 
 %plot the sequence of sets of parameters as tubes of iso quality:
 if numel(indexesToPick) > 1
@@ -265,14 +267,17 @@ if numel(indexesToPick) > 1
        hold on
     end
 end
+assignin('base','isoQualityTubes',isoQualityTubes) %debug
 bar = colorbar('Ticks',linspace(0, 1, nbRestarts),'TickLabels',num2cell(1:nbRestarts));
 str = {'Last parameter set tweak';'(and call to';strcat(planner,')')};
 set(get(bar,'title'),'string',str);
+assignin('base','bar',bar) %debug
     
 camlight headlight
 lighting gouraud
 
 wrap = plotPositiveUnitaryBox([colorAxis,'-'],1);
+assignin('base','wrap',wrap) %debug
 hold on
 %% Merge the two parallel figs
 x11 = [ax1.XLim ; ax2.XLim];
@@ -332,3 +337,5 @@ line3 = strcat('Context: scene "',scene, ...
 longStr = {line1;line2;line3};
 title(longStr, 'Interpreter', 'none') % https://fr.mathworks.com/matlabcentral/answers/9260-disabling-printing-underscore-as-subscript-in-figures
 set(gcf,'color','w');
+
+pause(25)
