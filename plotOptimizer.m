@@ -1,4 +1,4 @@
-function firstfig = plotOptimizer(cellComp)
+function [fig,h1] = plotOptimizer(cellComp)
 %designed to work on a component of the cell outputed from loadlog().
 %% load
 %fictionalDataset;
@@ -331,3 +331,5 @@ line3 = strcat('Context: scene "',scene, ...
 longStr = {line1;line2;line3};
 title(longStr, 'Interpreter', 'none') % https://fr.mathworks.com/matlabcentral/answers/9260-disabling-printing-underscore-as-subscript-in-figures
 set(gcf,'color','w');
+
+fig = get(firstfig);

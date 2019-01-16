@@ -60,7 +60,7 @@ hText = text(0.5, 0.5, ...
             'Interpreter', 'none');
             
 imageData = getframe(hFigure);  %# Save the figure as an image frame
-assignin('base','imageData',imageData);
+% assignin('base','imageData',imageData);
 
 delete(hFigure);
 textImage = imageData.cdata;  %# Get the RGB image of the text

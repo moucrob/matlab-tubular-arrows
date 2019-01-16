@@ -6,8 +6,9 @@ clc
 % fileName = 'goodmins.log';
 fileName = 'goodminsRRT.log';
 c = loadlog(fileName);
-% for i=1:numel(c)
-for i=12:12
-    fig = plotOptimizer(c{i});
+fig = cell(0,1) ; rules = cell(0,1);
+for i=1:numel(c)
+% for i=12:12
+    [fig{end+1,1},rules{end+1,1}] = plotOptimizer(c{i});
 end
 % end
