@@ -215,12 +215,9 @@ ylabel({'input scene:'; ...
 b2.FaceColor = 'flat';
 for i=1:numel(allPlanners)
     b1(1,i).FaceColor = 'flat';
-    for j=1:numel(countdowns)
-        b1(1,i).CData(1:numel(countdowns),:) = repmat(co(j,:),numel(countdowns),1);
-    end
+    b1(1,i).CData(1:numel(countdowns),:) = repmat(co(i,:),numel(countdowns),1);
 end
 for j=1:numel(countdowns)
     b2.CData(j,:) = co(idxBestQualityPlanners(j),:);
-    b1(1,i).CData(1:numel(countdowns),:) = repmat(co(j,:),numel(countdowns),1);
 end
 set(gcf,'color','w');
