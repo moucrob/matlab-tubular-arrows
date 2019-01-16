@@ -58,7 +58,7 @@ for k=1:numel(logNamesVec)
         %their associated parameter name:
         paramNamesVec = string(strsplit(runs{i}(8),{', ', ':'}));
         paramNamesVec(end-1:end) = []; %remove 'quality', and the '' char returned after the ':' due to the split!
-
+        
         %and the datas
         tmpMat = [];
         if numel(runs{i}) >= 11
@@ -125,7 +125,7 @@ for i=1:numel(allCells)
     stru.plannerName = allCells{i,1}{1,1}.planner;
     stru.acceptance = allCells{i,1}{1,1}.acceptance;
     stru.scene = allCells{i,1}{1,1}.scene;
-    stru.metric = allCells{i,1}{1,1}.metric
+    stru.metric = allCells{i,1}{1,1}.metric;
     stru.countdowns = countdowns;
     stru.nbQueries = nbQueries;
     stru.nbRuns = nbRuns;
@@ -160,17 +160,43 @@ end
 
 %% and plot
 figure
+
+co = distinguishable_colors(numel(allPlanners), {'w','k'});
+
 toBar = []; %MY CURRENT WAY USING toBar MATRIX CONSTRAINS TO HAVE THE SAME COUNTDOWNS SET FOR EACH PLANNER LOG !!!!
 %ALSO EACH SIMULATION SHOULD BE RUN INTO THE SAME SCENE AND FOR THE SAME
 %METRIC !!!!
+names = cell(0,1);
+qualitiesAvgMat = [];
 for i=1:numel(allPlanners)
 %     subplot(2,1,1)
 %     plot(countdowns, allPlanners{i}.successRatesAvg) ; hold on
-    subplot(2,1,2)
-    title('test')
-    plot(countdowns, allPlanners{i}.qualitiesAvg) ; hold on
+    subplot(3,1,2)
+    set(gca,'XTick', allPlanners{i}.countdowns)
+    plot(countdowns, allPlanners{i}.qualitiesAvg,'color',co(i,:)) ; hold on
+    qualitiesAvgMat(end+1,:) = allPlanners{i}.qualitiesAvg;
+    names{end+1,1} = char(allPlanners{i}.plannerName);
+    
     toBar(end+1,:) = allPlanners{i}.successRatesAvg;
 end
-subplot(2,1,1)
-b = bar(toBar');
-set(gca,'XTick',countdowns)
+[~,idxBestQualityPlanners] = max(qualitiesAvgMat);
+
+subplot(3,1,2)
+l = legend(names);
+
+subplot(3,1,1)
+b1 = bar(toBar');
+set(gca,'XTick', allPlanners{1}.countdowns)
+
+subplot(3,1,3)
+title("Planner that had the best quality overall")
+b2 = bar(countdowns,ones(1,numel(countdowns)));
+
+%to modify individually the bars' color
+b2.FaceColor = 'flat';
+for i=1:numel(countdowns)
+    b2.CData(i,:) = co(idxBestQualityPlanners(i),:);
+    
+    b1(1,i).FaceColor = 'flat';
+    b1(1,i).CData(1:numel(allPlanners),:) = repmat(co(i,:),numel(allPlanners),1);
+end
