@@ -1,6 +1,6 @@
 clc
 clear all
-logNamesVec = {'ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log','TRRTwrapped.log'};
+logNamesVec = {'ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log','TRRTwrapped.log','TRRT.log'};
 
 format longG %otherwise tmpMat(end+1,:) = tmpRow transforms "1.00001" into numerical value 1 !!
 
@@ -187,24 +187,28 @@ subplot(3,1,2)
 l = legend(names);
 ylabel({num2str(allPlanners{1}.metric);'quality metric'})
 ytickformat('percentage');
+xtickangle(90)
 grid on ; grid minor
 
 subplot(3,1,1)
-b1 = bar(countdowns, 100*toBar');
-set(gca,'XTick', allPlanners{1}.countdowns)
+b1 = bar(100*toBar');
+% set(gca,'XTick', allPlanners{1}.countdowns)
 set(gca,'XTickLabels', string(allPlanners{1}.countdowns))
 ylabel({'average success rate'; ...
         strcat(['overall ',num2str(allPlanners{1}.nbRuns),' runs on']); ...
         strcat(['each of the ',num2str(allPlanners{1}.nbQueries)]); ...
         'random feasible queries'})
+xlabel('allocated countdown (sec)')
 ytickformat('percentage');
 grid on ; grid minor
 
 subplot(3,1,3)
 b2 = bar(countdowns,ones(1,numel(countdowns)));
+set(gca,'TickLength', [0 0])
 set(gca,'XTick', allPlanners{1}.countdowns)
 set(gca,'XTickLabels', string(allPlanners{1}.countdowns))
-title({'Planner that had the best quality overall,';'w.r.t to each allocated countdown (sec)'})
+xtickangle(90)
+title({'Planner that had the best quality overall,';'w.r.t to each allocated countdown T (in sec)'})
 set(gca,'YTick',[])
 set(gca,'YTickLabel',[])
 ylabel({'input scene:'; ...
@@ -221,4 +225,12 @@ end
 for j=1:numel(countdowns)
     b2.CData(j,:) = co(idxBestQualityPlanners(j),:);
 end
+
+%to precise the names of the winners: in subplot313
+for i=1:numel(countdowns)
+    t = text(countdowns(i),0.5,names{idxBestQualityPlanners(i)},'HorizontalAlignment','center');
+    set(t,'Rotation',90);
+    hold on
+end
+
 set(gcf,'color','w');
