@@ -1,6 +1,6 @@
 clc
 clear all
-logNamesVec = {'datas2019-01-08_21_52.log','datas2019-01-09_21_58.log'};
+logNamesVec = {'ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTCwrapped.log','TRRTwrapped.log'};
 
 format longG %otherwise tmpMat(end+1,:) = tmpRow transforms "1.00001" into numerical value 1 !!
 
@@ -190,8 +190,9 @@ ytickformat('percentage');
 grid on ; grid minor
 
 subplot(3,1,1)
-b1 = bar(100*toBar');
+b1 = bar(countdowns, 100*toBar');
 set(gca,'XTick', allPlanners{1}.countdowns)
+set(gca,'XTickLabels', string(allPlanners{1}.countdowns))
 ylabel({'average success rate'; ...
         strcat(['overall ',num2str(allPlanners{1}.nbRuns),' runs on']); ...
         strcat(['each of the ',num2str(allPlanners{1}.nbQueries),' queries'])})
@@ -212,9 +213,14 @@ ylabel({'input scene:'; ...
 
 %to modify individually the bars' color
 b2.FaceColor = 'flat';
-for i=1:numel(countdowns)
-    b2.CData(i,:) = co(idxBestQualityPlanners(i),:);
-    
+for i=1:numel(allPlanners)
     b1(1,i).FaceColor = 'flat';
-    b1(1,i).CData(1:numel(allPlanners),:) = repmat(co(i,:),numel(allPlanners),1);
+    for j=1:numel(countdowns)
+        b1(1,i).CData(1:numel(countdowns),:) = repmat(co(j,:),numel(countdowns),1);
+    end
 end
+for j=1:numel(countdowns)
+    b2.CData(j,:) = co(idxBestQualityPlanners(j),:);
+    b1(1,i).CData(1:numel(countdowns),:) = repmat(co(j,:),numel(countdowns),1);
+end
+set(gcf,'color','w');
