@@ -149,7 +149,7 @@ for i=1:numel(allCells)
             end
         end
         successRatesAvg(end+1) = successRateStorage/(nbQueries*nbRuns);
-        qualitiesAvg(end+1) = mean(qualityStorage); %careful, mean([]) = NaN
+        qualitiesAvg(end+1) = sum(qualityStorage)/(nbQueries*nbRuns); %careful, mean([]) = NaN
         if isnan(qualitiesAvg(end)) ; qualitiesAvg(end) = 0 ; end %instead
     end
     
@@ -195,7 +195,8 @@ set(gca,'XTick', allPlanners{1}.countdowns)
 set(gca,'XTickLabels', string(allPlanners{1}.countdowns))
 ylabel({'average success rate'; ...
         strcat(['overall ',num2str(allPlanners{1}.nbRuns),' runs on']); ...
-        strcat(['each of the ',num2str(allPlanners{1}.nbQueries),' queries'])})
+        strcat(['each of the ',num2str(allPlanners{1}.nbQueries)]); ...
+        'random feasible queries'})
 ytickformat('percentage');
 grid on ; grid minor
 
