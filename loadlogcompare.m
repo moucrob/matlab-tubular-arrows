@@ -173,7 +173,9 @@ for i=1:numel(allPlanners)
 %     plot(countdowns, allPlanners{i}.successRatesAvg) ; hold on
     subplot(3,1,2)
     set(gca,'XTick', allPlanners{i}.countdowns)
-    plot(countdowns, allPlanners{i}.qualitiesAvg,'color',co(i,:)) ; hold on
+    plot(countdowns, 100*allPlanners{i}.qualitiesAvg, ...
+         '-o','MarkerSize',5,'MarkerFaceColor',co(i,:),'color',co(i,:))
+    hold on
     qualitiesAvgMat(end+1,:) = allPlanners{i}.qualitiesAvg;
     names{end+1,1} = char(allPlanners{i}.plannerName);
     
@@ -183,14 +185,30 @@ end
 
 subplot(3,1,2)
 l = legend(names);
+ylabel({num2str(allPlanners{1}.metric);'quality metric'})
+ytickformat('percentage');
+grid on ; grid minor
 
 subplot(3,1,1)
-b1 = bar(toBar');
+b1 = bar(100*toBar');
 set(gca,'XTick', allPlanners{1}.countdowns)
+ylabel({'average success rate'; ...
+        strcat(['overall ',num2str(allPlanners{1}.nbRuns),' runs on']); ...
+        strcat(['each of the ',num2str(allPlanners{1}.nbQueries),' queries'])})
+ytickformat('percentage');
+grid on ; grid minor
 
 subplot(3,1,3)
-title("Planner that had the best quality overall")
 b2 = bar(countdowns,ones(1,numel(countdowns)));
+set(gca,'XTick', allPlanners{1}.countdowns)
+set(gca,'XTickLabels', string(allPlanners{1}.countdowns))
+title({'Planner that had the best quality overall,';'w.r.t to each allocated countdown (sec)'})
+set(gca,'YTick',[])
+set(gca,'YTickLabel',[])
+ylabel({'input scene:'; ...
+        strcat([num2str(allPlanners{1}.scene),',']); ...
+        strcat(['acceptance(t):=',num2str(allPlanners{1}.acceptance)]); ...
+        'for wrapped planners'},'Interpreter','none')
 
 %to modify individually the bars' color
 b2.FaceColor = 'flat';
