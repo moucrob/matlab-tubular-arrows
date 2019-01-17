@@ -321,7 +321,7 @@ set(gca,'Projection','perspective')
 grid off
 set(gca,'XColor','none') ; set(gca,'YColor','none') ; set(gca,'ZColor','none')
 
-line1 = strcat('Iterative tweaks of the parameter set of the ',planner, ' motion-planning algorithm,');
+line1 = strcat('Iterative tweaks of the ',planner, ' motion-planning algorithm parameter set');
 line2 = 'associated to the quality of the resulting plan, ';
 line22 = strcat(line2,'with respect to our ',metric,' metric.');
 line3 = strcat('Context: scene "',scene, ...

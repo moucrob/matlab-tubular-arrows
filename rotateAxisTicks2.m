@@ -115,4 +115,5 @@ else %function called for plotting an axis name
         rotate(surfaceHandle, [0 0 1], thetaInput,[0 0 0]);
     end
 end
+% pause(1)
 end

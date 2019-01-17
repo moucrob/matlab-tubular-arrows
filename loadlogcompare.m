@@ -1,6 +1,6 @@
 clc
 clear all
-logNamesVec = {'ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log','TRRTwrapped.log','TRRT.log'};
+logNamesVec = {'RRT.log','RRTwrapped.log','EST.log','ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log','TRRTwrapped.log','TRRT.log'};
 
 format longG %otherwise tmpMat(end+1,:) = tmpRow transforms "1.00001" into numerical value 1 !!
 
@@ -185,7 +185,8 @@ end
 
 subplot(3,1,2)
 l = legend(names);
-ylabel({num2str(allPlanners{1}.metric);'quality metric'})
+ylabel({strcat( ['average ',num2str(allPlanners{1}.metric)] ); ...
+        'quality metric'})
 ytickformat('percentage');
 xtickangle(90)
 grid on ; grid minor
