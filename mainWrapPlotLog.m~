@@ -17,13 +17,7 @@ fileName = 'RRTCwrapped.log';
 %call is green
 %648 : in the end the arrows (quality) are forced to go to the side where
 %it make them rise up
-%650 : be aware though, that the end of the process doesn't take part
-%necessarily on the right side of the fig as shown here, the end of the
-%process is where is the last arrowhead. Other note is that as viewable
-%here, for a same parameter (set), plan found can be of several qualities,
-%due to the randomness of the trees' growth itself. For this reason we keen
-%in memory during the process not only the winning parameter set but also
-%its associated plan found!
+%65
 
 
 c = loadlog(fileName);
@@ -31,7 +25,7 @@ fig = cell(0,1) ; rules = cell(0,1);
 % for i=1:numel(c)
 for i=640:numel(c) 
     
-% for i=24:24 %for TRRT datas2019-01-09_23_15.log
+% for i=24:24
 
     [fig{end+1,1},rules{end+1,1}] = plotOptimizer(c{i});
     disp(['i = ',num2str(i)]) ; pause(4);
