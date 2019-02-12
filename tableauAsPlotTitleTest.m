@@ -1,9 +1,9 @@
-%https://www.mathworks.com/matlabcentral/answers/300523-plot-title-formatting-with-table
+%% https://www.mathworks.com/matlabcentral/answers/300523-plot-title-formatting-with-table
 tbl_header    = "\begin{tabular}{ccccc} \textbf{DoE ID} & \multicolumn{2}{c}{\textbf{Toolposition} (in mm)} & \multicolumn{2}{c}{\textbf{Material}} \\ & x & y & name & thickness (in mm) \\ \hline";
 tbl_footer    = "\end{tabular}";
 figure
 for ii = 1:5
-    plot((1:256)', rand(256,1)); hold on;
+    %plot((1:256)', rand(256,1)); hold on;
     tbl_body(ii)  = sprintf("%d & %.2f & %.2f & %s & %.2f", randi(10,1), rand, rand, 'random string', randi(10,1));
 end
 tbl_str = sprintf("%s %s %s", tbl_header, strjoin(tbl_body, ' \\\\ '), tbl_footer);
@@ -15,3 +15,11 @@ title(...
         }, ...
         'Interpreter','latex' ...
      );
+ 
+testo = {...
+            sprintf("\\textbf{Machine:} %s", 'Random machine name'), ...
+            "", ...
+            tbl_str ...
+};
+testo{3}
+
