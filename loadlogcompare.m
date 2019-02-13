@@ -1,7 +1,6 @@
 clc
 clear all
-% logNamesVec = {'RRT.log','RRTwrapped.log','EST.log','ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log','TRRTwrapped.log','TRRT.log'};
-logNamesVec = {'RRT.log','RRTwrapped.log'};
+logNamesVec = {'RRT.log','RRTwrapped.log','EST.log','ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log','TRRTwrapped.log','TRRT.log'};
 
 format longG %otherwise tmpMat(end+1,:) = tmpRow transforms "1.00001" into numerical value 1 !!
 
@@ -25,19 +24,15 @@ for k=1:numel(logNamesVec) %all planners
     i = 1;
     begin = 1;
     endofsub = 1;
-    noResults = 14; %number of lines when there is no results, otherwise there are 10 or more
+    noResults = 14; %number of lines when there is no results, otherwise there are 15 or more
     while 1
         if numel(toSplit{i}) == 0
            %move the preceding subcell array to a temporary array:
            %disp(['begin = ', num2str(begin)])
            %disp(['endofsub-1 = ', num2str(endofsub-1)])
-           arrayToPotentiallyKeep = toSplit(begin:endofsub-1);
-
+           arrayToKeep = toSplit(begin:endofsub-1);
            begin = endofsub + 1;
-    %        %check whether there are datas in the run
-    %        if numel(arrayToPotentiallyKeep) > noResults
-           runs{end+1,1} = arrayToPotentiallyKeep;
-    %        end
+           runs{end+1,1} = arrayToKeep;
         end
         if i == size(toSplit,1)
             break

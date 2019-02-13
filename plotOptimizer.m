@@ -12,6 +12,8 @@ run = cellComp.run;
 seqParam = cellComp.seqParam;
 seqM = cellComp.seqM;
 step = cellComp.step; %vector
+jointNamesVec = cellComp.jointNamesVec;
+lims = [cellComp.jointAnglesMin ; cellComp.jointAnglesMax];
 
 %% main:
 nbRestarts = max(size(seqParam(1).seq));
@@ -267,6 +269,9 @@ end
 bar = colorbar('Ticks',linspace(0, 1, nbRestarts),'TickLabels',num2cell(1:nbRestarts));
 str = {'Last parameter set tweak';'(and call to';strcat(planner,')')};
 set(get(bar,'title'),'string',str);
+
+% tbl_str = tableTitle(jointNamesVec,lims,"Joint angle limits (rad)");
+% set(get(bar,'YLabel'),'string',tbl_str,'Interpreter','latex');
     
 camlight headlight
 lighting gouraud
@@ -329,7 +334,10 @@ line3 = strcat('Context: scene "',scene, ...
                '", countdown T = ',countdown, ...
                's, acceptance(t):=',acceptance);
 longStr = {line1;line2;line3};
-title(longStr, 'Interpreter', 'none') % https://fr.mathworks.com/matlabcentral/answers/9260-disabling-printing-underscore-as-subscript-in-figures
+t1 = title(longStr, 'Interpreter', 'none') % https://fr.mathworks.com/matlabcentral/answers/9260-disabling-printing-underscore-as-subscript-in-figures
 set(gcf,'color','w');
+
+tbl_str = tableTitle(jointNamesVec,lims,"Joint angle limits (rad)");
+t2 = text('string',tbl_str,'Position', [0.5, 0.025, 0],'Units', 'normalized','HorizontalAlignment','center','Interpreter','latex');
 
 fig = get(firstfig);

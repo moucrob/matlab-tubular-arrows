@@ -25,7 +25,7 @@ succeedingRuns = cell(0,1);
 i = 1;
 begin = 1;
 endofsub = 1;
-noResults = 10; %number of lines when there is no results, otherwise there are 10 or more
+noResults = 14; %number of lines when there is no results, otherwise there are 15 or more
 while 1
     if numel(toSplit{i}) == 0
        %move the preceding subcell array to a temporary array:
@@ -47,7 +47,7 @@ while 1
 end
 clear toSplit
 
-%%
+%% Parse each runs:
 succeedingRunsStructCell = cell(0,1);
 for i=1:numel(succeedingRuns)
     stru = struct();
@@ -56,23 +56,28 @@ for i=1:numel(succeedingRuns)
         beforeafter = strsplit(succeedingRuns{i}(j), ' = ');
         stru.(beforeafter(1)) = beforeafter(2);
     end
-    %their associated parameter name:
-    paramNamesVec = string(strsplit(succeedingRuns{i}(8),{', ', ':'}));
+    % %the joint limits:
+    for n=8:10
+        beforeafter = strsplit(succeedingRuns{i}(n), ' = [ ');
+        %re-split to get the vector of the joint names + the char ']':
+        cell2strVar = string(beforeafter(2));
+        cell2strVec = strsplit(cell2strVar, ' ');
+        cell2strVec(end) = []; %remove the char "]" at the end
+        if n~=8
+            stru.(beforeafter(1)) = str2double(strcat(cell2strVec));
+        else
+            stru.(beforeafter(1)) = strcat(cell2strVec);
+        end
+    end
+    % %the planner's parameter names:
+    paramNamesVec = string(strsplit(succeedingRuns{i}(11),{', ', ':'}));
     paramNamesVec(end-1:end) = []; %remove 'quality', and the '' char returned after the ':' due to the split!
     %and the datas
     tmpMat = [];
-    for k=9:numel(succeedingRuns{i})-2
+    for k=noResults-1:numel(succeedingRuns{i})-2
         tmpRow = strsplit(succeedingRuns{i}(k),{', ', ';'});
         tmpRow(end) = []; %remove the '' char returned after the ';' due to the split!
         tmpMat(end+1,:) = tmpRow;
-        
-%         %debug : check if the 2 prints are identical
-%         if i==13
-%             disp(['tmpRow = ',tmpRow])
-%             disp(tmpMat(end,:))
-%         end
-%         %answer :
-        
     end
     tmpMat = tmpMat';
     seqParam = [];
@@ -90,10 +95,6 @@ for i=1:numel(succeedingRuns)
     cell2strVec(end) = []; %remove the char "]" at the end
     stru.(beforeafter(1)) = str2double(strcat(cell2strVec));
     succeedingRunsStructCell{i,1} = stru;
-%     %debug
-%     if i==13
-%         disp('--------------')
-%     end
 end
 % assignin('base','cLoadLog',succeedingRunsStructCell) %debug
 end
