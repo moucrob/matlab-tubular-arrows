@@ -55,19 +55,19 @@ for k=1:numel(logNamesVec) %all planners
             beforeafter = strsplit(runs{i}(j), ' = ');
             stru.(beforeafter(1)) = beforeafter(2);
         end
-        % %their associated parameter name:
+        %their associated parameter name:
         paramNamesVec = string(strsplit(runs{i}(8),{', ', ':'}));
         paramNamesVec(end-1:end) = []; %remove 'quality', and the '' char returned after the ':' due to the split!
-        % %the joint names:
+        %the joint names:
         jointNamesVec = string(strsplit(runs{i}(9),{', ', ':'}));
         jointNamesVec(end) = []; %remove the '' char returned after the ':' due to the split!
-        % %the joint angles minimal limits:
+        %the joint angles minimal limits:
         jointAnglesMin = string(strsplit(runs{i}(10),{', ', ';'}));
         jointAnglesMin(end) = []; %remove the '' char returned after the ';' due to the split!
-        % %the joint angles maximal limits:
+        %the joint angles maximal limits:
         jointAnglesMax = string(strsplit(runs{i}(11),{', ', ';'}));
         jointAnglesMax(end) = []; %remove the '' char returned after the ';' due to the split!
-        % %the datas:
+        %the datas:
         tmpMat = [];
         if numel(runs{i}) >= noResults+1
             for k=noResults+1:numel(runs{i})-2
@@ -96,16 +96,16 @@ for k=1:numel(logNamesVec) %all planners
             stru.quality = 0;
         end
         stru.seqParam = seqParam;
-        % %the joint limits:
-        for n=8:10
-            beforeafter = strsplit(runs{i}(n), ' = [ ');
-            %re-split to get the vector of the joint names + the char ']':
-            cell2strVar = string(beforeafter(2));
-            cell2strVec = strsplit(cell2strVar, ' ');
-            cell2strVec(end) = []; %remove the char "]" at the end
-            stru.(beforeafter(1)) = str2double(strcat(cell2strVec));
-        end
-        % %the steps:
+        %the joint names:
+        beforeafter = strsplit(runs{i}(numel(runs{i})), ' = [ ');
+        %re-split to get the vector of the steps associated to the vector of
+        %paramNames:
+        cell2strVar = string(beforeafter(2));
+        cell2strVec = strsplit(cell2strVar, ' ');
+        cell2strVec(end) = []; %remove the char "]" at the end
+        stru.(beforeafter(1)) = str2double(strcat(cell2strVec));
+        
+        %the steps:
         beforeafter = strsplit(runs{i}(numel(runs{i})), ' = [ ');
         %re-split to get the vector of the steps associated to the vector of
         %paramNames:
