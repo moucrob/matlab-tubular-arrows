@@ -25,26 +25,24 @@ nbj = size(lims,2);
 
 %% Parse the underscores in order to prevent errors
 for i=1:nbj
-    tmp = char(jnames(i));
-    count = 0;
-    j = 1;
-    iter = length(tmp);
-    while j <= iter
-        if strcmp(tmp(1),'_')
-            count = count+1;
-            if count == 1
-                tmp = [tmp(1:j-1),'\underline{',tmp(j+1:end)];
+    tmp = strsplit(jnames(i),'_');
+    nbUnderscores = numel(tmp)-1;
+    if nbUnderscores >= 1
+        stack = [];
+        for j=1:numel(tmp)
+            if j<numel(tmp)
+                if j == 1
+                    duo = strcat(tmp(j),"\_{");
+                else
+                    duo = strcat(tmp(j),"}\_{");
+                end
+                stack = strcat(stack,duo);
             else
-                tmp = [tmp(1:j-1),'}\underline{',tmp(j+1:end)];
+                continue
             end
         end
-        j = j+1;
-        tmp = tmp(2:end)
+        tmp = strcat(stack,tmp(end),"}");
     end
-    if count >= 1
-        tmp(end+1) = '}';
-    end
-    disp(tmp)
     jnames(i) = tmp;
 end
 
