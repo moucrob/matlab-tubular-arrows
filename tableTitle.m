@@ -1,11 +1,12 @@
+function t = tableTitle(jnames, lims, intitule)
 %% https://www.mathworks.com/matlabcentral/answers/300523-plot-title-formatting-with-table
-clear all;
-clc
+%clear all;
+%clc
 
 %% Inputs:
-jnames = ["base","elb","wrist"];
-lims = [-6.28 -3.14 -6.28 ; 6.28 3.14 6.28];
-intitule = "Joint angle limits (rad)";
+% jnames = ["base","elb","wrist"];
+% lims = [-6.28 -3.14 -6.28 ; 6.28 3.14 6.28];
+% intitule = "Joint angle limits (rad)";
 
 %% Latex code:
 % \begin{tabular}{|c|c|c|}
@@ -41,22 +42,13 @@ end
 jnamest = strcat(jnamest," \\ "); %\\ = \ in sprintf(), but not in strcat()
 
 %% Construct the lims:
-limst = [];
+% BE CAREFUL TO DO USE THE $, even though it works without it within
+% overleaf!
 for i=1:nbj
     currLims = lims(:,i);
-    currLims(1)
-    currLims(2)
-    currLims(1)
-    limst(i) = sprintf("%.2f \\leq q_%d \\leq %.2f &",currLims(1),i,currLims(2))
-%     limst = strcat(limst,num2str(currLims(1)));
-%     limst = strcat(limst," \leq q_");
-%     limst = strcat(limst,num2str(i));
-%     limst = strcat(limst," \leq ");
-%     limst = strcat(limst,num2str(currLims(2)));
-%     limst = strcat(limst," & ");
+    limst(i) = sprintf("$%.2f \\leq q_%d \\leq %.2f$",currLims(1),i,currLims(2));
 end
-limst
-limst = limst(1:end-2) %remove the last "&"
+limst = strjoin(limst, ' & ');
 limst = strcat(limst," \\ ");
 
 %% Some latex regexs:
@@ -71,7 +63,8 @@ tbl_str = sprintf("%s %s %s %s %s %s %s %s", ...
                   trait, ...
                   limst, ...
                   trait, ...
-                  endt);
+                  endt)
 
 figure
-title(tbl_str,'Interpreter','latex')
+t = title(tbl_str,'Interpreter','latex');
+return t
