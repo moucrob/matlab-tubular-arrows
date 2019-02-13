@@ -1,6 +1,6 @@
 %% https://www.mathworks.com/matlabcentral/answers/300523-plot-title-formatting-with-table
 clear all;
-clc
+%clc
 
 %% Inputs:
 jnames = ["base","elb","wrist"];
@@ -41,9 +41,11 @@ end
 jnamest = strcat(jnamest," \\ "); %\\ = \ in sprintf(), but not in strcat()
 
 %% Construct the lims:
+% BE CAREFUL TO DO USE THE $, even though it works without it within
+% overleaf!
 for i=1:nbj
     currLims = lims(:,i);
-    limst(i) = sprintf("%.2f \\leq q_%d \\leq %.2f",currLims(1),i,currLims(2));
+    limst(i) = sprintf("$%.2f \\leq q_%d \\leq %.2f$",currLims(1),i,currLims(2));
 end
 limst = strjoin(limst, ' & ');
 limst = strcat(limst," \\ ");
@@ -60,7 +62,7 @@ tbl_str = sprintf("%s %s %s %s %s %s %s %s", ...
                   trait, ...
                   limst, ...
                   trait, ...
-                  endt);
+                  endt)
 
 figure
 title(tbl_str,'Interpreter','latex');
