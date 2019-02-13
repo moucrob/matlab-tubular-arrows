@@ -1,4 +1,4 @@
-function t = tableTitle(jnames, lims, intitule)
+function tbl_str = tableTitle(jnames, lims, intitule)
 %% https://www.mathworks.com/matlabcentral/answers/300523-plot-title-formatting-with-table
 %clear all;
 %clc
@@ -22,6 +22,31 @@ function t = tableTitle(jnames, lims, intitule)
 
 %% Parse the number of joints
 nbj = size(lims,2);
+
+%% Parse the underscores in order to prevent errors
+for i=1:nbj
+    tmp = char(jnames(i));
+    count = 0;
+    j = 1;
+    iter = length(tmp);
+    while j <= iter
+        if strcmp(tmp(1),'_')
+            count = count+1;
+            if count == 1
+                tmp = [tmp(1:j-1),'\underline{',tmp(j+1:end)];
+            else
+                tmp = [tmp(1:j-1),'}\underline{',tmp(j+1:end)];
+            end
+        end
+        j = j+1;
+        tmp = tmp(2:end)
+    end
+    if count >= 1
+        tmp(end+1) = '}';
+    end
+    disp(tmp)
+    jnames(i) = tmp;
+end
 
 %% Construct the 1st latex line:
 begt = "\begin{tabular}{";
@@ -63,8 +88,5 @@ tbl_str = sprintf("%s %s %s %s %s %s %s %s", ...
                   trait, ...
                   limst, ...
                   trait, ...
-                  endt)
-
-figure
-t = title(tbl_str,'Interpreter','latex');
-return t
+                  endt);
+end

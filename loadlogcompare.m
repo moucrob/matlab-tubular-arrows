@@ -1,6 +1,7 @@
 clc
 clear all
-logNamesVec = {'RRT.log','RRTwrapped.log','EST.log','ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log','TRRTwrapped.log','TRRT.log'};
+% logNamesVec = {'RRT.log','RRTwrapped.log','EST.log','ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log','TRRTwrapped.log','TRRT.log'};
+logNamesVec = {'RRT.log','RRTwrapped.log'};
 
 format longG %otherwise tmpMat(end+1,:) = tmpRow transforms "1.00001" into numerical value 1 !!
 
@@ -55,22 +56,26 @@ for k=1:numel(logNamesVec) %all planners
             beforeafter = strsplit(runs{i}(j), ' = ');
             stru.(beforeafter(1)) = beforeafter(2);
         end
-        % %their associated parameter name:
-        paramNamesVec = string(strsplit(runs{i}(8),{', ', ':'}));
+        % %the joint limits:
+        for n=8:10
+            beforeafter = strsplit(runs{i}(n), ' = [ ');
+            %re-split to get the vector of the joint names + the char ']':
+            cell2strVar = string(beforeafter(2));
+            cell2strVec = strsplit(cell2strVar, ' ');
+            cell2strVec(end) = []; %remove the char "]" at the end
+            if n~=8
+                stru.(beforeafter(1)) = str2double(strcat(cell2strVec));
+            else
+                stru.(beforeafter(1)) = strcat(cell2strVec);
+            end
+        end
+        % %the planner's parameter names:
+        paramNamesVec = string(strsplit(runs{i}(11),{', ', ':'}));
         paramNamesVec(end-1:end) = []; %remove 'quality', and the '' char returned after the ':' due to the split!
-        % %the joint names:
-        jointNamesVec = string(strsplit(runs{i}(9),{', ', ':'}));
-        jointNamesVec(end) = []; %remove the '' char returned after the ':' due to the split!
-        % %the joint angles minimal limits:
-        jointAnglesMin = string(strsplit(runs{i}(10),{', ', ';'}));
-        jointAnglesMin(end) = []; %remove the '' char returned after the ';' due to the split!
-        % %the joint angles maximal limits:
-        jointAnglesMax = string(strsplit(runs{i}(11),{', ', ';'}));
-        jointAnglesMax(end) = []; %remove the '' char returned after the ';' due to the split!
         % %the datas:
         tmpMat = [];
         if numel(runs{i}) >= noResults+1
-            for k=noResults+1:numel(runs{i})-2
+            for k=noResults-1:numel(runs{i})-2
                 tmpRow = strsplit(runs{i}(k),{', ', ';'});
                 tmpRow(end) = []; %remove the '' char returned after the ';' due to the split!
                 tmpMat(end+1,:) = tmpRow;
@@ -96,15 +101,6 @@ for k=1:numel(logNamesVec) %all planners
             stru.quality = 0;
         end
         stru.seqParam = seqParam;
-        % %the joint limits:
-        for n=8:10
-            beforeafter = strsplit(runs{i}(n), ' = [ ');
-            %re-split to get the vector of the joint names + the char ']':
-            cell2strVar = string(beforeafter(2));
-            cell2strVec = strsplit(cell2strVar, ' ');
-            cell2strVec(end) = []; %remove the char "]" at the end
-            stru.(beforeafter(1)) = str2double(strcat(cell2strVec));
-        end
         % %the steps:
         beforeafter = strsplit(runs{i}(numel(runs{i})), ' = [ ');
         %re-split to get the vector of the steps associated to the vector of
@@ -223,8 +219,11 @@ ylabel({'average success rate'; ...
 xlabel('allocated countdown (sec)')
 ytickformat('percentage');
 grid on ; grid minor
+
 lims = [allPlanners{1}.jointAnglesMin ; allPlanners{1}.jointAnglesMax];
-t = tableTitle(allPlanners{1}.jointNamesVec,lims,"Joint angle limits (rad)");
+tbl_str = tableTitle(allPlanners{1}.jointNamesVec,lims,"Joint angle limits (rad)");
+title(tbl_str,'Interpreter','latex');
+
 
 subplot(3,1,3)
 b2 = bar(countdowns,ones(1,numel(countdowns)));
