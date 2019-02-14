@@ -28,17 +28,16 @@ endofsub = 1;
 noResults = 13; %number of lines when there is no results, otherwise there are 14 or more
 while 1
     if numel(toSplit{i}) == 0
-        disp(i)
-        %move the preceding subcell array to a temporary array:
-        %disp(['begin = ', num2str(begin)])
-        %disp(['endofsub-1 = ', num2str(endofsub-1)])
-        arrayToPotentiallyKeep = toSplit(begin:endofsub-1);
-
-        begin = endofsub + 1;
-        %check whether there are datas in the run
-        if numel(arrayToPotentiallyKeep) > noResults
-            succeedingRuns{end+1,1} = arrayToPotentiallyKeep;
-        end
+       %move the preceding subcell array to a temporary array:
+       %disp(['begin = ', num2str(begin)])
+       %disp(['endofsub-1 = ', num2str(endofsub-1)])
+       arrayToPotentiallyKeep = toSplit(begin:endofsub-1);
+       
+       begin = endofsub + 1;
+       %check whether there are datas in the run
+       if numel(arrayToPotentiallyKeep) > noResults
+           succeedingRuns{end+1,1} = arrayToPotentiallyKeep;
+       end
     end
     if i == size(toSplit,1)
         break
@@ -46,8 +45,8 @@ while 1
     i = i + 1;
     endofsub = endofsub + 1;
 end
-assignin('base','succeedingRuns',succeedingRuns) %debug
 clear toSplit
+assignin('Base');
 %% Parse each runs:
 succeedingRunsStructCell = cell(0,1);
 for i=1:numel(succeedingRuns)

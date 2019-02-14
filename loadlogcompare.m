@@ -1,7 +1,7 @@
 clc
 clear all
-logNamesVec = {'RRT.log','RRTwrapped.log','EST.log','ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log'};%,'TRRTwrapped.log','TRRT.log'};
-
+logNamesVec = {'RRT.log','RRTwrapped.log','EST.log','ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log','TRRTwrapped.log','TRRT.log'};
+% logNamesVec = {'TRRTwrapped.log','TRRT.log'}; %debug
 format longG %otherwise tmpMat(end+1,:) = tmpRow transforms "1.00001" into numerical value 1 !!
 
 allCells = cell(0,1);
@@ -24,7 +24,7 @@ for k=1:numel(logNamesVec) %all planners
     i = 1;
     begin = 1;
     endofsub = 1;
-    noResults = 14; %number of lines when there is no results, otherwise there are 15 or more
+    noResults = 13; %number of lines when there is no results, otherwise there are 14 or more
     while 1
         if numel(toSplit{i}) == 0
            %move the preceding subcell array to a temporary array:
@@ -40,7 +40,7 @@ for k=1:numel(logNamesVec) %all planners
         i = i + 1;
         endofsub = endofsub + 1;
     end
-    clear toSplit
+    %clear toSplit %debug
 
     %% Parse each runs:
     runsStructCell = cell(0,1);
