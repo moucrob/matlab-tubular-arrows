@@ -258,6 +258,7 @@ if numel(indexesToPick) > 1
            y(end+1,1) = seqParam(indexesToPickForIso(j)).y(i);
            z(end+1,1) = seqM.mapseq(i);
        end
+       x(isnan(x)) = 0 ; y(isnan(y)) = 0;
        xx{i} = x ; yy{i} = y ; zz{i} = z;
        XYZ{1} = [xx{i},yy{i},zz{i}]; %streamtubes wants only cells idk why...
        count = count+1;
@@ -334,7 +335,7 @@ line3 = strcat('Context: scene "',scene, ...
                '", countdown T = ',countdown, ...
                's, acceptance(t):=',acceptance);
 longStr = {line1;line2;line3};
-t1 = title(longStr, 'Interpreter', 'none') % https://fr.mathworks.com/matlabcentral/answers/9260-disabling-printing-underscore-as-subscript-in-figures
+t1 = title(longStr, 'Interpreter', 'none'); % https://fr.mathworks.com/matlabcentral/answers/9260-disabling-printing-underscore-as-subscript-in-figures
 set(gcf,'color','w');
 
 tbl_str = tableTitle(jointNamesVec,lims,"Joint angle limits (rad)");

@@ -33,7 +33,6 @@ fig = cell(0,1) ; rules = cell(0,1);
 % for i=1:numel(c)
 % for i=[648,650,662] %for RRTC 1D
 for i=24:24 %for TRRT 9D datas2019-01-09_23_15.log
-
     [fig{end+1,1},rules{end+1,1}] = plotOptimizer(c{i});
     disp(['i = ',num2str(i)]) ; pause(4);
 end

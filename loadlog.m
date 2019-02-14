@@ -28,7 +28,6 @@ endofsub = 1;
 noResults = 13; %number of lines when there is no results, otherwise there are 14 or more
 while 1
     if numel(toSplit{i}) == 0
-        disp(i)
         %move the preceding subcell array to a temporary array:
         %disp(['begin = ', num2str(begin)])
         %disp(['endofsub-1 = ', num2str(endofsub-1)])
@@ -51,20 +50,15 @@ clear toSplit
 %% Parse each runs:
 succeedingRunsStructCell = cell(0,1);
 for i=1:numel(succeedingRuns)
-    disp(i) %debug
     stru = struct();
     %the legends
     for j=1:7
         beforeafter = strsplit(succeedingRuns{i}(j), ' = ');
         stru.(beforeafter(1)) = beforeafter(2);
-        disp(beforeafter(1)) %debug
-        disp(beforeafter(2)) %debug
     end
     % %the joint limits:
     for n=8:10
         beforeafter = strsplit(succeedingRuns{i}(n), ' = [ ');
-        disp(beforeafter(1)) %debug
-        disp(beforeafter(2)) %debug
         %re-split to get the vector of the joint names + the char ']':
         cell2strVar = string(beforeafter(2));
         cell2strVec = strsplit(cell2strVar, ' ');
