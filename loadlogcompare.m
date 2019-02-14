@@ -1,6 +1,6 @@
 clc
 clear all
-logNamesVec = {'RRT.log','RRTwrapped.log','EST.log','ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log','TRRTwrapped.log','TRRT.log'};
+logNamesVec = {'RRT.log','RRTwrapped.log','EST.log','ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log'};%,'TRRTwrapped.log','TRRT.log'};
 
 format longG %otherwise tmpMat(end+1,:) = tmpRow transforms "1.00001" into numerical value 1 !!
 
@@ -226,7 +226,7 @@ set(gca,'TickLength', [0 0])
 set(gca,'XTick', allPlanners{1}.countdowns)
 set(gca,'XTickLabels', string(allPlanners{1}.countdowns))
 xtickangle(90)
-title({'Planner that had the best quality overall,';'w.r.t to each allocated countdown T (in sec)'})
+title({'Lookup table : planner that had the best quality overall,';'w.r.t to each allocated countdown T (in sec)'})
 set(gca,'YTick',[])
 set(gca,'YTickLabel',[])
 ylabel({'input scene:'; ...
