@@ -6,7 +6,7 @@ format longG %otherwise tmpMat(end+1,:) = tmpRow transforms "1.00001" into numer
 
 allCells = cell(0,1);
 for k=1:numel(logNamesVec) %all planners
-    fileName = string(logNamesVec(k));
+    fileName = string(logNamesVec(k))
     
     %% read each line
     fileID = fopen(fileName,'r');
