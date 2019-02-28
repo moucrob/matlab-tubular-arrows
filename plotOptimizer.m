@@ -26,6 +26,7 @@ if nbParams > 2
 end
 indexesToPick = randperm(nbParams);
 
+[~, idxMaxQuality] = max(seqM.seq);
 for i=1:nbParams
     tmpvec = [];
     for j=1:nbRestarts
@@ -35,6 +36,16 @@ for i=1:nbParams
     seqParam(i).min = min(seqParam(i).seq);
     seqParam(i).max = max(seqParam(i).seq);
     seqParam(i).step = step(i);
+    
+    seqParam(i).maxHighlightable = true;
+    if seqParam(i).seq(idxMaxQuality) == seqParam(i).min
+        seqParam(i).maxHighlightable = false;
+    end
+    
+    seqParam(i).lastHighlightable = true;
+    if seqParam(i).seq(end) == seqParam(i).min
+        seqParam(i).lastHighlightable = false;
+    end
 end
 
 %% %%%%%%%%%%%%%%%%% TWEAKABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -55,6 +66,8 @@ evolutionRadius = axisRadius;
 smooth = 40; %number of point on the circumference of the streamtubes
 
 dontCropArrow = [-(1.2*(2*axisRadius)) 1]; %120percent to get some margin with the arrowHead radius := 2*arrowBody radius
+
+howManyCharMaximum = 5;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Define the scaling factors for each axis,
 %two first ones are 1unit long, whereas all the following are more or less
@@ -62,18 +75,10 @@ dontCropArrow = [-(1.2*(2*axisRadius)) 1]; %120percent to get some margin with t
 %extremity anchored onto a vertex:
 mapAxisIntoZeroMag = @(x,xmin,xmax,magnitude) ((x-xmin)./(xmax-xmin)).*magnitude;
 
-howManyCharMaximum = 5;
-
 %% beginning of the bifurcation of the axes in two "parallel worlds" from matlab internal graphics storage point of view
 firstfig = figure ; ax1 = axes;
 %plot the ticks
 ticks = {};
-[~, idxMaxQuality] = max(seqM.seq); %however I won't be able to highlight the first tick
-shiftedIndex = idxMaxQuality-1;
-colorable = false;
-if shiftedIndex >= 1
-    colorable = true;
-end
 % disp(['idxMaxQuality = ',num2str(idxMaxQuality)])
 % disp(['colorable = ',num2str(colorable)])
 tmpTheta = NaN; %debug
@@ -118,11 +123,11 @@ for i=1:nbParams
 %     disp(['graduSpace = ',num2str(graduSpace)])
     for j=1:nbTicksAlong
         colorSent = colorAxis; %bring back
-        if j == idxLastInAlong
+        if j == idxLastInAlong & seqParam(indexesToPick(i)).lastHighlightable == 1
 %             disp('j == idxLastInAlong')
             colorSent = colorEmphasizeLast;
         end
-        if j==idxBestInAlong & colorable==1
+        if j==idxBestInAlong & seqParam(indexesToPick(i)).maxHighlightable == 1
 %             disp('j==idxBestInAlong & colorable==true')
             colorSent = colorEmphasizeBest;
         end
