@@ -332,18 +332,18 @@ set(gca,'Projection','perspective')
 grid off
 set(gca,'XColor','none') ; set(gca,'YColor','none') ; set(gca,'ZColor','none')
 
-line1 = strcat('Iterative tweaks of the ',planner, ' motion-planning algorithm parameter set');
+line1 = strcat("Iterative tweaks of ",planner, " parameter set");
 line2 = 'associated to the quality of the resulting plan, ';
 line22 = strcat(line2,'with respect to our ',metric,' metric.');
-line3 = strcat('Context: scene "',scene, ...
-               '", query "',query, ...
-               '", countdown T = ',countdown, ...
-               's, acceptance(t):=',acceptance);
-longStr = {line1;line2;line3};
+line3 = strcat('Context: scene "',scene,'"');
+longStr = {line1;line2;line3; ...
+            strcat('query "',query, ...
+               '",'); strcat('countdown T = ',countdown, ...
+               's, acceptance(t):=',acceptance)};
 t1 = title(longStr, 'Interpreter', 'none'); % https://fr.mathworks.com/matlabcentral/answers/9260-disabling-printing-underscore-as-subscript-in-figures
 set(gcf,'color','w');
 
 tbl_str = tableTitle(jointNamesVec,lims,"Joint angle limits (rad)");
-t2 = text('string',tbl_str,'Position', [0.5, 0.025, 0],'Units', 'normalized','HorizontalAlignment','center','Interpreter','latex');
+t2 = text('string',tbl_str,'Position', [0.5, -0.055, 0],'Units', 'normalized','HorizontalAlignment','center','Interpreter','latex');
 
 fig = get(firstfig);

@@ -1,12 +1,13 @@
 clc
 clear all
+path = "logs/unrestricted/";
 logNamesVec = {'RRT.log','RRTwrapped.log','EST.log','ESTwrapped.log','PRMstar.log','RRTCstar.log','RRTC.log','RRTCwrapped.log','TRRTwrapped.log','TRRT.log'};
 % logNamesVec = {'TRRTwrapped.log','TRRT.log'}; %debug
 format longG %otherwise tmpMat(end+1,:) = tmpRow transforms "1.00001" into numerical value 1 !!
 
 allCells = cell(0,1);
 for k=1:numel(logNamesVec) %all planners
-    fileName = string(logNamesVec(k))
+    fileName = strcat(path,string(logNamesVec(k)))
     
     %% read each line
     fileID = fopen(fileName,'r');
